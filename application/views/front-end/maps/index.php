@@ -1,4 +1,4 @@
 <div class="col-md-9">
-    <?php if(!empty($test))echo $test; else 'no bien';?>
+    <?php $this->load->view('front-end/block/view_maker');?>
 </div>
 

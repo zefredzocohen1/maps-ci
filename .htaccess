@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} ^demo
+RewriteCond %{HTTP_HOST} 4biz.vn
+RewriteRule ^robots\.txt$ robots_allow.txt
+
+RewriteCond $1 !^(index\.php|resources|js|skins|themes|media|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+ErrorDocument 404 /error/not_found
+
+</IfModule>
+
+<IfModule mod_deflate.c>
+    <filesMatch "\.(js|css|html|php)$">
+        SetOutputFilter DEFLATE
+    </filesMatch>
+</IfModule>

@@ -4,9 +4,16 @@
         <!--include css-->
         <link type="text/css" rel="stylesheet" href="<?php echo base_url().'public/asset/css/bootstrap.min.css'?>"/>
         <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/back-end/asset/css/main.css'?>"/>
+        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/spinner.css'?>"/>
+        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/font-awesome.css'?>"/>
+        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/bootstrap-datetimepicker.min.css'?>"/>
         <!--include js-->
         <script type="text/javascript" src="<?php echo base_url().'public/asset/js/jquery-1.12.4.min.js'?>"></script>
         <script type="text/javascript" src="<?php echo base_url().'public/asset/js/bootstrap.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/modal.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/moment.min.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/bootstrap-datetimepicker.js'?>"></script>
+        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/spinner.js'?>"></script>
     </head>
     <body>
         <div class="container">
