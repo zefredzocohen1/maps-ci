@@ -1,5 +1,5 @@
-<?php // if(!empty($debug)) $this->load->view($debug); ?>
-<?php // exit; ?>
+<?php // if(!empty($debug)) $this->load->view($debug);  ?>
+<?php // exit;  ?>
 <style>
     html, body {
         height: 100%;
@@ -15,8 +15,8 @@
 
 </style>
 
-<link type="text/css" rel="stylesheet" href="<?php echo base_url()?>public/asset/css/custom.css"/>
-<link type="text/css" rel="stylesheet" href="<?php echo base_url()?>public/asset/css/its_custom.css"/>
+<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>public/asset/css/custom.css"/>
+<link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>public/asset/css/its_custom.css"/>
 </head>
 <body>
     <div id="map"></div>
@@ -33,7 +33,6 @@
                     </button>
                     <h4 class="modal-title label-vms" id="myModalLabelForm" style="margin-left: 10px; padding-top: 5px; font-size: 20px">Thêm mới</h4>
                 </div>
-
                 <div class="modal-body color-bgr-form" style="font-size: 12px;">
                     <div class="row " style="margin-left: 0px; margin-right: 0px;">
                         <div id="div-8-col" class="border-graph" style="padding-bottom: 10px">
@@ -42,108 +41,443 @@
                                     <h4 class="label-vms" style="background-color: #6d6e70; margin-bottom: -5px;margin-top: 0px;width: 35%;height: 25px;font-size: 16px;">THÔNG TIN CHUNG</h4>
                                     <hr style="border-top-color: #939598;">
                                     <div class="form-group">
-                                        <label class="col-sm-1 control-label label-vms">Tên<font color="red"><b>*</b></font></label>
+                                        <label class="col-sm-1 control-label label-vms">Tên giao lộ<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-5">
-                                            <input id="vmsName" placeholder="Nhập tên bảng" type="text" name="" maxlength="100" value="" class="form-control input-sm vms-input">
+                                            <input id="vmsName" placeholder="Tên giao lộ" type="text" name="" maxlength="100" value="" class="form-control input-sm vms-input">
                                         </div>
-                                        <label class="col-sm-1 control-label label-vms">Loại<font color="red"><b>*</b></font></label>
+                                        <label class="col-sm-1 control-label label-vms">Ưu tiên<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-3">
                                             <select id="vmsType" class="form-control input-sm vms-input">
-                                                <option value="-1">--Loại biển--</option>
-                                                <option value="0">Biển báo</option>
-                                                <option value="1">Biển chỉ dẫn</option>
+                                                <option value="-1">--Loại Ưu tiên--</option>
+                                                <option value="0">Auto</option>
+                                                <option value="1">Tuyến 1</option>
+                                                <option value="2">Tuyến 2</option>
+                                                <option value="3">Tuyến 3</option>
+                                                <option value="4">Tuyến 4</option>
+                                                <option value="5">Tuyến 5</option>
+                                                <option value="6">Tuyến 6</option>
+                                                <option value="7">Tuyến 7</option>
+                                                <option value="8">Tuyến 8</option>
                                             </select>
                                         </div>
                                     </div>
+                                    <hr style="border-top-color: #939598;">
+                                </div>
+                                <div class="col-sm-12 form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-sm-1 control-label label-vms">IP<font color="red"><b>*</b></font></label>
+                                        <div id= "vmsModel" class="col-sm-2 label-vms" style="text-align: right; padding-right: 0px; margin-left: -20px; text-align: center;">Chiến lược giờ</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label label-vms">Thời điểm<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-5">
-                                            <input type="text" placeholder="Nhập IP" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
                                         </div>
-                                        <label class="col-sm-1 control-label label-vms">Port<font color="red"><b>*</b></font></label>
+                                        <label class="col-sm-1 control-label label-vms">Chiến lược<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-3">
-                                            <input type="text" placeholder="Nhập port" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-sm-1 label-vms" style="text-align: right; padding-left: 0px">Mô tả</div>
-                                        <div class="col-sm-11" style="">
-                                            <textarea id="vmsDesc" placeholder="Nhập mô tả" name="" rows="1" maxlength="200" class="form-control input-sm vms-input"></textarea>
+                                        <label class="col-sm-1 control-label label-vms">Txanh<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-1 control-label label-vms">Bảng<font color="red"><b>*</b></font></label>
+                                        <label class="col-sm-1 control-label label-vms">TSxanh<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label label-vms">Tdibo<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label label-vms">TSdibo<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label label-vms">Tck<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-5">
-                                            <select id="vmsVesionId" class="form-control input-sm vms-input">
-                                            </select>
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <label class="col-sm-1 control-label label-vms">Tgt<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                         </div>
                                     </div>
-                                    <hr style="border-top-color: #939598;">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label label-vms">Bắt đầu<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-5">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <label class="col-sm-1 control-label label-vms">kết thúc<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-12 form-horizontal">
-                                    <div class="form-group">
-                                        <div id= "vmsModel" class="col-sm-2 label-vms" style="text-align: right; padding-right: 0px; margin-left: -20px; text-align: center;">Model: ABC</div>
-                                        <div id="vmsColor" class="col-sm-2 label-vms" style="text-align: right; padding-left: 0px; padding-right: 0px; margin-left: 10px; text-align: center;">Màu sắc: đa sắc</div>
-                                        <div id="vmsVendor" class="col-sm-3 label-vms" style="text-align: right; padding-left: 5px; padding-right: 0px; text-align: center;">Nhà cung cấp: Sam Sung</div>
-                                        <div id="vmsWidthx" class="col-sm-2 label-vms" style="text-align: right; padding-left: 5px; padding-right: 0px; text-align: center;">Rộng: 100 cm</div>
-                                        <div id="vmsHeighx" class="col-sm-3 label-vms" style="padding-left: 5px; padding-right: 0px; text-align: center;">&nbsp;&nbsp; Cao: 56 cm</div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 form-horizontal">
-                                    <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 25px;font-size: 14px;">THÔNG TIN TUYẾN</h4>
+                                    <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 25px;font-size: 14px;">Chiến lược ngày</h4>
                                     <hr style="border-top-color: #939598;">
                                     <div class="form-group">
-                                        <label class="col-sm-1 control-label label-vms">Tuyến<font color="red"><b>*</b></font></label>
-                                        <div class="col-sm-5">
-                                            <select id="vmsRoadId" class="form-control pointer input-sm vms-input"></select>
-                                        </div>
-                                        <label class="col-sm-1 control-label label-vms">Section<font color="red"><b>*</b></font>
+                                        <label class="col-sm-1 control-label label-vms">T2->CN<font color="red"><b>*</b></font>
                                         </label>
-                                        <div class="col-sm-5">
-                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input"></select>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-12 form-horizontal">
+                                    <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 25px;font-size: 14px;">Cài đặt khác</h4>
+                                    <hr style="border-top-color: #939598;">
                                     <div class="form-group">
-                                        <label class="col-sm-1 control-label label-vms">Link<font color="red"><b>*</b></font></label>
-                                        <div class="col-sm-5">
-                                            <select id="vmsLinkId" class="form-control pointer input-sm vms-input"></select>
+                                        <label class="col-sm-1 control-label label-vms">OPT 1<font color="red"><b>*</b></font>
+                                        </label>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
                                         </div>
-                                        <label class="col-sm-1 control-label label-vms">Làn<font color="red"><b>*</b></font></label>
-                                        <div class="col-sm-5">
-                                            <select id="vmsLaneId" class="form-control pointer input-sm vms-input">
-                                                <option value="-1">--Chọn làn--</option>
-                                                <option value="1">Làn 1</option>
-                                                <option value="2">Làn 2</option>
-                                                <option value="3">Làn 3</option>
-                                                <option value="4">Làn 4</option>
-                                                <option value="5">Làn 5</option>
-                                                <option value="6">Làn 6</option>
-                                                <option value="7">Làn 7</option>
-                                                <option value="8">Làn 8</option>
-                                                <option value="9">Làn 9</option>
-                                                <option value="10">Làn 10</option>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <<option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-1 control-label label-vms">Kinh độ</label>
-                                        <div class="col-sm-2">
-                                            <input id="vmsLongitude" placeholder="Nhập kinh độ" type="text" name="" value="" class="form-control input-sm vms-input">
+                                        <label class="col-sm-1 control-label label-vms">OPT 2<font color="red"><b>*</b></font>
+                                        </label>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
                                         </div>
-                                        <label class="col-sm-1 control-label label-vms">Vĩ độ</label>
-                                        <div class="col-sm-2">
-                                            <input id="vmsLatitude" placeholder="Nhập vĩ độ" type="text" name="" value="" class="form-control input-sm vms-input">
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
                                         </div>
-                                        <label class="col-sm-1 control-label label-vms">Vị trí<font color="red"><b>*</b></font></label>
-                                        <div class="col-sm-5">
-                                            <label class="col-sm-1 control-label label-vms">KM</label>
-                                            <div class="col-sm-5">
-                                                <input id="vmsPositionFirst" type="text" maxlength="3" class="form-control input-sm vms-input">
-                                            </div>
-                                            <label class="col-sm-1 control-label label-vms" style="margin-left: -20px;">+</label>
-                                            <div class="col-sm-5">
-                                                <input id="vmsPositionSecond" type="text" maxlength="3" class="form-control input-sm vms-input">
-                                            </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <<option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <select id="vmsSectionId" class="form-control pointer input-sm vms-input">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0">Xanh</option>
+                                                <option value="1">Đo</option>
+                                                <option value="2">Vang</option>
+                                                <option value="3">Chu thap</option>
+                                                <option value="4">Bo xanh</option>
+                                                <option value="5">Bo do</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label label-vms">Giờ mở<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <label class="col-sm-1 control-label label-vms">Giờ tắt<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <label class="col-sm-1 control-label label-vms">Giờ chớp<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                        </div>
+                                        <label class="col-sm-1 control-label label-vms">Số pha<font color="red"><b>*</b></font></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -151,26 +485,33 @@
                             <div id= "btnActionDiv" class="row" style="float: right; margin-right: 0px; margin-top: 20px">
                                 <button type="button" id="btnAdd"
                                         class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
-                                        data-dismiss="">Lưu lại</button>
+                                        data-dismiss="">Start</button>
                                 <button type="button" id="btnResetData" 
                                         class="btn btn-sm btn-danger m-t-n-xs" style="margin-bottom: 0px; color: white !important"
-                                        data-dismiss="">Xóa dữ liệu</button>
+                                        data-dismiss="">Stop</button>
+                                <button type="button" id="btnAdd"
+                                        class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
+                                        data-dismiss="">Toggle</button>
+                                <button type="button" id="btnResetData" 
+                                        class="btn btn-sm btn-danger m-t-n-xs" style="margin-bottom: 0px; color: white !important"
+                                        data-dismiss="">Set time</button>
+                                <button type="button" id="btnAdd"
+                                        class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
+                                        data-dismiss="">Upload</button>
+                                <button type="button" id="btnResetData" 
+                                        class="btn btn-sm btn-danger m-t-n-xs" style="margin-bottom: 0px; color: white !important"
+                                        data-dismiss="">Download</button><button type="button" id="btnAdd"
+                                        class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
+                                        data-dismiss="">Cancle</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
     <script>
-
-        // This example displays a marker at the center of Australia.
-        // When the user clicks the marker, an info window opens.
         var jArray = <?php if (!empty($devicesInfo)) echo json_encode($devicesInfo); ?>;
-        console.log(jArray[0]['lat']);
-
         function initMap() {
             var uluru = {lat: 21.029692, lng: 105.801643};
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -179,42 +520,24 @@
                 minZoom: 12,
                 center: uluru
             });
-
-            var contentString = 'aaaaa';
-
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-            var makers = new google.maps.Marker();
-            var i=0;
+            var markers = [];
+            var i = 0;
             for (i = 0; i < jArray.length; i++) {
-                console.log(i);
-                marker = new google.maps.Marker({
+                markers.push(new google.maps.Marker({
                     position: new google.maps.LatLng(jArray[i]['lat'], jArray[i]['lng']),
                     map: map,
                     title: jArray[i]['title'],
                     icon: '<?php echo base_url() ?>public/asset/image/bus.png',
                     id: i
-                }).addListener('click', function () {
-                    console.log(marker);
-                    $.ajax({
-                        url: '<?php echo base_url() ?>device/ajax_search',
-                        type: "post",
-                        dataType: "json",
-                        data: {
-                            'id': 1,
-                        },
-                        success: function (data) {
-                            console.log(data)
-//                            infowindow.setContent('<?php // $this->load->view('front-end/block/view_maker') ?>');
-//                            console.log('<?php // $this->load->view('front-end/block/view_maker') ?>');
-//                            infowindow.open(map, marker);
-                            $('#myModal').modal('show');
-                        }
-                    });
-
-                });
+                }))
             }
+            for (i = 0; i < markers.length; i++) {
+                markers[i].addListener('click', toggleBounce);
+            }
+        }
+        function toggleBounce() {
+            console.log(this.position.lat());
+            $('#myModal').modal('show');
         }
     </script>
     <script async defer
