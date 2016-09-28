@@ -1,3 +1,3 @@
-<div class="col-md-3">
+<div class="sidebar">
     <p>sidebar</p>
 </div>

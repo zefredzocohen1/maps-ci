@@ -18,11 +18,18 @@
     <body>
         <div class="container">
             <?php $this->load->view('front-end/template/header.php')?>
-            <?php if(!empty($temp)):?> 
-            <?php $this->load->view($temp,  isset($data)?$data:NULL)?>
-            <?php else:?>
-            <?php die();?>
-            <?php endif;?>
+            <div class="main-content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <?php $this->load->view('front-end/sidebar');?>
+                    </div>
+                    <div class="col-md-9">
+                        <?php if(!empty($temp)):?> 
+                        <?php $this->load->view($temp,  isset($data)?$data:NULL)?>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
             <div class="clearfix"></div>
             <?php $this->load->view('front-end/template/footer.php')?>
         </div>

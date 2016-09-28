@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="map"></div>
-    <div class="modal fade" id="myModal" data-keyboard="false"
+    <div class="modal fade" id="myModal" tabindex="-1" data-keyboard="false"
          tabindex="-1" role="dialog" data-backdrop="static"
          aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" style="width: 80%;">
