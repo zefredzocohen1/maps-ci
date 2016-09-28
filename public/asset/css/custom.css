@@ -1,0 +1,221 @@
+.error-effect {
+	background-color: #E5BABA;
+}
+
+.small-input {
+	height: 27px !important;
+}
+
+.small-button {
+	padding-top: 0px !important;
+	padding-bottom: 3px !important;
+    margin-bottom: 0px !important;
+    border-top-width: 4px !important;
+    border-bottom-width: 0px !important;
+}
+
+.search-area {
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 18px;
+    border-color: #e7eaec;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    margin-bottom: 3px !important;
+}
+
+.form-row {
+	    margin: 0px 10px 10px 10px !important;
+}
+
+@media ( min-width : 768px) {
+	.b-col {
+		float: right !important;
+	}
+}
+
+hr {
+	margin-top: 5px !important;
+    margin-bottom: 10px !important;
+    border-top: 1px solid #939598;
+}
+
+.hide-colum{
+	
+}
+
+.side-logo-elcom {
+	margin-top:200px;
+	margin-right: 10px;
+}
+
+
+textarea {
+    resize: none;
+}
+
+/*for alert*/
+.alert {
+	  -webkit-border-radius: 3px 3px 3px 3px;
+	  -moz-border-radius: 3px 3px 3px 3px;
+	  border-radius: 3px 3px 3px 3px;
+	  -webkit-box-shadow: 0px 1px 1px #e2e3e3;
+	  -moz-box-shadow: 0px 1px 1px #e2e3e3;
+	  box-shadow: 0px 1px 1px #e2e3e3;
+	  background: #fcf4d4;
+	  border-color: #edad00;
+	  color: #333333;
+	  padding: 8px 13px;
+	  margin: 10px 0;
+	  z-index: 100;
+	  position: absolute;
+	  display: none;
+	  top: 20%;
+	  left: 50%;
+	  /* bring your own prefixes */
+	  transform: translate(-50%, -50%);
+}
+ 
+ .alert .uiIconWarning {
+  background: url("../assets/images/uiIconsColor.png") no-repeat -20px top;
+}
+.alert a {
+  color: #2f5e92;
+}
+.alert a:hover {
+  font-weight: bold;
+  text-decoration: none;
+}
+.alert-success {
+  background: #e6fade;
+  border-color: #39c522;
+}
+.alert-success .uiIconSuccess {
+  background: url("../assets/images/uiIconsColor.png") no-repeat -60px top;
+}
+.alert-info {
+  background: #dee3fa;
+  border-color: #215ab2;
+}
+.alert-info .uiIconInfo {
+  background: url("../assets/images/uiIconsColor.png") no-repeat -40px top;
+}
+.alert-error {
+  background: #f7b5b5;
+  border-color: #c72222;
+}
+.alert-error .uiIconError {
+  background: url("../assets/images/uiIconsColor.png") no-repeat left top;
+}
+
+[class^="uiIcon"] {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  *margin-right: .3em;
+  line-height: 16px;
+  vertical-align: text-top;
+  background-image: url("../img/elcom-platform-icons/uiIconsDarkGray.png");
+  background-repeat: no-repeat;
+}
+
+/*show processing*/
+
+#loading-div-background-modal{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    
+}
+
+#loading-div-background{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 10000
+    
+}
+
+#loading-div{
+    width: 300px;
+    height: 150px;
+    background-color: #fff;
+    text-align: center;
+    color: #202020;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -100px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    behavior: url("/css/pie/PIE.htc"); /* HANDLES IE */
+}
+/*end*/
+
+
+.has-error {
+	background-color: #f8b2b2 !important;
+}
+
+
+.v-center {
+  min-height:200px;
+  display: flex;
+  justify-content:center;
+  flex-flow: column wrap;
+}
+
+.scroller { overflow-y: scroll; height: 200px}
+
+.pickup-head {
+	background-color: #ccc !important;
+	color: black !important;
+	border-color: #ccc !important;
+}
+
+.width-full {
+	width: 100% !important;
+	table-layout:fixed;
+}
+
+.width-full td {
+	word-wrap:break-word;
+}
+
+.menu-icon-color{
+	color: #27a8e0;
+	font-size: 18px !important;
+}
+
+.menu-icon-color-sub{
+	color: #27a8e0;
+	font-size: 12px !important;
+}
+
+.header-color {
+	background: #212121;
+}
+
+.menu-icon-image{
+	width: 25px;
+	height: 30px;
+	margin-right: 4px;
+}

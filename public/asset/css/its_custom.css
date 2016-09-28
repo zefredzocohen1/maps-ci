@@ -1,0 +1,279 @@
+.small-input {
+	height: 27px !important;
+}
+
+.small-button {
+	padding-top: 0px !important;
+	padding-bottom: 3px !important;
+    margin-bottom: 0px !important;
+    border-top-width: 4px !important;
+    border-bottom-width: 0px !important;
+}
+
+.hide-colum{
+	
+}
+
+.side-logo-elcom {
+	margin-top:200px;
+	margin-right: 10px;
+}
+
+
+textarea {
+    resize: none;
+}
+
+.vms-input{
+	/*height: 15% !important;*/
+}
+
+.color-bgr-view {
+	background-color: #939598 !important;
+}
+
+.color-bgr-add {
+	background-color: #27a9e1 !important;
+}
+
+.color-bgr-edit {
+	background-color: #00a79d !important;
+}
+
+.color-bgr-delete {
+	background-color: #bd202e !important;
+}
+
+.color-bgr-form {
+	background-color: #6d6e71 !important;
+}
+
+.color-text-white {
+	color: white !important;
+}
+
+.label-vms {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	color: white !important;
+	font-size:13px;
+}
+
+
+.header-vms {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	color: white !important;
+}
+
+.border-graph {
+	border-style: solid !important;
+	border-width: thin !important;
+	border-color: #939598 !important;
+}
+
+.header-active-tab {
+	background-color:#27a9e0 !important;
+}
+
+.close-span {
+	color: white !important;
+    font-size: 30px;
+    font-weight: 100;
+    margin-right: 10px;
+    margin-top: 5px;
+    opacity: inherit;
+}
+
+.close {
+	opacity: inherit !important;
+}
+
+.modal-title-custom {
+	margin-left: 10px !important;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+tbody{
+	font-size: 14px;
+}
+
+thead{
+	font-size: 16px;
+	background-color: #e6e7e8;
+}
+
+.background-content {
+	background-color: #939598 !important;
+}
+
+.breadcrumb-style {
+	font-size: 12px !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	color: white !important;
+}
+.breadcrumb-style {
+	font-size: 12px !important;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	color: white !important;
+}
+
+.header-datatable-style {
+	font-size: 14px !important;
+	background-color: #f0f3f5 !important;
+}
+
+body {
+    background: #939598 !important;
+}
+
+.event-notify {
+	padding: .3em .6em .3em;
+	background: red;
+	line-height: 12px;
+	border-radius: 9px
+}
+
+.event-icon-SpeedDrop{
+	color: red;
+}
+
+.event-icon-Fires{
+	color: orange;
+}
+
+.event-icon-Congestion{
+	color: yellow;
+}
+
+.event-icon-Maintain{
+	color: gray;
+}
+
+
+/*
+Force table width to 100%
+*/
+ table.table-fixedheader {
+    width: 100%;   
+}
+/*
+Set table elements to block mode.  (Normally they are inline).
+This allows a responsive table, such as one where columns can be stacked
+if the display is narrow.
+*/
+ table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>td {
+    display: block;
+}
+table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after {
+    content:' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+/*
+When scrolling the table, actually it is only the tbody portion of the
+table that scrolls (not the entire table: we want the thead to remain
+fixed).  We must specify an explicit height for the tbody.  We include
+100px as a default, but it can be overridden elsewhere.
+
+Also, we force the scrollbar to always be displayed so that the usable
+width for the table contents doesn't change (such as becoming narrower
+when a scrollbar is visible and wider when it is not).
+*/
+ table.table-fixedheader>tbody {
+    overflow-y: scroll;
+    height: 100px;
+    
+}
+/*
+We really don't want to scroll the thead contents, but we want to force
+a scrollbar to be displayed anyway so that the usable width of the thead
+will exactly match the tbody.
+*/
+ table.table-fixedheader>thead {
+    overflow-y: scroll;    
+}
+/*
+For browsers that support it (webkit), we set the background color of
+the unneeded scrollbar in the thead to make it invisible.  (Setting
+visiblity: hidden defeats the purpose, as this alters the usable width
+of the thead.)
+*/
+ table.table-fixedheader>thead::-webkit-scrollbar {
+    background-color: inherit;
+}
+
+
+table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after {
+    content:' ';
+    display: table-cell;
+    visibility: hidden;
+    clear: both;
+}
+
+/*
+We want to set <th> and <td> elements to float left.
+We also must explicitly set the width for each column (both for the <th>
+and the <td>).  We set to 20% here a default placeholder, but it can be
+overridden elsewhere.
+*/
+
+ table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td {
+    float: left;    
+    word-wrap:break-word;     
+}
+
+.input-position{
+	width: 70px;
+}
+
+.density-statistics {
+	padding-right: 0px;
+	margin-right: 0px;
+	height: 330px !important;
+}
+
+
+
+.violation-item {
+    position: relative;
+    display: block;
+    padding: 1px 1px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+
+.violation-scroller {
+    overflow-y: scroll;
+    height: 930px;
+}
+
+.control-label > font {
+	color: white !important;
+	margin-left:3px;
+	font-size: 10px;
+}
+.margin-top-nvs {
+	margin-top: 10px !important;
+}
+
+.form-control-position {
+    border: 1px solid #ccd0d4;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    font-size: 12px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+.input-date-select {
+	
+} 
