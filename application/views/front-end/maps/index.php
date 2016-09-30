@@ -70,11 +70,27 @@
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label label-vms">Thời điểm<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-5">
-                                            <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                            <!--<input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">-->
+                                            <select class="form-control input-sm vms-input">
+                                                <option value="-1">--Chọn thời điểm--</option>
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                                <option value="3">4</option>
+                                                <option value="4">5</option>
+                                                <option value="5">6</option>
+                                            </select>
                                         </div>
                                         <label class="col-sm-1 control-label label-vms">Chiến lược<font color="red"><b>*</b></font></label>
                                         <div class="col-sm-3">
-                                            <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                            <!--<input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">-->
+                                            <select class="form-control input-sm vms-input">
+                                                <option value="-1">--Chọn chiến lược--</option>
+                                                <option value="0">A</option>
+                                                <option value="1">B</option>
+                                                <option value="2">C</option>
+                                                <option value="3">D</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -528,7 +544,7 @@
                     map: map,
                     title: jArray[i]['title'],
                     icon: '<?php echo base_url() ?>public/asset/image/bus.png',
-                    id: i
+                    id: jArray[i]['maps_id']
                 }))
             }
             for (i = 0; i < markers.length; i++) {
@@ -536,7 +552,7 @@
             }
         }
         function toggleBounce() {
-            console.log(this.position.lat());
+            console.log(this.position);
             $('#myModal').modal('show');
         }
     </script>
