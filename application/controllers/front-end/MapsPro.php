@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-require 'C:\xampp\htdocs\git\1.Codeigniter\1.Map\MapPro\application\third_party\vendor\autoload.php';
+require APPPATH.'third_party\vendor\autoload.php';
 
 use \Curl\Curl;
 
@@ -41,9 +41,12 @@ class MapsPro extends CI_Controller {
             var_dump($curl->response);
         }
 
-//        $curl->setHeader('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiYWRkcmVzcyI6Ijo6ZmZmZjoxMTMuMjMuMTI3LjI1IiwiaWF0IjoxNDc1Mjg1MTYyLCJleHAiOjE0NzUzNzE1NjJ9.IcQNTikpmLTnrhe6XfJoN4dL-CETWkrCMk29WbHe4O8');
-//        $list = $curl->get('https://128.199.193.255:8000/api/device-list');
-//        var_dump($list);
+        $curl->setHeader('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiYWRkcmVzcyI6Ijo6ZmZmZjoxMTMuMTYyLjY1LjE1NCIsImlhdCI6MTQ3NTMzNzA5NiwiZXhwIjoxNDc1NDIzNDk2fQ.Qe5mXnLGXA0DM_eh3qaZqt_dhNefGJgHXSUClzqK4lI');
+        $list = $curl->get('https://128.199.193.255:8000/api/device-list');
+        echo '<br/><br/>';
+        echo '<pre>';
+        print_r($list);
+        echo '</pre>';
         die;
         $data['temp'] = 'front-end/maps/index';
 //        $data['debug'] = 'front-end/block/view_maker';
