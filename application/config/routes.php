@@ -52,4 +52,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'front-end/MapsPro/index';
 $route['404_override'] = '';
 $route['device/ajax_search'] = 'front-end/MapsPro/search';
+$route['test'] = 'front-end/MapsPro/test';
 $route['translate_uri_dashes'] = FALSE;

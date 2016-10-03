@@ -1,6 +1,10 @@
 <?php
 
-require APPPATH . 'third_party\vendor\autoload.php';
+require APPPATH . 'third_party\php-curl\vendor\autoload.php';
+require APPPATH . 'third_party\php-cache\vendor\autoload.php';
+use phpFastCache\CacheManager;
+
+
 
 use \Curl\Curl;
 
@@ -45,7 +49,7 @@ if (!function_exists('mGetSession')) {
 
 if (!function_exists('getAuthenticate')) {
 
-    function getAuthenticate($user, $pass, &$curl, $typeResponve=1,$typeRequest = HTTPS_REQUEST) {
+    function getAuthenticate($user, $pass, &$curl='', $typeResponve=1,$typeRequest = HTTPS_REQUEST) {
         $CI = & get_instance();
         $result = array();
         if (empty($user) || empty($pass)) {
@@ -82,7 +86,7 @@ if (!function_exists('getAuthenticate')) {
 
 if (!function_exists('getDeviceConfig')) {
 
-    function getDeviceConfig($token, $name,$curl, $typeRequest = HTTPS_REQUEST) {
+    function getDeviceConfig($token, $name,$curl='', $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token)||empty($name)) {
             return $result;
@@ -109,7 +113,6 @@ if (!function_exists('getDeviceConfig')) {
 }
 
 if (!function_exists('writeLog')) {
-
     function writeLog($msg, $type=1) {
         $CI = & get_instance();
         $file = fopen(APPPATH.'..\log\debug.txt', 'w');
@@ -123,7 +126,7 @@ if (!function_exists('writeLog')) {
 
 if (!function_exists('getListDevice')) {
 
-    function getListDevice($token, $curl, $typeResponse=RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+    function getListDevice($token, $curl='', $typeResponse=RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token)) {
             return $result;
@@ -131,7 +134,7 @@ if (!function_exists('getListDevice')) {
         $address = mConfig('host_server').':'.mConfig('port_server').mConfig('addr_device_list');
         if (empty($curl))
             $curl = new Curl();
-        if ($typeRequest === 1) {
+        if ($typeRequest === HTTPS_REQUEST) {
             $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
             $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
         }

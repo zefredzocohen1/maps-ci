@@ -1,8 +1,8 @@
 <?php
-
+require APPPATH . 'third_party\php-cache\vendor\autoload.php';
+use phpFastCache\CacheManager;
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-require APPPATH . 'third_party\vendor\autoload.php';
 
 use \Curl\Curl;
 
@@ -13,24 +13,41 @@ class MapsPro extends CI_Controller {
     }
 
     public function index() {
-//        $data = array();
-////        $data['deviceInfo'] = $this->db->from('modem_info')->get()->result();
+        $data = array();
         $userInfo = array(
             'username'=>'admin',
             'password'=>'admin'
         );
+        $fileCache = mConfig('fileCache');
+        
+        $key = "product_page";
+        $CachedString = $fileCache->getItem($key);
+
+        $your_product_data = array(
+            'First product',
+            'Second product',
+            'Third product'
+            // etc...
+        );
+
+        if (is_null($CachedString->get())) {
+            $CachedString->set($your_product_data)->expiresAfter(5);//in seconds, also accepts Datetime
+            $fileCache->save($CachedString); // Save the cache item just like you do with doctrine and entities
+
+            echo "FIRST LOAD // WROTE OBJECT TO CACHE // RELOAD THE PAGE AND SEE // ";
+            echo $CachedString->get();
+
+        } else {
+            echo "READ FROM CACHE // ";
+            echo $CachedString->get()[0];// Will prints 'First product'
+        }
+        
         mSetSession($userInfo);
-//        $data['devicesInfo'] = array(
-//            array('lat' => 21.029692, 'lng' => 105.801643, 'title' => 'Nga tu Cau Giay', 'maps_id' => 1),
-//            array('lat' => 21.036732, 'lng' => 105.779617, 'title' => 'Nga tu Xuan Thuy, Pham Hung', 'maps_id' => 2),
-//            array('lat' => 21.030326, 'lng' => 105.787996, 'title' => 'Nga tu Duy Tan, Tran Thai Tong', 'maps_id' => 3)
-//        );
-        $curl = new Curl();
-        $result = getAuthenticate(mGetSession('username'), mGetSession('password'), $curl);
+        $result = getAuthenticate(mGetSession('username'), mGetSession('password'));
         if(!empty($result)){
             mSetSession(array('token'=>$result));
         }
-        $list = getListDevice(mGetSession('token'),$curl);
+        $list = getListDevice(mGetSession('token'));
         $data['devicesInfo'] = !empty($list)?$list:array();
         $data['temp'] = 'front-end/maps/index';
         $this->load->view('front-end/template/master', $data);
@@ -41,13 +58,60 @@ class MapsPro extends CI_Controller {
         $data = array();
         $name=scGetName($this->input->post('name'));
         $curl = new Curl();
-        $result = getDeviceConfig(mGetSession('token'), $name, $curl);
+        $result = getDeviceConfig(mGetSession('token'), $name);
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
+        exit;
         if(!empty($result)){
-            echo json_encode(array('success'=>true,'message'=>$this->load->view('front-end/block/view_maker',$result,TRUE)));
+            echo json_encode(array('success'=>true,'message'=>$this->load->view('front-end/block/view_maker',array('data'=>$result),TRUE)));
         }else{
-//            echo json_encode(array('success'=>false,'message'=>'error'));
             echo json_encode(array('success'=>true,'message'=>$this->load->view('front-end/block/view_maker',$result,TRUE)));
         }
     }
+    
+    public function update(){
+        
+    }
+
+    public function test(){
+    $jsonData = '[{
+"deviceName": "Dev02",
+"name": "* CONG TY PARAGON **",
+"otherConfig": {
+    "hour_on": 10,
+    "hour_off": 10,
+    "minute_on": 10,
+    "minute_off": 10,
+    "hour_blink": 10,
+    "minute_blink": 10,
+    "so_pha": 4,
+    "option1": [1, 2, 3, 4, 5, 6, 7, 8],
+    "option2": [1, 2, 3, 4, 5, 6, 7, 8],
+    "strageties": ["A", "A", "A", "A", "A", "A", "A"],
+    "lang": 1,
+    "train_road": [1, 1, 1, 1, 1, 1, 1, 1]
+},
+"mainConfig": {
+    "stragetiesA": [null, {
+            "hour_on": 20,
+            "hour_off": 20,
+            "minute_on": 30,
+            "minute_off": 30,
+            "freq": 10,
+            "gt": 10,
+            "tv": 10,
+            "tx": [1, 2, 3, 4, 5, 6, 7, 8],
+            "tsx": [1, 2, 3, 4, 5, 6, 7, 8],
+            "tdbx": [1, 2, 3, 4, 5, 6, 7, 8],
+            "tsdbx": [1, 2, 3, 4, 5, 6, 7, 8]
+        }, null, null, null, null],
+    "stragetiesB": [null, null, null, null, null, null],
+    "stragetiesC": [null, null, null, null, null, null],
+    "stragetiesD": [null, null, null, null, null, null]
+}
+}]';
+    echo json_decode($jsonData);
+}
 
 }

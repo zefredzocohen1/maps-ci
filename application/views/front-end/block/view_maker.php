@@ -1,7 +1,6 @@
 <div class="modal-dialog modal-lg" style="width: 80%;">
     <div class="modal-content">
-        <div id="headerDiv" class=""
-             style="padding: 0px;border-bottom-width: 0px;">
+        <div id="headerDiv" class="" style="padding: 0px;border-bottom-width: 0px;">
             <div class="alert alert-warning" id="WarningMessageAdd"></div>
             <button type="button" class="close" data-dismiss="modal">
                 <span aria-hidden="true" class="close-span">&times;</span><span class="sr-only">Close</span>
@@ -9,6 +8,7 @@
             <h4 class="modal-title label-vms" id="myModalLabelForm" style="margin-left: 10px; padding-top: 5px; font-size: 20px">Thêm mới</h4>
         </div>
         <div class="modal-body color-bgr-form" style="font-size: 12px;">
+            <?php if(!empty($data)):?>
             <div class="row " style="margin-left: 0px; margin-right: 0px;">
                 <div id="div-8-col" class="border-graph" style="padding-bottom: 10px">
                     <div class="row" style="margin-left: 0px !important; margin-top: 5px">
@@ -497,6 +497,7 @@
                     </div>
                 </div>
             </div>
+            <?php endif;?>
         </div>
     </div>
 </div>
