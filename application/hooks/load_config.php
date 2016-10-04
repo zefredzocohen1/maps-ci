@@ -5,7 +5,7 @@ use phpFastCache\CacheManager;
 
 function load_cache(){
     $CI = &get_instance();
-    CacheManager::setup(array(
+    CacheManager::setDefaultConfig(array(
         "path" => APPPATH.'logs',
     ));
     $fileCache = CacheManager::getInstance('files');

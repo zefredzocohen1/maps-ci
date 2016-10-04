@@ -23,19 +23,14 @@ class MapsPro extends CI_Controller {
         $key = "product_page";
         $CachedString = $fileCache->getItem($key);
 
-        $your_product_data = array(
-            'First product',
-            'Second product',
-            'Third product'
-            // etc...
-        );
+        $your_product_data = array('aaaa');
 
         if (is_null($CachedString->get())) {
             $CachedString->set($your_product_data)->expiresAfter(5);//in seconds, also accepts Datetime
             $fileCache->save($CachedString); // Save the cache item just like you do with doctrine and entities
 
             echo "FIRST LOAD // WROTE OBJECT TO CACHE // RELOAD THE PAGE AND SEE // ";
-            echo $CachedString->get();
+            print_r( $CachedString->get());
 
         } else {
             echo "READ FROM CACHE // ";
