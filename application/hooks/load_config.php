@@ -9,5 +9,6 @@ function load_cache(){
         "path" => APPPATH.'logs',
     ));
     $fileCache = CacheManager::getInstance('files');
+//    $fToken = $fileCache->
     $CI->config->set_item('fileCache',$fileCache);
 }

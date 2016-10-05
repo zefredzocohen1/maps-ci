@@ -19,3 +19,13 @@ if (!function_exists('seGetName')) {
 
 }
 
+if (!function_exists('pre')) {
+
+    function pre($str) {
+        echo '<pre>';
+        print_r($str);
+        echo '</pre>';
+    }
+
+}
+

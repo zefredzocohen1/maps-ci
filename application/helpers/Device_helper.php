@@ -2,10 +2,8 @@
 
 require APPPATH . 'third_party\php-curl\vendor\autoload.php';
 require APPPATH . 'third_party\php-cache\vendor\autoload.php';
+
 use phpFastCache\CacheManager;
-
-
-
 use \Curl\Curl;
 
 if (!function_exists('mConfig')) {
@@ -30,7 +28,8 @@ if (!function_exists('mSetSession')) {
         $CI = & get_instance();
         if (!empty($item)) {
             return $CI->session->set_userdata($item);
-        }else return FALSE;
+        } else
+            return FALSE;
     }
 
 }
@@ -42,20 +41,21 @@ if (!function_exists('mGetSession')) {
         $result = FALSE;
         if (!empty($item)) {
             return $CI->session->userdata($item);
-        }else return FALSE;
+        } else
+            return FALSE;
     }
 
 }
 
 if (!function_exists('getAuthenticate')) {
 
-    function getAuthenticate($user, $pass, &$curl='', $typeResponve=1,$typeRequest = HTTPS_REQUEST) {
+    function getAuthenticate($user, $pass, &$curl = '', $typeResponve = 1, $typeRequest = HTTPS_REQUEST) {
         $CI = & get_instance();
         $result = array();
         if (empty($user) || empty($pass)) {
             return $result;
         }
-        $address = $CI->config->item('host_server').':'.$CI->config->item('port_server').mConfig('addr_authenticate');
+        $address = $CI->config->item('host_server') . ':' . $CI->config->item('port_server') . mConfig('addr_authenticate');
         if (empty($curl))
             $curl = new Curl();
         if ($typeRequest === 2) {
@@ -69,15 +69,15 @@ if (!function_exists('getAuthenticate')) {
             'username' => $user,
             'password' => $pass
         ));
-        if($curl->error){
+        if ($curl->error) {
             //ghi log
-            writeLog('error: '.$curl->errorCode.': '.$curl->errorMessage);
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
             return array();
-        }elseif(empty ($result)||  get_class($result)!=='stdClass'){
+        } elseif (empty($result) || get_class($result) !== 'stdClass') {
             writeLog('error: dữ liệu trả về ko đúng');
             return array();
-        }else{
-            return !@empty($result->token)?$result->token:  curl_close($curl)&&array();
+        } else {
+            return !@empty($result->token) ? $result->token : curl_close($curl) && array();
         }
         return $result;
     }
@@ -86,12 +86,12 @@ if (!function_exists('getAuthenticate')) {
 
 if (!function_exists('getDeviceConfig')) {
 
-    function getDeviceConfig($token, $name,$curl='', $typeRequest = HTTPS_REQUEST) {
+    function getDeviceConfig($token, $name, $curl = '', $typeRequest = HTTPS_REQUEST) {
         $result = array();
-        if (empty($token)||empty($name)) {
+        if (empty($token) || empty($name)) {
             return $result;
         }
-        $address =mConfig('host_server').':'.mConfig('port_server').mConfig('addr_device_config').$name;
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
         if (empty($curl))
             $curl = new Curl();
         if ($typeRequest === 2) {
@@ -103,7 +103,7 @@ if (!function_exists('getDeviceConfig')) {
         $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
         $curl->setHeader('x-access-token', $token);
         $result = $curl->get($address);
-        if($curl->error){
+        if ($curl->error) {
             //ghi log
             return array();
         }
@@ -113,53 +113,52 @@ if (!function_exists('getDeviceConfig')) {
 }
 
 if (!function_exists('writeLog')) {
-    function writeLog($msg, $type=1) {
-        $CI = & get_instance();
-        $file = fopen(APPPATH.'..\log\debug.txt', 'w');
+
+    function writeLog($msg, $type = 1) {
+        $file = APPPATH . '..\log\debug.txt';
         $_message = date('Y:m:d H:i:s');
-        $_message.=' '.print_r($msg,true);
-        fwrite($file, $_message);
-        fclose($file);
+        $_message.=' ' . print_r($msg, true)."\r\n";
+        file_put_contents($file,$_message,FILE_APPEND|LOCK_EX);
     }
 
 }
 
-if (!function_exists('getListDevice')) {
+if (!function_exists('writeLog')) {
 
-    function getListDevice($token, $curl='', $typeResponse=RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+    function writeLog($msg, $type = 1) {
+        $file = APPPATH . '..\log\debug.txt';
+        $_message = date('Y:m:d H:i:s');
+        $_message.=' ' . print_r($msg, true)."\r\n";
+        file_put_contents($file,$_message,FILE_APPEND|LOCK_EX);
+    }
+
+}
+
+if (!function_exists('getActiveChienLuoc')) {
+
+    function getActiveChienLuoc($deviceConfig, $chienLuoc, $thoiDiem) {
         $result = array();
-        if (empty($token)) {
+        if (empty($chienLuoc)||empty($thoiDiem)) {
             return $result;
         }
-        $address = mConfig('host_server').':'.mConfig('port_server').mConfig('addr_device_list');
-        if (empty($curl))
-            $curl = new Curl();
-        if ($typeRequest === HTTPS_REQUEST) {
-            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
-            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        writeLog($chienLuoc.': '.$thoiDiem);
+        if($chienLuoc=='stragetiesA'){
+            if(!empty($deviceConfig->config->mainConfig->stragetiesA[$thoiDiem])){
+                $result['active'] = $deviceConfig->config->mainConfig->stragetiesA[$thoiDiem];
+            }
+        }elseif($chienLuoc=='stragetiesB'){
+            if(!empty($deviceConfig->config->mainConfig->stragetiesB[$thoiDiem])){
+                $result['active'] = $deviceConfig->config->mainConfig->stragetiesB[$thoiDiem];
+            }
         }
-        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
-        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
-        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
-        $curl->setHeader('x-access-token', $token);
-        $result = $curl->get($address);
-        if($curl->error){
-            //ghi log
-            writeLog('error: '.$curl->errorCode.': '.$curl->errorMessage);
-            return array();
-        }elseif(empty ($result)){
-            writeLog('error: dữ liệu trả về ko đúng');
-            return array();
-        }else{
-            if(!empty($result)&&$typeResponse==RESPON_JSON){
-                foreach ($result as $i=>$value){
-                    $result[$i] = array(
-                        'long'=>$value->modem_long,
-                        'lat'=>$value->modem_lat,
-                        'name'=>$value->device_name
-                    );
-                }
-                return $result;
+        elseif($chienLuoc=='stragetiesC'){
+            if(!empty($deviceConfig->config->mainConfig->stragetiesC[$thoiDiem])){
+                $result['active'] = $deviceConfig->config->mainConfig->stragetiesC[$thoiDiem];
+            }
+        }
+        elseif($chienLuoc=='stragetiesD'){
+            if(!empty($deviceConfig->config->mainConfig->stragetiesD[$thoiDiem])){
+                $result['active'] = $deviceConfig->config->mainConfig->stragetiesD[$thoiDiem];
             }
         }
         return $result;

@@ -524,3 +524,20 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['thoi-diem']=array(
+    0=>0,
+    1=>1,
+    2=>2,
+    3=>3,
+    4=>4,
+    5=>5,
+    6=>6,
+);
+
+$config['chien-luoc'] = array(
+    0=>'stragetiesA',
+    1=>'stragetiesB',
+    2=>'stragetiesC',
+    3=>'stragetiesD'
+);
