@@ -201,10 +201,8 @@ if (!function_exists('getListDevice')) {
             if (!empty($result) && $typeResponse == RESPON_JSON) {
                 foreach ($result as $i => $value) {
                     $result[$i] = array(
-//                        'long'              => $value->longitude,
-                        'long'=>'105.779905',
-                        'lat'=>'21.037209',
-//                        'lat'               => $value->latitude,
+                        'long'              => $value->longitude,
+                        'lat'               => $value->latitude,
                         'name'              => $value->device_name,
                         "sim_number"        => $value->sim_number,
                         "device_serial"     => isset($value->device_serial)?$value->device_serial:'',
