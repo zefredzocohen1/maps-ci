@@ -34,10 +34,13 @@
             var i = 0;
             var img = '';
             for (i = 0; i < jArray.length; i++) {
-                if(jArray[i]['isActive']){
+                
+                if(jArray[i]['state']==1){
                     img = 'maker-online-lite.png';
-                }else{
+                }else if(jArray[i]['state']==0){
                     img = 'maker-offline-lite.png'
+                }else{
+                    continue;
                 }
                 markers.push(new google.maps.Marker({
                     position: new google.maps.LatLng(jArray[i]['lat'], jArray[i]['long']),
@@ -55,10 +58,11 @@
         $.ajax({
             url: '<?php echo base_url().'Device/search'?>',
             type: "POST",
-            dataType: "Json",
+            dataType: "text",
             data: data,
             success: function (data) {
                 console.log(data);
+                return;
                 if(data.success){
                     $('#myModal').html(data.message);
                     $('#myModal').modal('show');

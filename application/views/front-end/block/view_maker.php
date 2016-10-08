@@ -23,7 +23,7 @@
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Ưu tiên<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <select id="vmsType" name="vmsTypeOrder" class="form-control input-sm vms-input">
+                                    <select id="vmsTypeOrder" name="vmsTypeOrder" class="form-control input-sm vms-input">
                                         <option value="-1">--Loại Ưu tiên--</option>
                                         <option value="0">Auto</option>
                                         <option value="1">Tuyến 1</option>
@@ -447,6 +447,36 @@ $('#chien-luoc,#thoi-diem').on('change',function(){
         } 
     return;
     })
+    
+    $('#vmsTypeOrder').on('change',function(){
+        var typeOrder = parseInt($(this).val());
+        if(typeOrder<0||typeOrder>8){
+            alert('Chọn sai loại ưu tiên');
+        }else{
+            r = confirm('Bạn có chắc muốn thực hiện');
+            if(r==true){
+                $.ajax({
+                    url: '<?php echo base_url().'Device/setOrderDevice'?>',
+                    type: "POST",
+                    dataType: "Json",
+                    data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',orderType:typeOrder},
+                    success: function (data) {
+                        console.log(data);
+                        if(data.success){
+        //                    c.parent().modal('hiden');
+                            toast('Thành công','Lệnh thực hiện thành công','success');
+                        }else{
+                            toast('Có lỗi !',data.message,'error');
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            }else{
+                console.log('thực hiện thất bại');
+            }
+        }
+    });
 </script>
 <?php
 endif;

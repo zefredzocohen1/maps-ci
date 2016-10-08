@@ -71,7 +71,7 @@ if (!function_exists('getAuthenticate')) {
         ));
         if ($curl->error) {
             //ghi log
-            $_resutl = new stdClass();
+            $_result = new stdClass();
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
             $_result->success = false;
             $_result->message = $curl->errorCode . '-' . $curl->errorMessage;
@@ -201,14 +201,18 @@ if (!function_exists('getListDevice')) {
             if (!empty($result) && $typeResponse == RESPON_JSON) {
                 foreach ($result as $i => $value) {
                     $result[$i] = array(
-                        'long'              => $value->modem_long,
-                        'lat'               => $value->modem_lat,
+//                        'long'              => $value->longitude,
+                        'long'=>'105.779905',
+                        'lat'=>'21.037209',
+//                        'lat'               => $value->latitude,
                         'name'              => $value->device_name,
                         "sim_number"        => $value->sim_number,
-                        "device_series"     => $value->device_series,
+                        "device_series"     => $value->device_serial,
                         "device_mainboard"  => $value->device_mainboard,
-                        "device_state"      =>$value->device_state,
-                        "isActive"          => $value->isActive
+                        "mode"              =>$value->mode,
+                        "state"             => $value->state,
+                        'created_time'      =>  $value->created_time,
+                        'register_string'   =>  $value->register_string
                     );
                 }
                 return $result;
@@ -538,4 +542,73 @@ if (!function_exists('deleteUser')) {
 
 }
 
+if (!function_exists('setOrderDevice')) {
+
+    function setOrderDevice($token, $name, $mode, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token)||empty($mode)||empty($name)) {
+            return array('success' => false, 'message' => 'error: token or mode or name');
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_set_device_order').$name;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address,array(
+            'run-mode'=>$mode
+        ));
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+    }
+
+}
+
+if (!function_exists('DeviceInfo')) {
+
+    function DeviceInfo($token, $name, $mode, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token)||empty($mode)||empty($name)) {
+            return array('success' => false, 'message' => 'error: token or mode or name');
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_curd_device').$name;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address,array(
+            'run-mode'=>$mode
+        ));
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+    }
+
+}
 ?>

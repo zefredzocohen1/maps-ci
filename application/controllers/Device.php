@@ -52,34 +52,29 @@ class Device extends BaseController {
         $result2 = new stdClass();
         $name = scGetName($this->input->post('name'));
         $listDivice = getListDevice(mGetSession('token'));
-        $isActive = FALSE;
+        
+        $state = -1;
         if(!empty($listDivice)){
             $deviceNameCache = $fileCache->getItem($name);
             foreach ($listDivice as $i=>$device){
                if($device['name']==$name ){
-                   $isActive = $device['isActive'];
+                   $state = $device['state'];
                    break;
                }
             }
-            if($isActive){
-                if (is_null($deviceNameCache->get())) {
+            if($state!=-1){
                     $result = getDeviceConfig(mGetSession('token'), $name);
                     if (empty($result) || @$result->success === false) {
                         echo json_encode(array('th'=>1,'success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
                     } else {
                         $result2->config = $result;
-                        $deviceNameCache->set($result2)->expiresAfter(EXPIRES_CACHE_DEVICE);
-                        $fileCache->save($deviceNameCache);
                         echo json_encode(array('th'=>$result2,'success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result2), TRUE)));
                     }
-                } else {
-                    $result=$deviceNameCache->get();
-                    echo json_encode(array('th','success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
-                }
-            }else{
-                $fileCache->deleteItem($name);
-                echo json_encode(array('success'=>false,'message'=>'Thiết bị chưa được bật'));
             }
+//            elseif($state==0){
+//                $fileCache->deleteItem($name);
+//                echo json_encode(array('success'=>true,'message'=>$this->load->view('front-end/block/view_maker', array('data' => array('test')), TRUE)));
+//            }
         }
         exit;
     }
@@ -219,5 +214,24 @@ class Device extends BaseController {
             echo json_encode($result);
         }
         exit;
+    }
+    
+    public function setOrderDevice(){
+        $deviceName = !empty(scGetName($this->input->post('deviceName')))?scGetName($this->input->post('deviceName')):'';
+        $orderType = !empty(scGetName($this->input->post('orderType')))?  intval(scGetName($this->input->post('orderType'))):-1;
+        if(empty($deviceName)||$orderType<0||$orderType>8){
+            return json_encode(array('success'=>FALSE,'message'=>'Lỗi tên thiết bị hoặc trạng thái ưu tiên'));
+        }
+        $result = setOrderDevice(mGetSession('token'), $deviceName, $orderType);
+        echo json_encode($result);
+        exit;
+        if (empty($result)) {
+            return json_encode(array(
+                'success' => false,
+                'message' => 'Lỗi trong việc kết nối đến server'
+            ));
+        } else {
+            return json_encode($result);
+        }
     }
 }
