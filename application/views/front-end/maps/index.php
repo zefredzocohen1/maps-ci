@@ -58,11 +58,9 @@
         $.ajax({
             url: '<?php echo base_url().'Device/search'?>',
             type: "POST",
-            dataType: "text",
+            dataType: "Json",
             data: data,
             success: function (data) {
-                console.log(data);
-                return;
                 if(data.success){
                     $('#myModal').html(data.message);
                     $('#myModal').modal('show');
