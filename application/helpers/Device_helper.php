@@ -72,12 +72,11 @@ if (!function_exists('getAuthenticate')) {
         if ($curl->error) {
             //ghi log
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
-            return array();
+            return array('success' => false, 'message' => $curl->errorCode . '-' . $curl->errorMessage);
         } elseif (empty($result) || get_class($result) !== 'stdClass') {
-            writeLog('error: dữ liệu trả về ko đúng');
-            return array();
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
         } else {
-            return !@empty($result->token) ? $result->token : curl_close($curl) && array();
+            return !@empty($result->token) ? array('success'=>TRUE,'message'=>$result->token) : array('success'=>FALSE,'message'=>'Không tồn tại token');
         }
         return $result;
     }
@@ -105,7 +104,8 @@ if (!function_exists('getDeviceConfig')) {
         $result = $curl->get($address);
         if ($curl->error) {
             //ghi log
-            return array();
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => $curl->errorCode . '-' . $curl->errorMessage);
         }
         return $result;
     }
@@ -117,19 +117,8 @@ if (!function_exists('writeLog')) {
     function writeLog($msg, $type = 1) {
         $file = APPPATH . '..\log\debug.txt';
         $_message = date('Y:m:d H:i:s');
-        $_message.=' ' . print_r($msg, true)."\r\n";
-        file_put_contents($file,$_message,FILE_APPEND|LOCK_EX);
-    }
-
-}
-
-if (!function_exists('writeLog')) {
-
-    function writeLog($msg, $type = 1) {
-        $file = APPPATH . '..\log\debug.txt';
-        $_message = date('Y:m:d H:i:s');
-        $_message.=' ' . print_r($msg, true)."\r\n";
-        file_put_contents($file,$_message,FILE_APPEND|LOCK_EX);
+        $_message.=' ' . print_r($msg, true) . "\r\n";
+        file_put_contents($file, $_message, FILE_APPEND | LOCK_EX);
     }
 
 }
@@ -138,28 +127,107 @@ if (!function_exists('getActiveChienLuoc')) {
 
     function getActiveChienLuoc($deviceConfig, $chienLuoc, $thoiDiem) {
         $result = array();
-        if (empty($chienLuoc)||empty($thoiDiem)) {
+        if (empty($chienLuoc) || empty($thoiDiem)) {
             return $result;
         }
-        writeLog($chienLuoc.': '.$thoiDiem);
-        if($chienLuoc=='stragetiesA'){
-            if(!empty($deviceConfig->config->mainConfig->stragetiesA[$thoiDiem])){
+        writeLog($chienLuoc . ': ' . $thoiDiem);
+        if ($chienLuoc == 'stragetiesA') {
+            if (!empty($deviceConfig->config->mainConfig->stragetiesA[$thoiDiem])) {
                 $result['active'] = $deviceConfig->config->mainConfig->stragetiesA[$thoiDiem];
             }
-        }elseif($chienLuoc=='stragetiesB'){
-            if(!empty($deviceConfig->config->mainConfig->stragetiesB[$thoiDiem])){
+        } elseif ($chienLuoc == 'stragetiesB') {
+            if (!empty($deviceConfig->config->mainConfig->stragetiesB[$thoiDiem])) {
                 $result['active'] = $deviceConfig->config->mainConfig->stragetiesB[$thoiDiem];
             }
-        }
-        elseif($chienLuoc=='stragetiesC'){
-            if(!empty($deviceConfig->config->mainConfig->stragetiesC[$thoiDiem])){
+        } elseif ($chienLuoc == 'stragetiesC') {
+            if (!empty($deviceConfig->config->mainConfig->stragetiesC[$thoiDiem])) {
                 $result['active'] = $deviceConfig->config->mainConfig->stragetiesC[$thoiDiem];
             }
-        }
-        elseif($chienLuoc=='stragetiesD'){
-            if(!empty($deviceConfig->config->mainConfig->stragetiesD[$thoiDiem])){
+        } elseif ($chienLuoc == 'stragetiesD') {
+            if (!empty($deviceConfig->config->mainConfig->stragetiesD[$thoiDiem])) {
                 $result['active'] = $deviceConfig->config->mainConfig->stragetiesD[$thoiDiem];
             }
+        }
+        return $result;
+    }
+
+}
+
+if (!function_exists('getListDevice')) {
+
+    function getListDevice($token, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token)) {
+            return $result;
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_list');
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->get($address);
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            if (!empty($result) && $typeResponse == RESPON_JSON) {
+                foreach ($result as $i => $value) {
+                    $result[$i] = array(
+                        'long' => $value->modem_long,
+                        'lat' => $value->modem_lat,
+                        'name' => $value->device_name
+                    );
+                }
+                return $result;
+            }
+        }
+        return $result;
+    }
+
+}
+
+if (!function_exists('setConfigDevice')) {
+
+    function setConfigDevice($token, $deviceName, $deviceConfig, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($deviceConfig) || empty($deviceName)) {
+            return $result;
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_set_device_config') . $deviceName;
+//        return $address;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address, array(
+            'device-config' => $deviceConfig
+        ));
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return $result;
+//            return array('success' => false, 'message' => $curl->errorCode . '-' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
         }
         return $result;
     }
@@ -190,6 +258,161 @@ if (!function_exists('getListDevice_')) {
             'username' => $user,
             'password' => $pass
         ));
+        return $result;
+    }
+
+}
+
+if (!function_exists('createDeviceConfig')) {
+
+    function createDeviceConfig() {
+        $result = new stdClass();
+        $result->deviceName = '';
+        $result->name = '';
+        $result->otherConfig = new stdClass();
+        $result->mainConfig = new stdClass();
+        return $result;
+    }
+
+}
+
+if (!function_exists('startDevice')) {
+
+    function startDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($deviceName)) {
+            return $result;
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_start') . $deviceName;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address, array(
+            'device-name' => $deviceName
+        ));
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+        return $result;
+    }
+
+}
+
+if (!function_exists('stopDevice')) {
+
+    function stopDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($deviceName)) {
+            return $result;
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_stop') . $deviceName;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address, array(
+            'device-name' => $deviceName
+        ));
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+        return $result;
+    }
+
+}
+
+if (!function_exists('blinkDevice')) {
+
+    function blinkDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($deviceName)) {
+            return $result;
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_blink') . $deviceName;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address, array(
+            'device-name' => $deviceName
+        ));
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+        return $result;
+    }
+
+}
+
+if (!function_exists('setTimeDevice')) {
+
+    function setTimeDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($deviceName)) {
+            return $result;
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_config_time_device') . $deviceName;
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->put($address);
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
         return $result;
     }
 

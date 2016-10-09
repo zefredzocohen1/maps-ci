@@ -9,21 +9,22 @@
         </div>
         <div class="modal-body color-bgr-form" style="font-size: 12px;">
             <?php if(!empty($data)):?>
+            <form action="<?php echo base_url().'device/saveConfig'?>" method="post">
             <div class="row " style="margin-left: 0px; margin-right: 0px;">
                 <div id="div-8-col" class="border-graph" style="padding-bottom: 10px">
                     <div class="row" style="margin-left: 0px !important; margin-top: 5px">
                         <div class="col-sm-12 form-horizontal">
+                            <div class="error"></div>
                             <h4 class="label-vms" style="background-color: #6d6e70; margin-bottom: -5px;margin-top: 0px;width: 35%;height: 25px;font-size: 16px;">THÔNG TIN CHUNG</h4>
                             <hr style="border-top-color: #939598;">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tên giao lộ<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input id="vmsName" placeholder="Tên giao lộ" type="text" name="ten-giao-lo" maxlength="100" value="<?php echo !@empty($data->config->name)?$data->config->name:''?>" class="form-control input-sm vms-input">
-                                    <input type="hidden" name="device-name" id="device-name" value="<?php echo @!empty($data->config->deviceName)?$data->config->deviceName:''?>"/>
+                                    <input id="vmsName" placeholder="Tên giao lộ" type="text" name="intersection_name" maxlength="100" value="<?php echo !@empty($data->config->name)?$data->config->name:''?>" class="form-control input-sm vms-input">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Ưu tiên<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <select id="vmsType" class="form-control input-sm vms-input">
+                                    <select id="vmsType" name="vmsTypeOrder" class="form-control input-sm vms-input">
                                         <option value="-1">--Loại Ưu tiên--</option>
                                         <option value="0">Auto</option>
                                         <option value="1">Tuyến 1</option>
@@ -67,13 +68,17 @@
                                         <option value="2">C</option>
                                         <option value="3">D</option>
                                     </select>
+                                    <input type="hidden" name="config_device_stragetiesA" id="config_device_stragetiesA" value='<?php echo @!empty($data->config->mainConfig->stragetiesA)?json_encode($data->config->mainConfig->stragetiesA):''?>'/>
+                                    <input type="hidden" name="config_device_stragetiesB" id="config_device_stragetiesB" value='<?php echo @!empty($data->config->mainConfig->stragetiesB)?json_encode($data->config->mainConfig->stragetiesB):''?>'/>
+                                    <input type="hidden" name="config_device_stragetiesC" id="config_device_stragetiesC" value='<?php echo @!empty($data->config->mainConfig->stragetiesC)?json_encode($data->config->mainConfig->stragetiesC):''?>'/>
+                                    <input type="hidden" name="config_device_stragetiesD" id="config_device_stragetiesD" value='<?php echo @!empty($data->config->mainConfig->stragetiesD)?json_encode($data->config->mainConfig->stragetiesD):''?>'/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Txanh<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTx<?php echo $i?>" name="vmsTx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input" placeholder="" value="<?php echo @!empty($data->config->mainConfig->active->tx[0])?$data->config->mainConfig->active->tx[0]:''?>">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTx<?php echo $i?>" name="vmsTx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tx" placeholder="" value="<?php echo @!empty($data->config->mainConfig->active->tx[0])?$data->config->mainConfig->active->tx[0]:''?>">
                                 </div>
                                 <?php endfor;?>
                             </div>
@@ -81,7 +86,7 @@
                                 <label class="col-sm-1 control-label label-vms">TSxanh<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTsx<?php echo $i?>" name="vmsTsx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input" placeholder="" value="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTsx<?php echo $i?>" name="vmsTsx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsx" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
                             </div>
@@ -89,7 +94,7 @@
                                 <label class="col-sm-1 control-label label-vms">Tdibo<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTdbx<?php echo $i?>" name="vmsTdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input" placeholder="" value="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTdbx<?php echo $i?>" name="vmsTdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tdbx" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
                             </div>
@@ -97,28 +102,28 @@
                                 <label class="col-sm-1 control-label label-vms">TSdibo<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTsdbx<?php echo $i?>" name="vmsTsdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input" placeholder="" value="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTsdbx<?php echo $i?>" name="vmsTsdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsdbx" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tck<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsFreq" name="vmsFreq" maxlength="20" class="form-control input-sm vms-input vms-input-tck" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Tgt<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsGt" name="vmsGt" maxlength="6" class="form-control input-sm vms-input vms-input-tgt" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Bắt đầu<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input vms-input-start-time" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">kết thúc<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <input type="text" placeholder="Chiến lược" id="vmsEndTime" name="vmsEndTime" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsEndTime" name="vmsEndTime" maxlength="6" class="form-control input-sm vms-input vms-input-end-time" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -130,7 +135,7 @@
                                 </label>
                                 <?php for($i=0;$i<7;$i++):?>
                                     <div class="col-sm-1">
-                                        <select id="vmsSectionId" name="chien-luoc-ngay-<?php echo $i+2?>" class="form-control pointer input-sm vms-input">
+                                        <select id="vmsSectionId" name="chien-luoc-ngay[<?php echo $i+2?>]" class="form-control pointer input-sm vms-input">
                                             <option value="-1">--Loại chiến lược--</option>
                                             <option value="0" <?php echo @!empty($data->config->otherConfig->strageties[$i]) && $data->config->otherConfig->strageties[$i]=='A'?' selected':''?>>A</option>
                                             <option value="1"  <?php echo @!empty($data->config->otherConfig->strageties[$i]) && $data->config->otherConfig->strageties[$i]=='B'?' selected':''?>>B</option>
@@ -149,14 +154,14 @@
                                 </label>
                                 <?php for($i=0;$i<8;$i++):?>
                                     <div class="col-sm-1">
-                                        <select id="vmsSectionId" class="form-control pointer input-sm vms-input" name="opt1-<?php echo $i?>">
-                                            <option value="-1">--Loại OPT--</option>
-                                            <option value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
-                                            <option value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
-                                            <option value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
-                                            <option value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
-                                            <option value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
-                                            <option value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
+                                        <select  class="form-control pointer input-sm vms-input vms-input-opt1" name="opt1_[<?php echo $i?>]">
+                                            <option name="item" value="-1">--Loại OPT--</option>
+                                            <option name="item" value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
+                                            <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
+                                            <option name="item" value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
+                                            <option name="item" value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
+                                            <option name="item" value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
+                                            <option name="item" value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
                                         </select>
                                     </div>
                                 <?php endfor;?>
@@ -166,7 +171,7 @@
                                 </label>
                                 <?php for($i=0;$i<8;$i++):?>
                                     <div class="col-sm-1">
-                                        <select id="vmsSectionId" class="form-control pointer input-sm vms-input" name="opt2-<?php echo $i?>">
+                                        <select  class="form-control pointer input-sm vms-input vms-input-opt2" name="opt2_[<?php echo $i?>]">
                                             <option value="-1">--Loại OPT--</option>
                                             <option value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
                                             <option value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
@@ -181,48 +186,35 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Giờ mở<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Thời điểm" id="vmsIp" value="<?php echo @!is_null($data->config->otherConfig->hour_on)&&@!is_null($data->config->otherConfig->minute_on)?$data->config->otherConfig->hour_on.':'.$data->config->otherConfig->minute_on:''?>"  maxlength="20" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsIp" name="otherStartTime" value="<?php echo @!is_null($data->config->otherConfig->hour_on)&&@!is_null($data->config->otherConfig->minute_on)?$data->config->otherConfig->hour_on.':'.$data->config->otherConfig->minute_on:''?>"  maxlength="20" class="form-control input-sm vms-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Giờ tắt<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort" value="<?php echo @!is_null($data->config->otherConfig->hour_off)&&@!is_null($data->config->otherConfig->minute_off)?$data->config->otherConfig->hour_off.':'.$data->config->otherConfig->minute_off:''?>"  maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsPort" name="otherEndTime" value="<?php echo @!is_null($data->config->otherConfig->hour_off)&&@!is_null($data->config->otherConfig->minute_off)?$data->config->otherConfig->hour_off.':'.$data->config->otherConfig->minute_off:''?>"  maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Giờ chớp<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort" value="<?php echo @!is_null($data->config->otherConfig->hour_blink)&&@!is_null($data->config->otherConfig->minute_blink)?$data->config->otherConfig->hour_blink.':'.$data->config->otherConfig->minute_blink:''?>"  maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsPort" name="otherBlinkTime" value="<?php echo @!is_null($data->config->otherConfig->hour_blink)&&@!is_null($data->config->otherConfig->minute_blink)?$data->config->otherConfig->hour_blink.':'.$data->config->otherConfig->minute_blink:''?>"  maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Số pha<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort" value="<?php echo @!is_null($data->config->otherConfig->so_pha)?$data->config->otherConfig->so_pha:''?>" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsPort"  name="otherAlpha" value="<?php echo @!is_null($data->config->otherConfig->so_pha)?$data->config->otherConfig->so_pha:''?>" maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id= "btnActionDiv" class="row" style="float: right; margin-right: 0px; margin-top: 20px">
-                        <button type="button" id="btnAdd"
-                                class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
-                                data-dismiss="">Start</button>
-                        <button type="button" id="btnResetData" 
-                                class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px;margin-right: 5px; color: white !important"
-                                data-dismiss="">Stop</button>
-                        <button type="button" id="btnAdd"
-                                class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
-                                data-dismiss="">Toggle</button>
-                        <button type="button" id="btnResetData" 
-                                class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px; color: white !important"
-                                data-dismiss="">Set time</button>
-                        <button type="button" id="btnAdd"
-                                class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
-                                data-dismiss="">Upload</button>
-                        <button type="button" id="btnResetData" 
-                                class="btn btn-sm btn-info m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px; color: white !important"
-                                data-dismiss="">Download</button>
-                        <button type="button" id="btnAdd"
-                                class="btn btn-sm btn-danger m-t-n-xs" style="margin-bottom: 0px; margin-right: 5px;color: white !important"
-                                data-dismiss="">Cancle</button>
+                        <button type="button" id="btnStart" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Start</button>
+                        <button type="button" id="btnStop" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Stop</button>
+                        <button type="button" id="btnBlink" class="btn btn-sm btn-info m-t-n-xs m-t-n-xs"  data-dismiss="">Blink</button>
+                        <button type="button" id="btnSetTime" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Set time</button>
+                        <button type="button" id="btnUpload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Upload</button>
+                        <button type="button" id="btnDownload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Download</button>
+                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="">Cancle</button>
                     </div>
                 </div>
             </div>
+            </form>
             <?php endif;?>
         </div>
     </div>
@@ -231,78 +223,252 @@
 if(!empty($data)):
 ?>
 <script>
-    var chien_luoc = $('#chien-luoc');
-    var thoi_diem = $('#thoi-diem');
-chien_luoc.on('change',function(){
-    if((parseInt(chien_luoc.val())>=0)&& typeof thoi_diem !='undefine' && parseInt(thoi_diem.val())>=0){
-        $.ajax({
-            url: '<?php echo base_url().'device/getMainConfig'?>',
+    (function ($) {
+})(jQuery);
+    var config_device_strageties_active = [];
+    var tmpChienLuoc = <?php echo json_encode(mConfig('chien-luoc',JSON_PRETTY_PRINT));?>;
+    $('.vms-input').on('input',function(){
+        var chienLuoc = $('#chien-luoc');
+        var thoiDiem = $('#thoi-diem');
+        var name=$(this).attr('name');
+        var test = name.match(/[0-9]/);
+        var _number, _name,active,config;
+        if(test!=null){
+            _number = test[0];
+            _name=name.substring(0,name.length-1);
+        }else{
+            _name=name;
+        }
+        if(typeof chienLuoc !='undefined' &&chienLuoc.val()>=0 
+                &&typeof thoiDiem !='undefined'  &&chienLuoc.val()>=0&& strageties.indexOf(_name)>=0
+        ){
+            config = $('#config_device_'+tmpChienLuoc[parseInt(chienLuoc.val())]).val();
+            try{
+                if(config.trim()!=''&&validateJson(config)){
+                active = JSON.parse(config);
+                if(_number!=null){
+                    active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()][_number]=parseInt($(this).val());
+                }else{
+                    if(strageties1.hasOwnProperty(_name)){
+                        var time = $(this).val().split(':');
+                        for(i=0;i<time.length;i++){
+                            active[parseInt(thoiDiem.val())][strageties1[_name][i]] = parseInt(time[i]);
+                        }
+                    }else{
+                       active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()]=parseInt($(this).val());
+                    }
+                }
+                 $('#config_device_'+tmpChienLuoc[parseInt(chienLuoc.val())]).val(JSON.stringify(active)) ;                 
+                }else{
+                    active = createArr();
+                    if(_number!=null){
+                        active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()][_number]=parseInt($(this).val());
+                    }else{
+                        if(strageties1.hasOwnProperty(_name)){
+                            var time = $(this).val().split(':');
+                            for(i=0;i<time.length;i++){
+                                active[parseInt(thoiDiem.val())][strageties1[_name][i]] = parseInt(time[i]);
+                            }
+                        }else{
+                           active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()]=parseInt($(this).val());
+                        }
+                    }
+                    $('#config_device_'+tmpChienLuoc[parseInt(chienLuoc.val())]).val(JSON.stringify(active)) ; 
+                }
+            }catch(e){
+                console.log(e);
+            }
+        }
+        else{
+                console.log('khong co du lieu2');
+            }
+    })
+    $('#btnUpload').on('click',function(){
+    $.ajax({
+            url: '<?php echo base_url().'device/saveConfig'?>',
             type: "POST",
             dataType: "Json",
-            data: {name:'<?php echo @!empty($data->config->deviceName)?$data->config->deviceName:''?>',chien_luoc:chien_luoc.val(),thoi_diem:thoi_diem.val()},
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
             success: function (data) {
+                console.log(data);
                 if(data.success){
-                    for(i=0;i<data['dataConfig']['active']['tx'].length;i++){
-                        $('#vmsTx'+i).val(data['dataConfig']['active']['tx'][i]);
-                    }
-                    for(i=0;i<data['dataConfig']['active']['tsx'].length;i++){
-                        $('#vmsTsx'+i).val(data['dataConfig']['active']['tsx'][i]);
-                    }
-                    for(i=0;i<data['dataConfig']['active']['tdbx'].length;i++){
-                        $('#vmsTdbx'+i).val(data['dataConfig']['active']['tdbx'][i]);
-                    }
-                    for(i=0;i<data['dataConfig']['active']['tsdbx'].length;i++){
-                        $('#vmsTsdbx'+i).val(data['dataConfig']['active']['tsdbx'][i]);
-                    }
-                    $('#vmsStartTime').val(data['dataConfig']['active']['hour_on']+ ":"+data['dataConfig']['active']['minute_on']);
-                    $('#vmsEndTime').val(data['dataConfig']['active']['hour_off']+ ":"+data['dataConfig']['active']['minute_off']);
-                }else{
-                    console.log(1111);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert(1)
-                console.log(errorThrown)
-                console.log(textStatus);
             }
         });
-    }
-});
-thoi_diem.on('change',function(){
-    if((parseInt(thoi_diem.val())>=0)&& typeof chien_luoc !='undefine' && parseInt(chien_luoc.val())>=0){
-        $.ajax({
-            url: '<?php echo base_url().'device/getMainConfig'?>',
+    });
+    
+    $('#btnStart').on('click',function(){
+    $.ajax({
+            url: '<?php echo base_url().'device/startDevice'?>',
             type: "POST",
             dataType: "Json",
-            data: {name:'<?php echo @!empty($data->config->deviceName)?$data->config->deviceName:''?>',chien_luoc:chien_luoc.val(),thoi_diem:thoi_diem.val()},
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
                 if(data.success){
-                    for(i=0;i<data['dataConfig']['active']['tx'].length;i++){
-                        $('#vmsTx'+i).val(data['dataConfig']['active']['tx'][i]);
-                    }
-                    for(i=0;i<data['dataConfig']['active']['tsx'].length;i++){
-                        $('#vmsTsx'+i).val(data['dataConfig']['active']['tsx'][i]);
-                    }
-                    for(i=0;i<data['dataConfig']['active']['tdbx'].length;i++){
-                        $('#vmsTdbx'+i).val(data['dataConfig']['active']['tdbx'][i]);
-                    }
-                    for(i=0;i<data['dataConfig']['active']['tsdbx'].length;i++){
-                        $('#vmsTsdbx'+i).val(data['dataConfig']['active']['tsdbx'][i]);
-                    }
-                    $('#vmsStartTime').val(data['dataConfig']['active']['hour_on']+ ":"+data['dataConfig']['active']['minute_on']);
-                    $('#vmsEndTime').val(data['dataConfig']['active']['hour_off']+ ":"+data['dataConfig']['active']['minute_off']);
+                    $(this).parent().modal('hiden');
+                    alert('lệnh đã thực hiện thành công');
                 }else{
-                    console.log(1111);
+                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert(1)
-                console.log(errorThrown)
-                console.log(textStatus);
             }
         });
-    }
-});
+    });
+    
+    $('#btnStop').on('click',function(){
+    $.ajax({
+            url: '<?php echo base_url().'device/stopDevice'?>',
+            type: "POST",
+            dataType: "Json",
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
+            success: function (data) {
+                if(data.success){
+                    $(this).parent().modal('hiden');
+                    alert('lệnh đã thực hiện thành công');
+                }else{
+                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    
+    $('#btnSetTime').on('click',function(){
+    $.ajax({
+            url: '<?php echo base_url().'device/setTimeDevice'?>',
+            type: "POST",
+            dataType: "Json",
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
+            success: function (data) {
+                if(data.success){
+                    $(this).parent().modal('hiden');
+                    alert('lệnh đã thực hiện thành công');
+                }else{
+                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    
+    $('#btnDownload').on('click',function(){
+    $.ajax({
+            url: '<?php echo base_url().'device/downloadConfigDevice'?>',
+            type: "POST",
+            dataType: "Json",
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
+            success: function (data) {
+                if(data.success){
+                    $(this).parent().modal('hiden');
+                    alert('lệnh đã thực hiện thành công');
+                }else{
+                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    
+    $('#btnBlink').on('click',function(){
+    $.ajax({
+            url: '<?php echo base_url().'device/blinkDevice'?>',
+            type: "POST",
+            dataType: "Json",
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
+            success: function (data) {
+                if(data.success){
+                    $(this).parent().modal('hiden');
+                    alert('lệnh đã thực hiện thành công');
+                }else{
+                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+    
+    var chien_luoc = $('#chien-luoc,#thoi-diem');
+var chien_luoc =$('#chien-luoc')
+var thoi_diem =$('#thoi-diem')
+$('#chien-luoc,#thoi-diem').on('change',function(){
+    var config_device_strageties_active = [];
+    var tmpChienLuoc = <?php echo json_encode(mConfig('chien-luoc',JSON_PRETTY_PRINT));?>;
+        if((parseInt(thoi_diem.val())>=0)&& parseInt(chien_luoc.val())>=0){
+            try{
+                var config = $('#config_device_'+tmpChienLuoc[parseInt(chien_luoc.val())]).val();
+                if(config.trim()!=''&&validateJson(config)){
+                    var tmp = JSON.parse(config);
+                    config_device_strageties_active = tmp[parseInt(thoi_diem.val())];
+                    for(i=0;i<config_device_strageties_active['tx'].length;i++){
+                        $('#vmsTx'+i).val(config_device_strageties_active['tx'][i]);
+                    }
+                    for(i=0;i<config_device_strageties_active['tsx'].length;i++){
+                        $('#vmsTsx'+i).val(config_device_strageties_active['tsx'][i]);
+                    }
+                    for(i=0;i<config_device_strageties_active['tdbx'].length;i++){
+                        $('#vmsTdbx'+i).val(config_device_strageties_active['tdbx'][i]);
+                    }
+                    for(i=0;i<config_device_strageties_active['tsdbx'].length;i++){
+                        $('#vmsTsdbx'+i).val(config_device_strageties_active['tsdbx'][i]);
+                    }
+                    $('#vmsStartTime').val(config_device_strageties_active['hour_on']+ ":"+config_device_strageties_active['minute_on']);
+                    $('#vmsEndTime').val(config_device_strageties_active['hour_off']+ ":"+config_device_strageties_active['minute_off']);
+                    $('#vmsFreq').val(config_device_strageties_active['freq']);
+                    $('#vmsGt').val(config_device_strageties_active['gt']);
+                }
+                else{
+                    config = createArr();
+                    config_device_strageties_active = config[0];
+                    for(i=0;i<config_device_strageties_active['tx'].length;i++){
+                        $('#vmsTx'+i).val(config_device_strageties_active['tx'][i]);
+                    }
+                    for(i=0;i<config_device_strageties_active['tsx'].length;i++){
+                        $('#vmsTsx'+i).val(config_device_strageties_active['tsx'][i]);
+                    }
+                    for(i=0;i<config_device_strageties_active['tdbx'].length;i++){
+                        $('#vmsTdbx'+i).val(config_device_strageties_active['tdbx'][i]);
+                    }
+                    for(i=0;i<config_device_strageties_active['tsdbx'].length;i++){
+                        $('#vmsTsdbx'+i).val(config_device_strageties_active['tsdbx'][i]);
+                    }
+                    $('#vmsStartTime').val(config_device_strageties_active['hour_on']+ ":"+config_device_strageties_active['minute_on']);
+                    $('#vmsEndTime').val(config_device_strageties_active['hour_off']+ ":"+config_device_strageties_active['minute_off']);
+                    $('#vmsFreq').val(config_device_strageties_active['freq']);
+                    $('#vmsGt').val(config_device_strageties_active['gt']);
+                }
+            }catch(e){
+                console.log(e)
+            }
+        }
+        else{
+            var config = createArr();
+            var config_device_strageties_active = config[0];
+            for(i=0;i<config_device_strageties_active['tx'].length;i++){
+                $('#vmsTx'+i).val(config_device_strageties_active['tx'][i]);
+            }
+            for(i=0;i<config_device_strageties_active['tsx'].length;i++){
+                $('#vmsTsx'+i).val(config_device_strageties_active['tsx'][i]);
+            }
+            for(i=0;i<config_device_strageties_active['tdbx'].length;i++){
+                $('#vmsTdbx'+i).val(config_device_strageties_active['tdbx'][i]);
+            }
+            for(i=0;i<config_device_strageties_active['tsdbx'].length;i++){
+                $('#vmsTsdbx'+i).val(config_device_strageties_active['tsdbx'][i]);
+            }
+            $('#vmsStartTime').val(config_device_strageties_active['hour_on']+ ":"+config_device_strageties_active['minute_on']);
+            $('#vmsEndTime').val(config_device_strageties_active['hour_off']+ ":"+config_device_strageties_active['minute_off']);
+            $('#vmsFreq').val(config_device_strageties_active['freq']);
+            $('#vmsGt').val(config_device_strageties_active['gt']);
+        } 
+    return;
+    })
 </script>
 <?php
 endif;

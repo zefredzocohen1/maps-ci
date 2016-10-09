@@ -1,7 +1,10 @@
 <?php
+
 require APPPATH . 'third_party\php-cache\vendor\autoload.php';
 require APPPATH . 'third_party\php-cache\vendor\autoload.php';
+
 use phpFastCache\CacheManager;
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -16,36 +19,36 @@ class MapsPro extends CI_Controller {
     public function index() {
         $data = array();
         $userInfo = array(
-            'username'=>'admin',
-            'password'=>'admin'
+            'username' => 'tutq',
+            'password' => 'tutq'
         );
         mSetSession($userInfo);
         $fileCache = mConfig('fileCache');
         $tokenCache = $fileCache->getItem('token');
-        if(is_null($tokenCache->get())){
+        if (is_null($tokenCache->get())) {
             $result = getAuthenticate(mGetSession('username'), mGetSession('password'));
-            if(!empty($result)){
-                mSetSession(array('token'=>$result));
+            if (!empty($result)) {
+                mSetSession(array('token' => $result['message']));
                 $tokenCache->set(($result))->expiresAfter(EXPIRES_CACHE_TOKEN);
                 $fileCache->save($tokenCache);
             }
-        }else{
-            writeLog('lay tu trong cache ra token: '.$tokenCache->get());
-            if(empty(mGetSession('token'))){
-                mSetSession(array('token'=>$tokenCache->get()));
+        } else {
+            writeLog('lay tu trong cache ra token: '.print_r($tokenCache->get(),true));
+            if (empty(mGetSession('token'))) {
+                mSetSession(array('token' => $tokenCache->get()));
             }
         }
         $listDeviceCache = $fileCache->getItem('listDevice');
         $list = '';
-        if(is_null($listDeviceCache->get())){
+        if (is_null($listDeviceCache->get())) {
             $list = getListDevice(mGetSession('token'));
             $listDeviceCache->set($list)->expiresAfter(EXPIRES_CACHE_LIST_DIVICE);
             $fileCache->save($listDeviceCache);
-        }else{
-            writeLog('lay list divice tu cache'.  print_r($listDeviceCache->get(),TRUE));
+        } else {
+            writeLog('lay list divice tu cache' . print_r($listDeviceCache->get(), TRUE));
             $list = $listDeviceCache->get();
         }
-        $data['devicesInfo'] = !empty($list)?$list:array();
+        $data['devicesInfo'] = !empty($list) ? $list : array();
         $data['temp'] = 'front-end/maps/index';
         $this->load->view('front-end/template/master', $data);
     }
@@ -54,77 +57,41 @@ class MapsPro extends CI_Controller {
         header("Content-Type: application/json", true);
         $fileCache = mConfig('fileCache');
         $data = array();
-        $name=scGetName($this->input->post('name'));
+        $name = scGetName($this->input->post('name'));
         $deviceNameCache = $fileCache->getItem($name);
-        if(is_null($deviceNameCache->get())){
+        if (is_null($deviceNameCache->get())) {
             $result = getDeviceConfig(mGetSession('token'), $name);
-            if(!empty($result)){   
-                echo json_encode(array('success'=>true,'message'=>$this->load->view('front-end/block/view_maker',array('data'=>$result),TRUE)));
-            }else{
-                echo json_encode(array('success'=>FALSE,'message'=>$this->load->view('front-end/block/view_maker',array('data'=>$result),TRUE)));
+            if (!empty($result)) {
+                echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+            } else {
+                echo json_encode(array('success' => FALSE, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
             }
             $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
             $fileCache->save($deviceNameCache);
-        }else{
+        } else {
             $result = $deviceNameCache->get();
-            echo json_encode(array('success'=>true,'message'=>$this->load->view('front-end/block/view_maker',array('data'=>$result),TRUE)));
+            echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
         }
         exit;
     }
-    
-    public function update(){
+
+    public function update() {
         
     }
 
-    public function test(){
-    $jsonData = '[{
-"deviceName": "Dev02",
-"name": "* CONG TY PARAGON **",
-"otherConfig": {
-    "hour_on": 10,
-    "hour_off": 10,
-    "minute_on": 10,
-    "minute_off": 10,
-    "hour_blink": 10,
-    "minute_blink": 10,
-    "so_pha": 4,
-    "option1": [1, 2, 3, 4, 5, 6, 7, 8],
-    "option2": [1, 2, 3, 4, 5, 6, 7, 8],
-    "strageties": ["A", "A", "A", "A", "A", "A", "A"],
-    "lang": 1,
-    "train_road": [1, 1, 1, 1, 1, 1, 1, 1]
-},
-"mainConfig": {
-    "stragetiesA": [null, {
-            "hour_on": 20,
-            "hour_off": 20,
-            "minute_on": 30,
-            "minute_off": 30,
-            "freq": 10,
-            "gt": 10,
-            "tv": 10,
-            "tx": [1, 2, 3, 4, 5, 6, 7, 8],
-            "tsx": [1, 2, 3, 4, 5, 6, 7, 8],
-            "tdbx": [1, 2, 3, 4, 5, 6, 7, 8],
-            "tsdbx": [1, 2, 3, 4, 5, 6, 7, 8]
-        }, null, null, null, null],
-    "stragetiesB": [null, null, null, null, null, null],
-    "stragetiesC": [null, null, null, null, null, null],
-    "stragetiesD": [null, null, null, null, null, null]
-}
-}]';
-    $fileCache = mConfig('fileCache');
-    $deviceCache = $fileCache->getItem('Dev04');
-    if(!empty($deviceCache->get())){
+    public function test() {
+        $fileCache = mConfig('fileCache');
+        $deviceCache = $fileCache->getItem('Dev02');
+        if (!empty($deviceCache->get())) {
 //        $deviceConfig = $deviceCache->get();$chienLuoc=mConfig('chien-luoc')[0];
 //                pre($deviceConfig->config->mainConfig->stragetiesA);
 //        pre($chienLuoc);
 //        pre(getActiveChienLuoc($deviceConfig, $chienLuoc, 1));
-        pre($deviceCache->get());
+            pre($deviceCache->get());
+        }
     }
-}
 
-    public function getMainConfig(){
+    public function getMainConfig() {
         $chien_luoc = $this->input->post('chien_luoc');
         $thoi_diem = $this->input->post('thoi_diem');
         $mc_chien_luoc = mConfig('chien-luoc');
@@ -134,23 +101,131 @@ class MapsPro extends CI_Controller {
         $fileCache = mConfig('fileCache');
         $deviceNameCache = $fileCache->getItem($name);
         $deviceConfigActive = array();
-        if(is_null($deviceNameCache->get())){
+        if (is_null($deviceNameCache->get())) {
             $deviceConfig = getDeviceConfig(mGetSession('token'), $name);
-            if(!empty($deviceConfig)){
+            if (!empty($deviceConfig)) {
                 $deviceNameCache->set($deviceConfig)->expiresAfter(EXPIRES_CACHE_DEVICE);
                 $fileCache->save($deviceNameCache);
                 $deviceConfigActive = getActiveChienLuoc($deviceConfig, $mc_chien_luoc[$chien_luoc], $mc_thoi_diem[$thoi_diem]);
             }
-            
-        }else{
+        } else {
             $deviceConfig = $deviceNameCache->get();
 //            echo json_encode (array($mc_chien_luoc[$chien_luoc], $mc_thoi_diem[$thoi_diem]));
             $deviceConfigActive = getActiveChienLuoc($deviceConfig, $mc_chien_luoc[$chien_luoc], $mc_thoi_diem[$thoi_diem]);
         }
 //        exit;
-        $deviceConfigView = $this->load->view('front-end/block/view_maker',array('data'=>$deviceConfig),TRUE);
-        echo  json_encode(array('success'=>true,'dataConfig'=>$deviceConfigActive));
+        $deviceConfigView = $this->load->view('front-end/block/view_maker', array('data' => $deviceConfig), TRUE);
+        echo json_encode(array('success' => true, 'dataConfig' => $deviceConfigActive));
         exit;
     }
 
+    public function saveConfig() {
+        $fileCache = mConfig('fileCache');
+        $data = $this->input->post('data');
+        $value = array_values($data);
+        $config = createDeviceConfig();
+        $subOtherConfig = mConfig('deviceSubOtherConfig');
+        $config->deviceName = $this->input->post('deviceName');
+        foreach ($value as $i => $row) {
+            if ($row['name'] == 'intersection_name') {
+                $config->name = $row['value'];
+            } elseif ($row['name'] == 'config_device_stragetiesA') {
+                $config->mainConfig->stragetiesA = json_decode($row['value']);
+            } elseif ($row['name'] == 'config_device_stragetiesB') {
+                $config->mainConfig->stragetiesB = json_decode($row['value']);
+            } elseif ($row['name'] == 'config_device_stragetiesC') {
+                $config->mainConfig->stragetiesC = json_decode($row['value']);
+            } elseif ($row['name'] == 'config_device_stragetiesD') {
+                $config->mainConfig->stragetiesD = json_decode($row['value']);
+            } elseif (preg_match('/chien\-luoc\-ngay\[([0-8])\]/', $row['name'], $_number)) {
+                $subOtherConfig['strageties'][$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
+            } elseif (preg_match('/opt1\_\[([0-8])\]/', $row['name'], $_number)) {
+                $subOtherConfig['option1'][$_number[1]] = intval($row['value']);
+            } elseif (preg_match('/opt2\_\[([0-8])\]/', $row['name'], $_number)) {
+                $subOtherConfig['option2'][$_number[1]] = intval($row['value']);
+            } elseif ($row['name'] == 'otherStartTime') {
+                $time = explode(':', $row['value']);
+                $subOtherConfig['hour_on'] = @ intval($time[0]);
+                $subOtherConfig['minute_on'] = @ intval($time[1]);
+            } elseif ($row['name'] == 'otherEndTime') {
+                $time = explode(':', $row['value']);
+                $subOtherConfig['hour_off'] = @ intval($time[0]);
+                $subOtherConfig['minute_off'] = @ intval($time[1]);
+            } elseif ($row['name'] == 'otherBlinkTime') {
+                $time = explode(':', $row['value']);
+                $subOtherConfig['hour_blink'] = @ intval($time[0]);
+                $subOtherConfig['minute_blink'] = @ intval($time[1]);
+            } elseif ($row['name'] == 'otherAlpha') {
+                $subOtherConfig['so_pha'] = intval($row['value']);
+            }
+        }
+        $config->otherConfig = $subOtherConfig;
+//        $deviceNameCache = $fileCache->getItem($config->deviceName);
+//        $deviceNameCache->set($config)->expiresAfter(EXPIRES_CACHE_DEVICE);
+//        $fileCache->save($deviceNameCache);
+        $result = setConfigDevice(mGetSession('token'), $config->deviceName,  json_encode($config));
+        echo json_encode($config);
+        echo json_encode($result);
+        exit;
+    }
+
+    public function startDevice() {
+        $deviceName = $this->input->post('deviceName');
+        $result = startDevice(mGetSession('token'), $deviceName);
+        if (empty($result)) {
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Lỗi trong việc kết nối đến server'
+            ));
+        } else {
+            echo json_encode($result);
+        }
+        exit;
+    }
+
+    public function stopDevice() {
+        $deviceName = $this->input->post('deviceName');
+        $result = stopDevice(mGetSession('token'), $deviceName);
+        if (empty($result)) {
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Lỗi trong việc kết nối đến server'
+            ));
+        } else {
+            echo json_encode($result);
+        }
+        exit;
+    }
+    
+    public function downloadConfigDevice() {
+        
+    }
+
+    public function blinkDevice() {
+        $deviceName = $this->input->post('deviceName');
+        $result = blinkDevice(mGetSession('token'), $deviceName);
+        if (empty($result)) {
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Lỗi trong việc kết nối đến server'
+            ));
+        } else {
+            echo json_encode($result);
+        }
+        exit;
+    }
+        
+    public function setTimeDevice() {
+        $deviceName = $this->input->post('deviceName');
+        $result = setTimeDevice(mGetSession('token'), $deviceName);
+        if (empty($result)) {
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Lỗi trong việc kết nối đến server'
+            ));
+        } else {
+            echo json_encode($result);
+        }
+        exit;
+    }
 }

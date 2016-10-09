@@ -541,3 +541,60 @@ $config['chien-luoc'] = array(
     2=>'stragetiesC',
     3=>'stragetiesD'
 );
+
+$config['chien-luoc-ngay'] = array(
+    -1=>NULL,
+    0=>'A',
+    1=>'B',
+    2=>'C',
+    3=>'D'
+);
+
+$config['config-view'] = array(
+    'intersection_name'=>array('name',1),
+//    'vmsTypeOrder'=>'',
+    'name'=>array('deviceName',1),
+    'chien-luoc-ngay'=>'',
+    'opt1'=>'',
+    'opt2'=>'',
+    'otherStartTime'=>'',
+    'otherEndTime'=>'stragetiesB',
+    'otherBlinkTime'=>'stragetiesC',
+    'otherAlpha'=>''
+);
+
+$config['deviceConfig'] = array(
+    'deviceName'=>null,
+    'name'=>null,
+    'otherConfig'=>new stdClass(),
+    'mainConfig'=>new stdClass()
+);
+
+$config['deviceSubOtherConfig'] = array(
+    'hour_on'=>'',
+    'hour_off'=>'',
+    'minute_on'=>'',
+    'minute_off'=>'',
+    'hour_blink'=>'',
+    'minute_blink'=>'',
+    'so_pha'=>'',
+    'option1'=>array(),
+    'option2'=>array(),
+    'strageties'=>array(),
+    'lang'=>'',
+    'train_road'=>array()
+);
+
+$config['deviceSubMainConfig'] = array(
+    'hour_on'=>'',
+    'hour_off'=>'',
+    'minute_on'=>'',
+    'minute_off'=>'',
+    "freq"=> '',
+    "gt"=> '',
+    "tv"=> '',
+    "tx"=> '',
+    "tsx"=> '',
+    "tdbx"=> '',
+    "tsdbx"=> '',
+);

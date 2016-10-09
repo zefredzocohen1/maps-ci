@@ -50,7 +50,6 @@
         function toggleBounce() {
 //            $('#myModal').modal('show');
             var data = {name:this.title};
-            console.log('<?php echo base_url().'device/ajax_search'?>')
         $.ajax({
             url: '<?php echo base_url().'device/ajax_search'?>',
             type: "POST",
@@ -73,7 +72,6 @@
 //                $("input:checkbox").prop('checked', $(this).prop("checked"));
 //            });
         });
-            console.log(this.title);
         }
     </script>
     <script async defer
