@@ -61,7 +61,7 @@
 <link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>public/asset/css/its_custom.css"/>
 </head>
 <body>
-<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">HEAD
 <div id="map"></div>
 <div class="modal fade" id="myModal" tabindex="-1" data-keyboard="false" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
 </div>
@@ -204,6 +204,7 @@
         } else {
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
+<<<<<<< HEAD
     }
     $(document).ready(function(){
         $('#pac-input').autocomplete({
@@ -223,6 +224,35 @@
                             break;
                         }
                     }
+=======
+        function toggleAnimation(marker) {
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
+        $(document).ready(function(){
+            $('#pac-input').autocomplete({
+                source: jArray,
+                select: function (event, ui) {
+                    event.preventDefault();
+                    var itemc = ui.item;
+                    $('#pac-input').val(ui.item.label);
+                    if(typeof markers !=undefined && markers.length>=0){
+                        for(i=0;i<markers.length;i++){
+                            if(markers[i]['position'].lat().toFixed(3)==itemc.lat && markers[i]['position'].lng().toFixed(3)==itemc.long){
+                                map.setCenter({lat:itemc.lat,lng:itemc.long});
+                                markers[i].setAnimation(google.maps.Animation.BOUNCE);
+                                setTimeout(function() {
+                                    markers[i].setAnimation(null)
+                                }, 5000);
+                                break;
+                            }
+                        }
+                    }
+                    return;
+>>>>>>> d5ce49c53241201d63b95f8d6a7ef23590ee217a
                 }
                 return;
             }

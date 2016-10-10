@@ -206,6 +206,75 @@ class Device extends BaseController {
         echo json_encode(array('success'=>false,'message'=>$result));
         exit;
     }
+
+    public function saveConfig2(){
+        $fileCache = mConfig('fileCache');
+        $data = $this->input->post('data');
+        $value = array_values($data);
+        $config = createDeviceConfig();
+        $subOtherConfig = createDeviceSubOtherConfig();
+        $config->deviceName = $this->input->post('deviceName');
+        $configActive = createDeviceMainConfig();
+        foreach ($value as $i => $row) {
+            if ($row['name'] == 'intersection_name') {
+                $config->name = $row['value'];
+            }  elseif (preg_match('/chien\-luoc\-ngay\[([0-8])\]/', $row['name'], $_number)) {
+                $subOtherConfig->strageties[$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
+            } elseif (preg_match('/option1\_\[([0-8])\]/', $row['name'], $_number)) {
+                $subOtherConfig->option1[$_number[1]] = intval($row['value']);
+            } elseif (preg_match('/option2\_\[([0-8])\]/', $row['name'], $_number)) {
+                $subOtherConfig->option2[$_number[1]] = intval($row['value']);
+            } elseif ($row['name'] == 'otherStartTime') {
+                $time = explode(':', $row['value']);
+                $subOtherConfig->hour_on = @ intval($time[0]);
+                $subOtherConfig->minute_on = @ intval($time[1]);
+            } elseif ($row['name'] == 'otherEndTime') {
+                $time = explode(':', $row['value']);
+                $subOtherConfig->hour_off = @ intval($time[0]);
+                $subOtherConfig->minute_off = @ intval($time[1]);
+            } elseif ($row['name'] == 'otherBlinkTime') {
+                $time = explode(':', $row['value']);
+                $subOtherConfig->hour_blink = @ intval($time[0]);
+                $subOtherConfig->minute_blink = @ intval($time[1]);
+            } elseif ($row['name'] == 'otherAlpha') {
+                $subOtherConfig->so_pha = intval($row['value']);
+            } elseif (preg_match('/vmsTx([0-8])/', $row['name'], $_number)) {
+                $configActive->tx[$_number[1]] = $row['value'];
+            } elseif (preg_match('/vmsTsx([0-8])/', $row['name'], $_number)) {
+                $configActive->tsx[$_number[1]] = $row['value'];
+            } elseif (preg_match('/vmsTdbx([0-8])/', $row['name'], $_number)) {
+                $configActive->tdbx[$_number[1]] = $row['value'];
+            } elseif (preg_match('/vmsTsdbx([0-8])/', $row['name'], $_number)) {
+                $configActive->tsdbx[$_number[1]] = $row['value'];
+            }elseif ($row['name'] == 'chien-luoc') {
+                $chienLuoc = @mConfig('chien-luoc')[intval($row['value'])];
+            }elseif ($row['name'] == 'thoi-diem') {
+                $thoiDiem = @intval($row['value']);
+            }
+        }
+        if(!isset($chienLuoc)&&!isset($thoiDiem)){
+            echo json_encode(array('success'=>false,'message'=>'Chưa chọn thời điểm hoặc chiến lược cụ thể'));
+            exit;
+        }
+        foreach ($config->mainConfig->$chienLuoc[$thoiDiem] as &$i =>&$row){
+//            $row = $configActive->$i
+        }
+        echo json_encode('thoidiem: '.$thoiDiem.': chienluoc'.$chienLuoc);
+        die;
+        $config->otherConfig = $subOtherConfig;
+        $result = setConfigDevice(mGetSession('token'), $config->deviceName, json_encode($config));
+        if (@$result->success) {
+            $tmp = new stdClass();
+            $tmp->config = $config;
+            $deviceNameCache = $fileCache->getItem($config->deviceName);
+            $deviceNameCache->set($tmp)->expiresAfter(EXPIRES_CACHE_DEVICE);
+            $fileCache->save($deviceNameCache);
+            echo json_encode(array('success'=>true,'message'=>'Thiết bị đã được ghi'));
+            exit;
+        }
+        echo json_encode(array('success'=>false,'message'=>$result));
+        exit;
+    }
     
     public function startDevice() {
         $deviceName = $this->input->post('deviceName');
