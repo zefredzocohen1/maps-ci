@@ -124,17 +124,10 @@ class Device extends BaseController {
         $config = createDeviceConfig();
         $subOtherConfig = createDeviceSubOtherConfig();
         $config->deviceName = $this->input->post('deviceName');
+        $subMainConfig = createDeviceMainConfig();
         foreach ($value as $i => $row) {
             if ($row['name'] == 'intersection_name') {
                 $config->name = $row['value'];
-            } elseif ($row['name'] == 'config_device_stragetiesA') {
-                $config->mainConfig->stragetiesA = json_decode($row['value']);
-            } elseif ($row['name'] == 'config_device_stragetiesB') {
-                $config->mainConfig->stragetiesB = json_decode($row['value']);
-            } elseif ($row['name'] == 'config_device_stragetiesC') {
-                $config->mainConfig->stragetiesC = json_decode($row['value']);
-            } elseif ($row['name'] == 'config_device_stragetiesD') {
-                $config->mainConfig->stragetiesD = json_decode($row['value']);
             } elseif (preg_match('/chien\-luoc\-ngay\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig->strageties[$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
             } elseif (preg_match('/option1\_\[([0-8])\]/', $row['name'], $_number)) {
@@ -143,18 +136,60 @@ class Device extends BaseController {
                 $subOtherConfig->option2[$_number[1]] = intval($row['value']);
             } elseif ($row['name'] == 'otherStartTime') {
                 $time = explode(':', $row['value']);
-                $subOtherConfig->hour_on = @ intval($time[0]);
-                $subOtherConfig->minute_on = @ intval($time[1]);
+                $subOtherConfig->hour_on = @ ConvertTime(intval($time[0]));
+                $subOtherConfig->minute_on = @ ConvertTime(intval($time[1]));
             } elseif ($row['name'] == 'otherEndTime') {
                 $time = explode(':', $row['value']);
-                $subOtherConfig->hour_off = @ intval($time[0]);
-                $subOtherConfig->minute_off = @ intval($time[1]);
+                $subOtherConfig->hour_off = @ ConvertTime(intval($time[0]));
+                $subOtherConfig->minute_off = @ ConvertTime(intval($time[1]));
             } elseif ($row['name'] == 'otherBlinkTime') {
                 $time = explode(':', $row['value']);
-                $subOtherConfig->hour_blink = @ intval($time[0]);
-                $subOtherConfig->minute_blink = @ intval($time[1]);
+                $subOtherConfig->hour_blink = @ ConvertTime(intval($time[0]));
+                $subOtherConfig->minute_blink = @ ConvertTime(intval($time[1]));
             } elseif ($row['name'] == 'otherAlpha') {
                 $subOtherConfig->so_pha = intval($row['value']);
+            }elseif($row['name'] == 'chien-luoc'){
+                $chienLuoc = @mConfig('chien-luoc')[$row['value']];
+            }elseif ($row['name']=='thoi-diem'){
+                $thoiDiem = intval($row['value'])>=0&&intval($row['value'])<=5 ? intval($row['value']):null;
+            } elseif (preg_match('/vmsTx([0-8])/', $row['name'], $_number)) {
+                $subMainConfig->tx[$_number[1]] = intval($row['value']);
+            } elseif (preg_match('/vmsTsx([0-8])/', $row['name'], $_number)) {
+                $subMainConfig->tsx[$_number[1]] = intval($row['value']);
+            } elseif (preg_match('/vmsTdbx([0-8])/', $row['name'], $_number)) {
+                $subMainConfig->tdbx[$_number[1]] = intval($row['value']);
+            } elseif (preg_match('/vmsTsdbx([0-8])/', $row['name'], $_number)) {
+                $subMainConfig->tsdbx[$_number[1]] = intval($row['value']);
+            }elseif ($row['name'] == 'vmsFreq') {
+                $subMainConfig->freq= intval($row['value']);
+            }elseif ($row['name'] == 'vmsTv') {
+                $subMainConfig->tv= intval($row['value']);
+            }elseif ($row['name'] == 'vmsGt') {
+                $subMainConfig->gt= intval($row['value']);
+            }elseif ($row['name'] == 'vmsStartTime') {
+                $time = explode(':', $row['value']);
+                $subMainConfig->hour_on = @ ConvertTime(intval($time[0]));
+                $subMainConfig->minute_on = @ ConvertTime(intval($time[1]));
+            }elseif ($row['name'] == 'vmsEndTime') {
+                $time = explode(':', $row['value']);
+                $subMainConfig->hour_off = @ ConvertTime(intval($time[0]));
+                $subMainConfig->minute_off = @ ConvertTime(intval($time[1]));
+            }
+
+        }
+        if(!isset($chienLuoc)||!isset($thoiDiem)){
+            echo json_encode(array('success'=>false,'message'=>'Chọn sai thời điểm hoặc chiến lược'));
+            exit();
+        }
+        $config->mainConfig->$chienLuoc = array(null , null, null, null, null, null);
+        foreach ($config->mainConfig->$chienLuoc as $i=>&$row){
+            if($i==$thoiDiem){
+                $row = $subMainConfig;
+            }
+        }
+        foreach (mConfig('chien-luoc') as $i => $row2){
+            if($row2 != $chienLuoc){
+                $config->mainConfig->$row2 = null;
             }
         }
         $config->otherConfig = $subOtherConfig;

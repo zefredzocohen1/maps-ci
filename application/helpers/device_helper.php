@@ -210,9 +210,9 @@ if (!function_exists('getListDevice')) {
             if (!empty($result) && $typeResponse == RESPON_JSON) {
                 foreach ($result as $i => $value) {
                     $result[$i] = array(
-                        'long'              => $value->longitude,
-                        'lat'               => $value->latitude,
-                        'name'              => $value->device_name
+                        'long'              => round($value->longitude,3),
+                        'lat'               => round($value->latitude,3),
+                        'name'              => strlen($value->device_name)>20?substr($value->device_name,0,20):$value->device_name
                     );
                     if($type==1){
                         $result[$i]['sim_number'] = isset($value->sim_number)?$value->sim_number:'';
@@ -695,5 +695,37 @@ if (!function_exists('UserInfo')) {
         }
     }
 
+}
+
+if (!function_exists('createDeviceMainConfig')) {
+
+    function createDeviceMainConfig()
+    {
+        $result = new stdClass();
+        $result->hour_off = '';
+        $result->minute_on = '';
+        $result->minute_off = '';
+        $result->freq = '';
+        $result->gt = '';
+        $result->tv = '3';
+        $result->gt = '';
+        $result->tv = '3';
+        $result->tx = array();
+        $result->tsx = array();
+        $result->tdbx = array();
+        $result->tsdbx = array();
+        return $result;
+    }
+}
+
+if (!function_exists('ConvertTime')) {
+
+    function ConvertTime($number)
+    {
+//        if($number>=0&&$number<10){
+//            $number = '0'.$number;
+//        }
+        return $number;
+    }
 }
 ?>
