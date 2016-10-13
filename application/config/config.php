@@ -581,8 +581,8 @@ $config['deviceSubOtherConfig'] = array(
     'option1'=>array(),
     'option2'=>array(),
     'strageties'=>array(),
-    'lang'=>'',
-    'train_road'=>array()
+    'lang'=>0,
+    'train_road'=>array(0,0,0,0,0,0,0,0)
 );
 
 $config['deviceSubMainConfig'] = array(

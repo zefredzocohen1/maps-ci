@@ -56,13 +56,14 @@
             dataType: "Json",
             data: data,
             success: function (data) {
+                console.log(data);
                 if(data.success){
                     $('#myModal').html(data.message);
                     $('#myModal').modal('show');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert(1)
+                alert('error')
                 console.log(errorThrown)
                 console.log(textStatus);
             }

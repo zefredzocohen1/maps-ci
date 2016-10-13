@@ -51,7 +51,7 @@ if (!function_exists('getAuthenticate')) {
 
     function getAuthenticate($user, $pass, &$curl = '', $typeResponve = 1, $typeRequest = HTTPS_REQUEST) {
         $CI = & get_instance();
-        $result = array();
+        $result = new stdClass();
         if (empty($user) || empty($pass)) {
             return $result;
         }
@@ -72,11 +72,20 @@ if (!function_exists('getAuthenticate')) {
         if ($curl->error) {
             //ghi log
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
-            return array('success' => false, 'message' => $curl->errorCode . '-' . $curl->errorMessage);
+            $result->success = false;
+            $result->message = $curl->errorCode . '-' . $curl->errorMessage;
+            return $result;
         } elseif (empty($result) || get_class($result) !== 'stdClass') {
-            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+            $result->success = false;
+            $result->message = 'dữ liệu trả về ko đúng';
         } else {
-            return !@empty($result->token) ? array('success'=>TRUE,'message'=>$result->token) : array('success'=>FALSE,'message'=>'Không tồn tại token');
+            if(!@empty($result->token)){
+                $result->success = true;
+                $result->message = $result->token;
+            }else{
+                $result->success = FALSE;
+                $result->message = 'Không tồn tại token';
+            }
         }
         return $result;
     }
@@ -86,7 +95,7 @@ if (!function_exists('getAuthenticate')) {
 if (!function_exists('getDeviceConfig')) {
 
     function getDeviceConfig($token, $name, $curl = '', $typeRequest = HTTPS_REQUEST) {
-        $result = array();
+        $result = new stdClass();
         if (empty($token) || empty($name)) {
             return $result;
         }
@@ -105,7 +114,9 @@ if (!function_exists('getDeviceConfig')) {
         if ($curl->error) {
             //ghi log
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
-            return array('success' => false, 'message' => $curl->errorCode . '-' . $curl->errorMessage);
+            $result->success = FALSE;
+            $result->message = $curl->errorCode . '-' . $curl->errorMessage;
+            return $result;
         }
         return $result;
     }
@@ -270,6 +281,8 @@ if (!function_exists('createDeviceConfig')) {
         $result->deviceName = '';
         $result->name = '';
         $result->otherConfig = new stdClass();
+        $result->otherConfig->lang = 1;
+        $result->otherConfig->train_road = array(0,0,0,0,0,0,0,0);
         $result->mainConfig = new stdClass();
         return $result;
     }

@@ -135,7 +135,7 @@
                                 </label>
                                 <?php for($i=0;$i<7;$i++):?>
                                     <div class="col-sm-1">
-                                        <select id="vmsSectionId" name="chien-luoc-ngay[<?php echo $i+2?>]" class="form-control pointer input-sm vms-input">
+                                        <select id="<?php echo 'stragetiesDay['.($i).']';?>" name="chien-luoc-ngay[<?php echo $i+2?>]" class="form-control pointer input-sm vms-input">
                                             <option value="-1">--Loại chiến lược--</option>
                                             <option value="0" <?php echo @!empty($data->config->otherConfig->strageties[$i]) && $data->config->otherConfig->strageties[$i]=='A'?' selected':''?>>A</option>
                                             <option value="1"  <?php echo @!empty($data->config->otherConfig->strageties[$i]) && $data->config->otherConfig->strageties[$i]=='B'?' selected':''?>>B</option>
@@ -154,7 +154,7 @@
                                 </label>
                                 <?php for($i=0;$i<8;$i++):?>
                                     <div class="col-sm-1">
-                                        <select  class="form-control pointer input-sm vms-input vms-input-opt1" name="opt1_[<?php echo $i?>]">
+                                        <select id="<?php echo 'option1['.$i.']'?>" class="form-control pointer input-sm vms-input vms-input-option1" name="option1_[<?php echo $i?>]">
                                             <option name="item" value="-1">--Loại OPT--</option>
                                             <option name="item" value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
                                             <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
@@ -171,7 +171,7 @@
                                 </label>
                                 <?php for($i=0;$i<8;$i++):?>
                                     <div class="col-sm-1">
-                                        <select  class="form-control pointer input-sm vms-input vms-input-opt2" name="opt2_[<?php echo $i?>]">
+                                        <select id="<?php echo 'option2['.$i.']';?>" class="form-control pointer input-sm vms-input vms-input-option2" name="option2_[<?php echo $i?>]">
                                             <option value="-1">--Loại OPT--</option>
                                             <option value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
                                             <option value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
@@ -210,7 +210,7 @@
                         <button type="button" id="btnSetTime" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Set time</button>
                         <button type="button" id="btnUpload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Upload</button>
                         <button type="button" id="btnDownload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Download</button>
-                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="">Cancle</button>
+                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="myModal">Cancle</button>
                     </div>
                 </div>
             </div>
@@ -364,8 +364,7 @@ if(!empty($data)):
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
                 if(data.success){
-                    $(this).parent().modal('hiden');
-                    alert('lệnh đã thực hiện thành công');
+                    window.setValue(data.message.stragetiesA);
                 }else{
                     $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
                 }
@@ -406,42 +405,12 @@ $('#chien-luoc,#thoi-diem').on('change',function(){
                 if(config.trim()!=''&&validateJson(config)){
                     var tmp = JSON.parse(config);
                     config_device_strageties_active = tmp[parseInt(thoi_diem.val())];
-                    for(i=0;i<config_device_strageties_active['tx'].length;i++){
-                        $('#vmsTx'+i).val(config_device_strageties_active['tx'][i]);
-                    }
-                    for(i=0;i<config_device_strageties_active['tsx'].length;i++){
-                        $('#vmsTsx'+i).val(config_device_strageties_active['tsx'][i]);
-                    }
-                    for(i=0;i<config_device_strageties_active['tdbx'].length;i++){
-                        $('#vmsTdbx'+i).val(config_device_strageties_active['tdbx'][i]);
-                    }
-                    for(i=0;i<config_device_strageties_active['tsdbx'].length;i++){
-                        $('#vmsTsdbx'+i).val(config_device_strageties_active['tsdbx'][i]);
-                    }
-                    $('#vmsStartTime').val(config_device_strageties_active['hour_on']+ ":"+config_device_strageties_active['minute_on']);
-                    $('#vmsEndTime').val(config_device_strageties_active['hour_off']+ ":"+config_device_strageties_active['minute_off']);
-                    $('#vmsFreq').val(config_device_strageties_active['freq']);
-                    $('#vmsGt').val(config_device_strageties_active['gt']);
+                        window.setStrageties(config_device_strageties_active);
                 }
                 else{
                     config = createArr();
                     config_device_strageties_active = config[0];
-                    for(i=0;i<config_device_strageties_active['tx'].length;i++){
-                        $('#vmsTx'+i).val(config_device_strageties_active['tx'][i]);
-                    }
-                    for(i=0;i<config_device_strageties_active['tsx'].length;i++){
-                        $('#vmsTsx'+i).val(config_device_strageties_active['tsx'][i]);
-                    }
-                    for(i=0;i<config_device_strageties_active['tdbx'].length;i++){
-                        $('#vmsTdbx'+i).val(config_device_strageties_active['tdbx'][i]);
-                    }
-                    for(i=0;i<config_device_strageties_active['tsdbx'].length;i++){
-                        $('#vmsTsdbx'+i).val(config_device_strageties_active['tsdbx'][i]);
-                    }
-                    $('#vmsStartTime').val(config_device_strageties_active['hour_on']+ ":"+config_device_strageties_active['minute_on']);
-                    $('#vmsEndTime').val(config_device_strageties_active['hour_off']+ ":"+config_device_strageties_active['minute_off']);
-                    $('#vmsFreq').val(config_device_strageties_active['freq']);
-                    $('#vmsGt').val(config_device_strageties_active['gt']);
+                    window.setStrageties(config_device_strageties_active);
                 }
             }catch(e){
                 console.log(e)
@@ -450,22 +419,7 @@ $('#chien-luoc,#thoi-diem').on('change',function(){
         else{
             var config = createArr();
             var config_device_strageties_active = config[0];
-            for(i=0;i<config_device_strageties_active['tx'].length;i++){
-                $('#vmsTx'+i).val(config_device_strageties_active['tx'][i]);
-            }
-            for(i=0;i<config_device_strageties_active['tsx'].length;i++){
-                $('#vmsTsx'+i).val(config_device_strageties_active['tsx'][i]);
-            }
-            for(i=0;i<config_device_strageties_active['tdbx'].length;i++){
-                $('#vmsTdbx'+i).val(config_device_strageties_active['tdbx'][i]);
-            }
-            for(i=0;i<config_device_strageties_active['tsdbx'].length;i++){
-                $('#vmsTsdbx'+i).val(config_device_strageties_active['tsdbx'][i]);
-            }
-            $('#vmsStartTime').val(config_device_strageties_active['hour_on']+ ":"+config_device_strageties_active['minute_on']);
-            $('#vmsEndTime').val(config_device_strageties_active['hour_off']+ ":"+config_device_strageties_active['minute_off']);
-            $('#vmsFreq').val(config_device_strageties_active['freq']);
-            $('#vmsGt').val(config_device_strageties_active['gt']);
+            window.setStrageties(config_device_strageties_active);
         } 
     return;
     })

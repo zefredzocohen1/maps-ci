@@ -27,13 +27,13 @@ class MapsPro extends CI_Controller {
         $tokenCache = $fileCache->getItem('token');
         if (is_null($tokenCache->get())) {
             $result = getAuthenticate(mGetSession('username'), mGetSession('password'));
-            if (!empty($result)) {
-                mSetSession(array('token' => $result['message']));
+            if (!empty($result) && $result->success) {
+                mSetSession(array('token' => $result->message));
                 $tokenCache->set(($result))->expiresAfter(EXPIRES_CACHE_TOKEN);
                 $fileCache->save($tokenCache);
             }
         } else {
-            writeLog('lay tu trong cache ra token: '.print_r($tokenCache->get(),true));
+            writeLog('lay tu trong cache ra token: ' . print_r($tokenCache->get(), true));
             if (empty(mGetSession('token'))) {
                 mSetSession(array('token' => $tokenCache->get()));
             }
@@ -61,15 +61,15 @@ class MapsPro extends CI_Controller {
         $deviceNameCache = $fileCache->getItem($name);
         if (is_null($deviceNameCache->get())) {
             $result = getDeviceConfig(mGetSession('token'), $name);
-            if (!empty($result)) {
-                echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
-            } else {
+            if (empty($result) || @$result->success === false) {
                 echo json_encode(array('success' => FALSE, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+            } else {
+                $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
+                $fileCache->save($deviceNameCache);
+                echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
             }
-            $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
-            $fileCache->save($deviceNameCache);
         } else {
-            $result = $deviceNameCache->get();
+            $result=$deviceNameCache->get();
             echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
         }
         exit;
@@ -80,14 +80,11 @@ class MapsPro extends CI_Controller {
     }
 
     public function test() {
+//        echo $this->load->view('test/index',null,true);
         $fileCache = mConfig('fileCache');
-        $deviceCache = $fileCache->getItem('Dev02');
+        $deviceCache = $fileCache->getItem('Dev01');
         if (!empty($deviceCache->get())) {
-//        $deviceConfig = $deviceCache->get();$chienLuoc=mConfig('chien-luoc')[0];
-//                pre($deviceConfig->config->mainConfig->stragetiesA);
-//        pre($chienLuoc);
-//        pre(getActiveChienLuoc($deviceConfig, $chienLuoc, 1));
-            pre($deviceCache->get());
+            pre(($deviceCache->get()));
         }
     }
 
@@ -103,17 +100,15 @@ class MapsPro extends CI_Controller {
         $deviceConfigActive = array();
         if (is_null($deviceNameCache->get())) {
             $deviceConfig = getDeviceConfig(mGetSession('token'), $name);
-            if (!empty($deviceConfig)) {
+            if (!empty($deviceConfig)||@$deviceConfig['success']===FALSE) {
                 $deviceNameCache->set($deviceConfig)->expiresAfter(EXPIRES_CACHE_DEVICE);
                 $fileCache->save($deviceNameCache);
                 $deviceConfigActive = getActiveChienLuoc($deviceConfig, $mc_chien_luoc[$chien_luoc], $mc_thoi_diem[$thoi_diem]);
             }
         } else {
             $deviceConfig = $deviceNameCache->get();
-//            echo json_encode (array($mc_chien_luoc[$chien_luoc], $mc_thoi_diem[$thoi_diem]));
             $deviceConfigActive = getActiveChienLuoc($deviceConfig, $mc_chien_luoc[$chien_luoc], $mc_thoi_diem[$thoi_diem]);
         }
-//        exit;
         $deviceConfigView = $this->load->view('front-end/block/view_maker', array('data' => $deviceConfig), TRUE);
         echo json_encode(array('success' => true, 'dataConfig' => $deviceConfigActive));
         exit;
@@ -139,9 +134,9 @@ class MapsPro extends CI_Controller {
                 $config->mainConfig->stragetiesD = json_decode($row['value']);
             } elseif (preg_match('/chien\-luoc\-ngay\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig['strageties'][$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
-            } elseif (preg_match('/opt1\_\[([0-8])\]/', $row['name'], $_number)) {
+            } elseif (preg_match('/option1\_\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig['option1'][$_number[1]] = intval($row['value']);
-            } elseif (preg_match('/opt2\_\[([0-8])\]/', $row['name'], $_number)) {
+            } elseif (preg_match('/option2\_\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig['option2'][$_number[1]] = intval($row['value']);
             } elseif ($row['name'] == 'otherStartTime') {
                 $time = explode(':', $row['value']);
@@ -160,12 +155,15 @@ class MapsPro extends CI_Controller {
             }
         }
         $config->otherConfig = $subOtherConfig;
-//        $deviceNameCache = $fileCache->getItem($config->deviceName);
-//        $deviceNameCache->set($config)->expiresAfter(EXPIRES_CACHE_DEVICE);
-//        $fileCache->save($deviceNameCache);
-        $result = setConfigDevice(mGetSession('token'), $config->deviceName,  json_encode($config));
-        echo json_encode($config);
-        echo json_encode($result);
+        $result = setConfigDevice(mGetSession('token'), $config->deviceName, json_encode($config));
+        if ($result->success) {
+            $tmp = new stdClass();
+            $tmp->config = $config;
+            $deviceNameCache = $fileCache->getItem($config->deviceName);
+            $deviceNameCache->set($tmp)->expiresAfter(EXPIRES_CACHE_DEVICE);
+            $fileCache->save($deviceNameCache);
+        }
+        echo json_encode(($result));
         exit;
     }
 
@@ -196,9 +194,31 @@ class MapsPro extends CI_Controller {
         }
         exit;
     }
-    
+
     public function downloadConfigDevice() {
-        
+        if (empty(mGetSession('token'))) {
+            return json_encode(array('success' => false, 'error: token'));
+        }
+        $fileCache = mConfig('fileCache');
+        $name = scGetName($this->input->post('deviceName'));
+        $deviceNameCache = $fileCache->getItem($name);
+        $result = getDeviceConfig(mGetSession('token'), $name);
+        var_dump($result);exit;
+        if (empty($result)||@$result->success===false) {
+            echo json_encode(array('success' => FALSE, 'message' => 'error'));
+        } else {
+            $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
+            $fileCache->save($deviceNameCache);
+            $data = array();
+            $data['stragetiesA'] = $result->config->mainConfig->stragetiesA;
+            $data['stragetiesB'] = $result->config->mainConfig->stragetiesB;
+            $data['stragetiesC'] = $result->config->mainConfig->stragetiesC;
+            $data['stragetiesD'] = $result->config->mainConfig->stragetiesD;
+            $data['otherConfig'] = $result->config->otherConfig;
+            $data['deviceName'] = $result->config->deviceName;
+            echo json_encode(array('success'=>TRUE,'message'=>  $data));
+//            echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+        }
     }
 
     public function blinkDevice() {
@@ -214,7 +234,7 @@ class MapsPro extends CI_Controller {
         }
         exit;
     }
-        
+
     public function setTimeDevice() {
         $deviceName = $this->input->post('deviceName');
         $result = setTimeDevice(mGetSession('token'), $deviceName);
@@ -228,4 +248,5 @@ class MapsPro extends CI_Controller {
         }
         exit;
     }
+
 }
