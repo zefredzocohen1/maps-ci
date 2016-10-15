@@ -7,7 +7,7 @@
         padding: 0;
     }
     #map {
-        height: 100%;
+        height: 99%;
     }
     .aaa{
         position: relative;

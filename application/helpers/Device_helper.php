@@ -71,10 +71,11 @@ if (!function_exists('getAuthenticate')) {
         ));
         if ($curl->error) {
             //ghi log
+            $_resutl = new stdClass();
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
-            $result->success = false;
-            $result->message = $curl->errorCode . '-' . $curl->errorMessage;
-            return $result;
+            $_result->success = false;
+            $_result->message = $curl->errorCode . '-' . $curl->errorMessage;
+            return $_result;
         } elseif (empty($result) || get_class($result) !== 'stdClass') {
             $result->success = false;
             $result->message = 'dữ liệu trả về ko đúng';
@@ -288,6 +289,28 @@ if (!function_exists('createDeviceConfig')) {
     }
 
 }
+
+if (!function_exists('createDeviceSubOtherConfig')) {
+
+    function createDeviceSubOtherConfig() {
+        $result = new stdClass();
+        $result->hour_on = '';
+        $result->hour_off = '';
+        $result->minute_on = '';
+        $result->minute_off = '';
+        $result->hour_blink = '';
+        $result->minute_blink = '';
+        $result->so_pha = '';
+        $result->option1 = array();
+        $result->option2 = array();
+        $result->strageties = '';
+        $result->lang = 1;
+        $result->train_road = array(0,0,0,0,0,0,0,0);
+        return $result;
+    }
+
+}
+
 
 if (!function_exists('startDevice')) {
 

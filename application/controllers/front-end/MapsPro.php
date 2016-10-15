@@ -17,26 +17,13 @@ class MapsPro extends CI_Controller {
     }
 
     public function index() {
-        $data = array();
-        $userInfo = array(
-            'username' => 'tutq',
-            'password' => 'tutq'
-        );
-        mSetSession($userInfo);
+        $this->session->set_flashdata(array(
+            'type'=>  mConfig('type_flash_data')['success'],
+            'message'=>'test'
+        ));
         $fileCache = mConfig('fileCache');
-        $tokenCache = $fileCache->getItem('token');
-        if (is_null($tokenCache->get())) {
-            $result = getAuthenticate(mGetSession('username'), mGetSession('password'));
-            if (!empty($result) && $result->success) {
-                mSetSession(array('token' => $result->message));
-                $tokenCache->set(($result))->expiresAfter(EXPIRES_CACHE_TOKEN);
-                $fileCache->save($tokenCache);
-            }
-        } else {
-            writeLog('lay tu trong cache ra token: ' . print_r($tokenCache->get(), true));
-            if (empty(mGetSession('token'))) {
-                mSetSession(array('token' => $tokenCache->get()));
-            }
+        if(empty(mGetSession('username'))||empty(mGetSession('password'))){
+            redirect(base_url().'front-end/user/index');
         }
         $listDeviceCache = $fileCache->getItem('listDevice');
         $list = '';
@@ -61,6 +48,7 @@ class MapsPro extends CI_Controller {
         $deviceNameCache = $fileCache->getItem($name);
         if (is_null($deviceNameCache->get())) {
             $result = getDeviceConfig(mGetSession('token'), $name);
+//            echo json_encode($result);exit;
             if (empty($result) || @$result->success === false) {
                 echo json_encode(array('success' => FALSE, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
             } else {
@@ -70,6 +58,8 @@ class MapsPro extends CI_Controller {
             }
         } else {
             $result=$deviceNameCache->get();
+//            echo json_encode($result);
+//            exit;
             echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
         }
         exit;
@@ -119,7 +109,7 @@ class MapsPro extends CI_Controller {
         $data = $this->input->post('data');
         $value = array_values($data);
         $config = createDeviceConfig();
-        $subOtherConfig = mConfig('deviceSubOtherConfig');
+        $subOtherConfig = createDeviceSubOtherConfig();
         $config->deviceName = $this->input->post('deviceName');
         foreach ($value as $i => $row) {
             if ($row['name'] == 'intersection_name') {
@@ -133,35 +123,38 @@ class MapsPro extends CI_Controller {
             } elseif ($row['name'] == 'config_device_stragetiesD') {
                 $config->mainConfig->stragetiesD = json_decode($row['value']);
             } elseif (preg_match('/chien\-luoc\-ngay\[([0-8])\]/', $row['name'], $_number)) {
-                $subOtherConfig['strageties'][$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
+                $subOtherConfig->strageties[$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
             } elseif (preg_match('/option1\_\[([0-8])\]/', $row['name'], $_number)) {
-                $subOtherConfig['option1'][$_number[1]] = intval($row['value']);
+                $subOtherConfig->option1[$_number[1]] = intval($row['value']);
             } elseif (preg_match('/option2\_\[([0-8])\]/', $row['name'], $_number)) {
-                $subOtherConfig['option2'][$_number[1]] = intval($row['value']);
+                $subOtherConfig->option2[$_number[1]] = intval($row['value']);
             } elseif ($row['name'] == 'otherStartTime') {
                 $time = explode(':', $row['value']);
-                $subOtherConfig['hour_on'] = @ intval($time[0]);
-                $subOtherConfig['minute_on'] = @ intval($time[1]);
+                $subOtherConfig->hour_on = @ intval($time[0]);
+                $subOtherConfig->minute_on = @ intval($time[1]);
             } elseif ($row['name'] == 'otherEndTime') {
                 $time = explode(':', $row['value']);
-                $subOtherConfig['hour_off'] = @ intval($time[0]);
-                $subOtherConfig['minute_off'] = @ intval($time[1]);
+                $subOtherConfig->hour_off = @ intval($time[0]);
+                $subOtherConfig->minute_off = @ intval($time[1]);
             } elseif ($row['name'] == 'otherBlinkTime') {
                 $time = explode(':', $row['value']);
-                $subOtherConfig['hour_blink'] = @ intval($time[0]);
-                $subOtherConfig['minute_blink'] = @ intval($time[1]);
+                $subOtherConfig->hour_blink = @ intval($time[0]);
+                $subOtherConfig->minute_blink = @ intval($time[1]);
             } elseif ($row['name'] == 'otherAlpha') {
-                $subOtherConfig['so_pha'] = intval($row['value']);
+                $subOtherConfig->so_pha = intval($row['value']);
             }
         }
         $config->otherConfig = $subOtherConfig;
         $result = setConfigDevice(mGetSession('token'), $config->deviceName, json_encode($config));
+        echo json_encode($result);
+        exit;
         if ($result->success) {
             $tmp = new stdClass();
             $tmp->config = $config;
             $deviceNameCache = $fileCache->getItem($config->deviceName);
             $deviceNameCache->set($tmp)->expiresAfter(EXPIRES_CACHE_DEVICE);
             $fileCache->save($deviceNameCache);
+//            exit;
         }
         echo json_encode(($result));
         exit;
@@ -247,6 +240,11 @@ class MapsPro extends CI_Controller {
             echo json_encode($result);
         }
         exit;
+    }
+    
+    public function table(){
+        $data['temp'] = 'front-end/block/table';
+        $this->load->view('front-end/template/master', $data);
     }
 
 }

@@ -5,7 +5,6 @@ if (!defined('BASEPATH'))
 //adding config items.
 $config['host_server'] = 'https://128.199.193.255';
 $config['port_server'] = 8000;
-$ci = &get_instance();
 $config['addr_authenticate'] = '/api/authenticate';
 $config['addr_device_list'] = '/api/device-list';
 $config['addr_device_start'] = '/api/start-device?device-name=';
@@ -21,4 +20,10 @@ $config['addr_config_device_node'] = '/api/config-device-mode?device-name=';
 $config['curl_connect_timeout'] = 5;
 $config['curl_verbose'] = 1;
 $config['curl_timeout'] = 4000;// 4s
+$config['type_flash_data'] = array(
+    'success'=>1,
+    'error'=>2,
+    'info'=>3,
+    'warning'=>4
+);
 

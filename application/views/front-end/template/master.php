@@ -3,84 +3,91 @@
         <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
         <!--include css-->
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="<?php echo base_url().'public/asset/css/bootstrap.min.css'?>"/>
-        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/back-end/asset/css/main.css'?>"/>
-        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/spinner.css'?>"/>
-        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/font-awesome.css'?>"/>
-        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/bootstrap-datetimepicker.min.css'?>"/>
-        <link type="text/css" rel="stylesheet"  href="<?php echo base_url().'public/asset/css/style.min.css'?>"/>
-        
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-        <link href="<?php echo base_url() ?>public1/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/animate.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/style.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/style-responsive.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/theme/default.css" rel="stylesheet" id="theme" />
-        <style>
-            .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        </style>
-        <!--include js-->
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/jquery-1.12.4.min.js'?>"></script>
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/globalString.js'?>"></script>
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/bootstrap.js'?>"></script>
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/modal.js'?>"></script>
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/moment.min.js'?>"></script>
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/bootstrap-datetimepicker.js'?>"></script>
-        <script type="text/javascript" src="<?php echo base_url().'public/asset/js/spinner.js'?>"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-        
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!--[if lt IE 9]>
-                <script src="assets/crossbrowserjs/html5shiv.js"></script>
-                <script src="assets/crossbrowserjs/respond.min.js"></script>
-                <script src="assets/crossbrowserjs/excanvas.min.js"></script>
-        <![endif]-->
-        <script src="<?php echo base_url() ?>public1/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-        <!-- ================== END BASE JS ================== -->
+        <!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">-->
+        <link href="<?php echo base_url()?>public/asset/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url()?>public/asset/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-        <script src="<?php echo base_url() ?>public1/assets/js/apps.min.js"></script>
-        <!-- ================== BEGIN BASE JS ================== -->
-        <!--<script src="<?php echo base_url() ?>public1/assets/plugins/pace/pace.min.js"></script>-->
-        <script>
-            var context = "/its-omap";
-            $(document).ready(function () {
-                App.init();
-            });
-        </script>
+        <!-- Toastr style -->
+        <link href="<?php echo base_url()?>public/asset/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
-        <style>
-            .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-                padding-left: 5px;
-                padding-right: 5px;
-            }
-        </style>
+        <!-- Gritter -->
+        <link href="<?php echo base_url()?>public/asset/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+        <link href="<?php echo base_url()?>public/asset/css/animate.css" rel="stylesheet">
+        <link href="<?php echo base_url()?>public/asset/css/style.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
-            <?php $this->load->view('front-end/template/header.php')?>
-            <div class="main-content">
-                        <?php $this->load->view('front-end/sidebar');?>
-                        <?php if(!empty($temp)):?> 
-                        <?php $this->load->view($temp,  isset($data)?$data:NULL)?>
-                        <?php endif;?>
-            </div>
-            <div class="clearfix"></div>
-            <?php $this->load->view('front-end/template/footer.php')?>
+        <div id="wrapper" style="background-color: #2f4050 !important">
+            <?php $this->load->view('front-end/block/flash');?>
+            <?php $this->load->view('front-end/sidebar'); ?>
+            <div id="page-wrapper" class="gray-bg dashbard-1" >
+                <div class="row border-bottom">
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="margin: 0px;padding: 0px;">
+                        <div class="wrapper wrapper-content" style="margin: 0px;padding: 0px;">
+                            <?php if (!empty($temp)): ?> 
+                                <?php $this->load->view($temp, isset($data) ? $data : NULL) ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
         
+    <!-- Mainly scripts -->
+    <script src="<?php base_url()?>public/asset/js/jquery-2.1.1.js"></script>
+    <script src="<?php base_url()?>public/asset/js/globalString.js"></script>
+    <script src="<?php base_url()?>public/asset/js/bootstrap.min.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Flot -->
+    <script src="<?php base_url()?>public/asset/js/plugins/flot/jquery.flot.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/flot/jquery.flot.pie.js"></script>
+
+    <!-- Peity -->
+    <script src="<?php base_url()?>public/asset/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="<?php base_url()?>public/asset/js/demo/peity-demo.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="<?php base_url()?>public/asset/js/inspinia.js"></script>
+    <script src="<?php base_url()?>public/asset/js/plugins/pace/pace.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="<?php base_url()?>public/asset/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- GITTER -->
+    <script src="<?php base_url()?>public/asset/js/plugins/gritter/jquery.gritter.min.js"></script>
+
+    <!-- Sparkline -->
+    <script src="<?php base_url()?>public/asset/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="<?php base_url()?>public/asset/js/demo/sparkline-demo.js"></script>
+
+    <!-- ChartJS-->
+    <script src="<?php base_url()?>public/asset/js/plugins/chartJs/Chart.min.js"></script>
+
+    <!-- Toastr -->
+    <script src="<?php base_url()?>public/asset/js/plugins/toastr/toastr.min.js"></script>
+
+    
+    <script>
+        $(document).ready(function() {
+            setTimeout(function() {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success('Maps .....', 'Welcome to Maps pro');
+            }, 1300);
+        });
+    </script>
     </body>
 </html>

@@ -63,3 +63,5 @@ $route['device/downloadConfigDevice'] = 'front-end/MapsPro/downloadConfigDevice'
 $route['device/blinkDevice'] = 'front-end/MapsPro/blinkDevice';
 $route['device/setTimeDevice'] = 'front-end/MapsPro/setTimeDevice';
 $route['user/(.*)'] ='front-end/user/$1' ;
+$route['home'] = 'front-end/MapsPro/index';
+$route['table'] = 'front-end/MapsPro/table';
