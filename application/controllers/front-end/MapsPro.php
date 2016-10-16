@@ -7,8 +7,6 @@ use phpFastCache\CacheManager;
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-use \Curl\Curl;
-
 class MapsPro extends CI_Controller {
 
     public function __construct() {
