@@ -3,7 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element"> <span>
-                        <img alt="image" class="img-circle" src="<?php base_url()?>public/asset/img/profile_small.jpg" />
+                        <img alt="image" class="img-circle" src="<?php echo base_url()?>public/asset/img/profile_small.jpg" />
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> 
@@ -21,27 +21,33 @@
                     Mp
                 </div>
             </li>
-            <li class="active">
-                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+            <li id="dashboard" data-choose="" >
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li class="active"><a href="<?php echo base_url()?>/home">Dashboard v.1</a></li>
-                    <li><a href="<?php echo base_url()?>/table">Dashboard v.2</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>home">Dashboard v.1</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>table">Dashboard v.2</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">Layouts</span></a>
+            <li id="user" data-choose="" >
+                <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Quản lý user</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li data-choose="" ><a href="<?php echo base_url()?>user/list">Danh sách user</a></li>
+                </ul>
+                <ul class="nav nav-second-level">
+                    <li data-choose="" ><a href="<?php echo base_url()?>user/create">Tạo user</a></li>
+                </ul>
             </li>
-            <li>
+            <li data-choose="" >
                 <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="graph_flot.html">Flot Charts</a></li>
-                    <li><a href="graph_morris.html">Morris.js Charts</a></li>
-                    <li><a href="graph_rickshaw.html">Rickshaw Charts</a></li>
-                    <li><a href="graph_chartjs.html">Chart.js</a></li>
-                    <li><a href="graph_chartist.html">Chartist</a></li>
-                    <li><a href="c3.html">c3 charts</a></li>
-                    <li><a href="graph_peity.html">Peity Charts</a></li>
-                    <li><a href="graph_sparkline.html">Sparkline Charts</a></li>
+                    <li data-choose="" ><a href="graph_flot.html">Flot Charts</a></li>
+                    <li data-choose="" ><a href="graph_morris.html">Morris.js Charts</a></li>
+                    <li data-choose="" ><a href="graph_rickshaw.html">Rickshaw Charts</a></li>
+                    <li data-choose="" ><a href="graph_chartjs.html">Chart.js</a></li>
+                    <li data-choose="" ><a href="graph_chartist.html">Chartist</a></li>
+                    <li data-choose="" ><a href="c3.html">c3 charts</a></li>
+                    <li data-choose="" ><a href="graph_peity.html">Peity Charts</a></li>
+                    <li data-choose="" ><a href="graph_sparkline.html">Sparkline Charts</a></li>
                 </ul>
             </li>
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #2f4050 !important; float: right" >
@@ -53,3 +59,11 @@
 
     </div>
 </nav>
+<script>
+$(document).ready(function(){
+    console.log('<?php echo $action?>');
+    <?php if(!empty($sidebarActive)):?>
+            $("#<?php echo $sidebarActive?>").sidebarActive();
+    <?php endif?>
+})
+</script>

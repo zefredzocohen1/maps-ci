@@ -5,7 +5,7 @@
         <div class="alert alert-<?php echo $i?>">
             <strong><?php echo $i?>! </strong> <?php echo $this->session->flashdata('message');?>
         </div>
-        <?php endif;?>
         <?php break;?>
+        <?php endif;?>
     <?php endforeach;?>
 <?php endif; ?>

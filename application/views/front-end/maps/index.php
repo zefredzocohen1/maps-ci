@@ -1,5 +1,3 @@
-<?php // if(!empty($debug)) $this->load->view($debug);  ?>
-<?php // exit;  ?>
 <style>
     html, body {
         height: 100%;
@@ -22,7 +20,6 @@
     <div id="map"></div>
     <div class="modal fade" id="myModal" tabindex="-1" data-keyboard="false" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true"> 
     </div>
-<!--    --><?php //echo '<pre>';print_r(($devicesInfo));echo '</pre>';exit;?>
     <script>
         var jArray = <?php echo  (!empty($devicesInfo)) ? json_encode($devicesInfo):  json_encode(array());?>;
         function initMap() {
@@ -48,7 +45,6 @@
             }
         }
         function toggleBounce() {
-//            $('#myModal').modal('show');
             var data = {name:this.title};
         $.ajax({
             url: '<?php echo base_url().'device/ajax_search'?>',
@@ -60,12 +56,13 @@
                 if(data.success){
                     $('#myModal').html(data.message);
                     $('#myModal').modal('show');
+                }else{
+                    toast('Có lỗi !',data.message,'error');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert('error')
-                console.log(errorThrown)
-                console.log(textStatus);
+                toast('Có lỗi !',errorThrown+': '+textStatus,'error');
+                
             }
         });
         $(document).ajaxComplete(function () {

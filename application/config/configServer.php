@@ -16,14 +16,20 @@ $config['addr_device_config'] = '/api/device-config?device-name=';
 $config['addr_set_device_config'] = '/api/config-device?device-name=';
 $config['addr_config_time_device'] = '/api/config-time?device-name=';
 $config['addr_config_name_device'] = '/api/config-name?device-name=';
-$config['addr_config_device_node'] = '/api/config-device-mode?device-name=';
+$config['addr_config_device_mode'] = '/api/config-device-mode?device-name=';
+$config['addr_create_user'] = 'api/users';
 $config['curl_connect_timeout'] = 5;
 $config['curl_verbose'] = 1;
 $config['curl_timeout'] = 4000;// 4s
 $config['type_flash_data'] = array(
     'success'=>1,
-    'error'=>2,
+    'danger'=>2,
     'info'=>3,
     'warning'=>4
+);
+
+$config['role'] = array(
+    'user'=>1,
+    'admin'=>2,
 );
 

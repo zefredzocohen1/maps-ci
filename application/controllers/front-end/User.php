@@ -16,6 +16,7 @@ class User extends CI_Controller {
     }
 
     public function index() {
+        $data = array();
         $this->load->library("form_validation");
         if(!empty(mGetSession('username'))&&!empty(mGetSession('password'))){
             redirect(base_url().'home');
@@ -38,13 +39,18 @@ class User extends CI_Controller {
                 }
                 else{
                     $this->session->set_flashdata(array(
-                        'success'=>false,
+                        'type'=> mConfig('type_flash_data')['danger'],
                         'message'=>'Mật khẩu hoặc tài khoản không đúng'
                     ));
                 }
             }
         }
-        $this->load->view('front-end/user/login');
+        $data['temp'] = 'front-end/user/login';
+        $data['title'] = 'Đăng nhập';
+        $data['plugin'] = array(
+            'js'=>array('jquery.validate.min.js')
+        );
+        $this->load->view('front-end/template/user_before/master_user_before',$data);
     }
 
     public function login(){
@@ -93,5 +99,37 @@ class User extends CI_Controller {
         $this->session->unset_userdata('password');
         redirect(base_url().'front-end/user/index');
     }
-
+    
+    public function create(){
+        $role = mGetSession('role');
+        $data = array();
+//        if($role != mConfig('role')['admin']){
+//            $this->session->set_flashdata(array(
+//                        'type'=> mConfig('type_flash_data')['danger'],
+//                        'message'=>'Bạn không có quyền tạo user'
+//                    ));
+//        }
+        if($this->input->post()){
+            $user = convert_accented_characters(scGetName($this->input->post('username')));
+            $pass = scGetName($this->input->post('password'));
+            $permisson = scGetName($this->input->post('permison'));
+            if(!empty($user)&&!empty($pass)){
+                createUser($token,
+                    array(
+                        'username'=>$user,
+                        'password'=>$pass,
+                        'permisson'=>$role
+                    ));
+            }
+        }
+        $data['temp'] = 'front-end/user/create';
+        $data['title'] = 'Thêm người dùng';
+        $data['plugin'] = array(
+            'js'=>array('jquery.validate.min.js')
+        );
+        $data['sidebarActive'] = 'user';
+        $data['action'] = $this->router->method;
+        $data['roles'] = mConfig('role');
+        $this->load->view('front-end/template/master',$data);
+    }
 }

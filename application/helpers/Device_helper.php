@@ -53,7 +53,7 @@ if (!function_exists('getAuthenticate')) {
         $CI = & get_instance();
         $result = new stdClass();
         if (empty($user) || empty($pass)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: user or pass');
         }
         $address = $CI->config->item('host_server') . ':' . $CI->config->item('port_server') . mConfig('addr_authenticate');
         if (empty($curl))
@@ -98,7 +98,7 @@ if (!function_exists('getDeviceConfig')) {
     function getDeviceConfig($token, $name, $curl = '', $typeRequest = HTTPS_REQUEST) {
         $result = new stdClass();
         if (empty($token) || empty($name)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token or device name');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
         if (empty($curl))
@@ -170,7 +170,7 @@ if (!function_exists('getListDevice')) {
     function getListDevice($token, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_list');
         if (empty($curl))
@@ -213,7 +213,7 @@ if (!function_exists('setConfigDevice')) {
     function setConfigDevice($token, $deviceName, $deviceConfig, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token) || empty($deviceConfig) || empty($deviceName)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token or device name or config');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_set_device_config') . $deviceName;
 //        return $address;
@@ -311,13 +311,12 @@ if (!function_exists('createDeviceSubOtherConfig')) {
 
 }
 
-
 if (!function_exists('startDevice')) {
 
     function startDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token) || empty($deviceName)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token or device name');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_start') . $deviceName;
         if (empty($curl))
@@ -353,7 +352,7 @@ if (!function_exists('stopDevice')) {
     function stopDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token) || empty($deviceName)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token or device name');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_stop') . $deviceName;
         if (empty($curl))
@@ -389,7 +388,7 @@ if (!function_exists('blinkDevice')) {
     function blinkDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token) || empty($deviceName)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token or device name');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_blink') . $deviceName;
         if (empty($curl))
@@ -425,7 +424,7 @@ if (!function_exists('setTimeDevice')) {
     function setTimeDevice($token, $deviceName, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token) || empty($deviceName)) {
-            return $result;
+            return array('success' => false, 'message' => 'error: token or device name');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_config_time_device') . $deviceName;
         if (empty($curl))
@@ -453,4 +452,79 @@ if (!function_exists('setTimeDevice')) {
     }
 
 }
+
+if (!function_exists('createUser')) {
+
+    function createUser($token, $userInfo = array(), $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($userInfo)||empty($userInfo['username'])||empty($userInfo['password'])||empty($userInfo['permisson'])) {
+            return array('success' => false, 'message' => 'error: token or info user');
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_create_user');
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        
+        $curl->setOpt(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->post($address,$userInfo);
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+        return $result;
+    }
+
+}
+
+if (!function_exists('deleteUser')) {
+
+    function deleteUser($token, $userInfo = array(), $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token) || empty($userInfo)||empty($userInfo['username'])) {
+            return array('success' => false, 'message' => 'error: token or info user');
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_create_user');
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        
+        $curl->setOpt(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+        
+        $curl->setHeader('x-access-token', $token);
+        $result = $curl->delete($address,$userInfo);
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+        return $result;
+    }
+
+}
+
 ?>

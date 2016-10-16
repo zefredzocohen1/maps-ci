@@ -17,10 +17,6 @@ class MapsPro extends CI_Controller {
     }
 
     public function index() {
-        $this->session->set_flashdata(array(
-            'type'=>  mConfig('type_flash_data')['success'],
-            'message'=>'test'
-        ));
         $fileCache = mConfig('fileCache');
         if(empty(mGetSession('username'))||empty(mGetSession('password'))){
             redirect(base_url().'front-end/user/index');
@@ -45,10 +41,14 @@ class MapsPro extends CI_Controller {
         $fileCache = mConfig('fileCache');
         $data = array();
         $name = scGetName($this->input->post('name'));
+        
+        $result = getDeviceConfig(mGetSession('token'), $name);
+        echo json_encode($result);
+        die;
+        
         $deviceNameCache = $fileCache->getItem($name);
         if (is_null($deviceNameCache->get())) {
             $result = getDeviceConfig(mGetSession('token'), $name);
-//            echo json_encode($result);exit;
             if (empty($result) || @$result->success === false) {
                 echo json_encode(array('success' => FALSE, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
             } else {
@@ -58,8 +58,6 @@ class MapsPro extends CI_Controller {
             }
         } else {
             $result=$deviceNameCache->get();
-//            echo json_encode($result);
-//            exit;
             echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
         }
         exit;

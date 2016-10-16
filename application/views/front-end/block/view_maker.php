@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-lg" style="width: 80%;">
+<div class="modal-dialog modal-lg" data-toggle="modal" tabindex="-1" style="width: 80%;">
     <div class="modal-content">
         <div id="headerDiv" class="" style="padding: 0px;border-bottom-width: 0px;">
             <div class="alert alert-warning" id="WarningMessageAdd"></div>
@@ -14,8 +14,7 @@
                 <div id="div-8-col" class="border-graph" style="padding-bottom: 10px">
                     <div class="row" style="margin-left: 0px !important; margin-top: 5px">
                         <div class="col-sm-12 form-horizontal">
-                            <div class="error"></div>
-                            <h4 class="label-vms" style="background-color: #6d6e70; margin-bottom: -5px;margin-top: 0px;width: 35%;height: 25px;font-size: 16px;">THÔNG TIN CHUNG</h4>
+                            <h4 class="label-vms" style="background-color: #6d6e70; margin-bottom: -5px;margin-top: 0px;width: 35%;height: 18px;font-size: 14px;">THÔNG TIN CHUNG</h4>
                             <hr style="border-top-color: #939598;">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tên giao lộ<font color="red"><b>*</b></font></label>
@@ -128,7 +127,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 form-horizontal">
-                            <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 25px;font-size: 14px;">Chiến lược ngày</h4>
+                            <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 18px;font-size: 13px;">Chiến lược ngày</h4>
                             <hr style="border-top-color: #939598;">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">T2->CN<font color="red"><b>*</b></font>
@@ -147,7 +146,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 form-horizontal">
-                            <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 25px;font-size: 14px;">Cài đặt khác</h4>
+                            <h4 class="label-vms" style="background-color: #6d6e70;margin-bottom: -5px;margin-top: 0px;width: 30%;height: 18px;font-size: 13px;">Cài đặt khác</h4>
                             <hr style="border-top-color: #939598;">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">OPT 1<font color="red"><b>*</b></font>
@@ -210,7 +209,7 @@
                         <button type="button" id="btnSetTime" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Set time</button>
                         <button type="button" id="btnUpload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Upload</button>
                         <button type="button" id="btnDownload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Download</button>
-                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="myModal">Cancle</button>
+                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="modal">Cancle</button>
                     </div>
                 </div>
             </div>
@@ -284,14 +283,20 @@ if(!empty($data)):
             }
     })
     $('#btnUpload').on('click',function(){
+    var c = $(this);
+    c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'device/saveConfig'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
             success: function (data) {
-                console.log(data);
+                c.removeAttr('disabled');
                 if(data.success){
+                    $(this).parent().modal('hiden');
+                    toast('Thành công','Lệnh thực hiện thành công');
+                }else{
+                    toast('Có lỗi !',data.message,'error');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -300,18 +305,22 @@ if(!empty($data)):
     });
     
     $('#btnStart').on('click',function(){
+    var c = $(this);
+    c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'device/startDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
+                c.removeAttr('disabled');
                 if(data.success){
                     $(this).parent().modal('hiden');
-                    alert('lệnh đã thực hiện thành công');
+                    toast('Thành công','Lệnh thực hiện thành công');
                 }else{
-                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                    toast('Có lỗi !',data.message,'error');
                 }
+                
             },
             error: function (jqXHR, textStatus, errorThrown) {
             }
@@ -319,17 +328,20 @@ if(!empty($data)):
     });
     
     $('#btnStop').on('click',function(){
+    var c = $(this);
+    c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'device/stopDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
+                c.removeAttr('disabled');
                 if(data.success){
                     $(this).parent().modal('hiden');
-                    alert('lệnh đã thực hiện thành công');
+                    toast('Thành công','Lệnh thực hiện thành công');
                 }else{
-                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                    toast('Có lỗi !',data.message,'error');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -338,17 +350,20 @@ if(!empty($data)):
     });
     
     $('#btnSetTime').on('click',function(){
+    var c = $(this);
+    c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'device/setTimeDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
+                c.removeAttr('disabled');
                 if(data.success){
                     $(this).parent().modal('hiden');
-                    alert('lệnh đã thực hiện thành công');
+                    toast('Thành công','Lệnh thực hiện thành công');
                 }else{
-                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                    toast('Có lỗi !',data.message,'error');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -357,6 +372,8 @@ if(!empty($data)):
     });
     
     $('#btnDownload').on('click',function(){
+    var c = $(this);
+    c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'device/downloadConfigDevice'?>',
             type: "POST",
@@ -366,7 +383,7 @@ if(!empty($data)):
                 if(data.success){
                     window.setValue(data.message.stragetiesA);
                 }else{
-                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                    toast('Có lỗi !',data.message,'error');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -375,17 +392,20 @@ if(!empty($data)):
     });
     
     $('#btnBlink').on('click',function(){
+    var c = $(this);
+    c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'device/blinkDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
+                c.removeAttr('disabled');
                 if(data.success){
                     $(this).parent().modal('hiden');
-                    alert('lệnh đã thực hiện thành công');
+                    toast('Thành công','Lệnh thực hiện thành công');
                 }else{
-                    $('.error').html('<p>Có lỗi.<br/>'+data.message+'</p>')
+                    toast('Có lỗi !',data.message,'error');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
