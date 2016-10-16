@@ -33,3 +33,9 @@ $config['role'] = array(
     'admin'=>2,
 );
 
+$config['nameCache'] = array(
+    'token'=>'ccToken',
+    'listDivice'=>'ccListDivice',
+    
+);
+

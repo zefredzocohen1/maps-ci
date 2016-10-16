@@ -18,7 +18,7 @@ class MapsPro extends CI_Controller {
         if(empty(mGetSession('username'))||empty(mGetSession('password'))){
             redirect(base_url().'front-end/user/index');
         }
-        $listDeviceCache = $fileCache->getItem('listDevice');
+        $listDeviceCache = $fileCache->getItem(mConfig('nameCache')['listDivice']);
         $list = '';
         if (is_null($listDeviceCache->get())) {
             $list = getListDevice(mGetSession('token'));
@@ -40,23 +40,36 @@ class MapsPro extends CI_Controller {
         $name = scGetName($this->input->post('name'));
         
         $result = getDeviceConfig(mGetSession('token'), $name);
-        echo json_encode($result);
-        die;
-        
-        $deviceNameCache = $fileCache->getItem($name);
-        if (is_null($deviceNameCache->get())) {
-            $result = getDeviceConfig(mGetSession('token'), $name);
-            if (empty($result) || @$result->success === false) {
-                echo json_encode(array('success' => FALSE, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
-            } else {
-                $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
-                $fileCache->save($deviceNameCache);
-                echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+//        $listDiviceConfig = mConfig('nameCache');
+        $listDivice = $fileCache->getItem(mConfig('nameCache')['listDivice'])->get();
+        $isActive = FALSE;
+        if(!empty($listDivice)){
+            foreach ($listDivice as $i=>$device){
+               if($device['name']==$name ){
+                   $isActive = $device['isActive'];
+                   break;
+               }
             }
-        } else {
-            $result=$deviceNameCache->get();
-            echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+            if($isActive){
+                $deviceNameCache = $fileCache->getItem($name);
+                if (is_null($deviceNameCache->get())) {
+                    $result = getDeviceConfig(mGetSession('token'), $name);
+                    if (empty($result) || @$result->success === false) {
+                        echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+                    } else {
+                        $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
+                        $fileCache->save($deviceNameCache);
+                        echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+                    }
+                } else {
+                    $result=$deviceNameCache->get();
+                    echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+                }
+            }else{
+                echo json_encode(array('success'=>false,'message'=>'Thiếts bị chưa được bật'));
+            }
         }
+        
         exit;
     }
 

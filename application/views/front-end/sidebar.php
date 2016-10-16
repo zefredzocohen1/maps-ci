@@ -61,7 +61,7 @@
 </nav>
 <script>
 $(document).ready(function(){
-    console.log('<?php echo $action?>');
+    console.log('<?php // echo $action?>');
     <?php if(!empty($sidebarActive)):?>
             $("#<?php echo $sidebarActive?>").sidebarActive();
     <?php endif?>

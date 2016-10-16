@@ -195,9 +195,14 @@ if (!function_exists('getListDevice')) {
             if (!empty($result) && $typeResponse == RESPON_JSON) {
                 foreach ($result as $i => $value) {
                     $result[$i] = array(
-                        'long' => $value->modem_long,
-                        'lat' => $value->modem_lat,
-                        'name' => $value->device_name
+                        'long'              => $value->modem_long,
+                        'lat'               => $value->modem_lat,
+                        'name'              => $value->device_name,
+                        "sim_number"        => $value->sim_number,
+                        "device_series"     => $value->device_series,
+                        "device_mainboard"  => $value->device_mainboard,
+                        "device_state"      =>$value->device_state,
+                        "isActive"          => $value->isActive
                     );
                 }
                 return $result;
