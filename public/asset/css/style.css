@@ -4440,10 +4440,22 @@ body.mini-navbar.fixed-sidebar .logo-element {
 .loginscreen.middle-box {
   width: 300px;
 }
+.createuser.lage-box{
+    width: 500px;
+}
+.lage-box{
+    max-width: 600px;
+    z-index: 100;
+    margin: 0 auto;
+    padding-top: 10px;
+}
 .loginColumns {
   max-width: 800px;
   margin: 0 auto;
   padding: 100px 20px 20px 20px;
+}
+text-center{
+    text-align: center
 }
 .passwordBox {
   max-width: 460px;
@@ -4463,6 +4475,11 @@ body.mini-navbar.fixed-sidebar .logo-element {
 .wrapper .middle-box {
   margin-top: 140px;
 }
+
+.wrapper .lage-box {
+  margin-top: 10px;
+}
+
 .lock-word {
   z-index: 10;
   position: absolute;

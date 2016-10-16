@@ -74,3 +74,30 @@ function setOtherConfig(config){
     }
 }
 
+function toast(title,message,type){
+    setTimeout(function() {
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            timeOut: 4000
+        };
+        toastr[type](message, title);
+    }, 1300);
+}
+
+(function ($) {
+     $.fn.extend({
+       sidebarActive:function(option){
+           var c = this;
+           return this.each(function(){
+               $(c).addClass('active');
+               var link = $(c).find('li a');
+               if(link.attr(' data-choose')){
+                   
+               }
+           });
+       }  
+     })
+})(jQuery);
+

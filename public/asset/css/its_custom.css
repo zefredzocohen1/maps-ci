@@ -19,7 +19,6 @@
 	margin-right: 10px;
 }
 
-
 textarea {
     resize: none;
 }
@@ -262,6 +261,15 @@ overridden elsewhere.
 }
 .margin-top-nvs {
 	margin-top: 10px !important;
+}
+
+.form-control{
+    font-size: 12px !important;
+    padding: 5px 5px !important;
+}
+
+.modal-body{
+    padding: 20px 30px 1px 30px !important;
 }
 
 .form-control-position {
