@@ -127,7 +127,7 @@ if (!function_exists('getDeviceConfig')) {
 if (!function_exists('writeLog')) {
 
     function writeLog($msg, $type = 1) {
-        $file = APPPATH . '..\log\debug.txt';
+        $file = APPPATH . '..'.DIRECTORY_SEPARATOR.'log'.DIRECTORY_SEPARATOR.'debug.txt';
         $_message = date('Y:m:d H:i:s');
         $_message.=' ' . print_r($msg, true) . "\r\n";
         file_put_contents($file, $_message, FILE_APPEND | LOCK_EX);
