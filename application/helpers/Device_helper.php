@@ -1,7 +1,7 @@
 <?php
 
-require APPPATH . 'third_party\php-curl\vendor\autoload.php';
-require APPPATH . 'third_party\php-cache\vendor\autoload.php';
+require APPPATH . 'third_party'.DIRECTORY_SEPARATOR.'php-curl'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+require APPPATH . 'third_party'.DIRECTORY_SEPARATOR.'php-cache'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
 use phpFastCache\CacheManager;
 use \Curl\Curl;
