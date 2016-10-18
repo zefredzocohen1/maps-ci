@@ -52,7 +52,6 @@ class MapsPro extends CI_Controller {
                 $deviceNameCache = $fileCache->getItem($name);
                 if (is_null($deviceNameCache->get())) {
                     $result = getDeviceConfig(mGetSession('token'), $name);
-                    echo json_encode('get api');
                     if (empty($result) || @$result->success === false) {
                         echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
                     } else {
