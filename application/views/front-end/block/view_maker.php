@@ -293,8 +293,12 @@ if(!empty($data)):
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
-                    $(this).parent().modal('hiden');
-                    toast('Thành công','Lệnh thực hiện thành công');
+//                    if(typeof $('#myModal') !='undefined' ){
+//                        jQuery('#myModal').modal('hiden');
+//                    } 
+//                    c.parent().modal('hiden');
+//                    console.log($('#myModal'));
+                    toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
                 }
@@ -315,8 +319,8 @@ if(!empty($data)):
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
-                    $(this).parent().modal('hiden');
-                    toast('Thành công','Lệnh thực hiện thành công');
+//                    c.parent().modal('hiden');
+                    toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
                 }
@@ -338,8 +342,8 @@ if(!empty($data)):
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
-                    $(this).parent().modal('hiden');
-                    toast('Thành công','Lệnh thực hiện thành công');
+//                    c.parent().modal('hiden');
+                    toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
                 }
@@ -360,8 +364,8 @@ if(!empty($data)):
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
-                    $(this).parent().modal('hiden');
-                    toast('Thành công','Lệnh thực hiện thành công');
+//                    c.parent().modal('hiden');
+                    toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
                 }
@@ -402,8 +406,8 @@ if(!empty($data)):
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
-                    $(this).parent().modal('hiden');
-                    toast('Thành công','Lệnh thực hiện thành công');
+//                    c.parent().modal('hiden');
+                    toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
                 }

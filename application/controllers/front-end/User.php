@@ -27,11 +27,12 @@ class User extends CI_Controller {
                 $pass = scGetName($this->input->post('password'));
                 $userInfo = array(
                     'username' => $user,
-                    'password' => $pass
+                    'password' => $pass,
                 );
                 $result = getAuthenticate($user, $pass);
                 if (!empty($result) && $result->success) {
                     mSetSession(array('token' => $result->message));
+                    mSetSession(array('role'  =>$result->role));
                     mSetSession($userInfo);
                     redirect(base_url().'home');
                 }

@@ -66,3 +66,4 @@ $route['device/setTimeDevice'] = 'front-end/MapsPro/setTimeDevice';
 $route['user/(.*)'] ='front-end/user/$1' ;
 $route['home'] = 'front-end/MapsPro/index';
 $route['table'] = 'front-end/MapsPro/table';
+$route['device/add'] = 'front-end/device/add';

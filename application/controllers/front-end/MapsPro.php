@@ -14,20 +14,12 @@ class MapsPro extends CI_Controller {
     }
 
     public function index() {
+        pre($this->session->userdata);
         $fileCache = mConfig('fileCache');
         if(empty(mGetSession('username'))||empty(mGetSession('password'))){
             redirect(base_url().'front-end/user/index');
         }
-        $listDeviceCache = $fileCache->getItem(mConfig('nameCache')['listDivice']);
-        $list = '';
-        if (is_null($listDeviceCache->get())) {
-            $list = getListDevice(mGetSession('token'));
-            $listDeviceCache->set($list)->expiresAfter(EXPIRES_CACHE_LIST_DIVICE);
-            $fileCache->save($listDeviceCache);
-        } else {
-            writeLog('lay list divice tu cache' . print_r($listDeviceCache->get(), TRUE));
-            $list = $listDeviceCache->get();
-        }
+        $list = getListDevice(mGetSession('token'));
         $data['devicesInfo'] = !empty($list) ? $list : array();
         $data['temp'] = 'front-end/maps/index';
         $this->load->view('front-end/template/master', $data);
@@ -42,6 +34,7 @@ class MapsPro extends CI_Controller {
         $listDivice = getListDevice(mGetSession('token'));
         $isActive = FALSE;
         if(!empty($listDivice)){
+            $deviceNameCache = $fileCache->getItem($name);
             foreach ($listDivice as $i=>$device){
                if($device['name']==$name ){
                    $isActive = $device['isActive'];
@@ -49,27 +42,25 @@ class MapsPro extends CI_Controller {
                }
             }
             if($isActive){
-                $deviceNameCache = $fileCache->getItem($name);
                 if (is_null($deviceNameCache->get())) {
                     $result = getDeviceConfig(mGetSession('token'), $name);
                     if (empty($result) || @$result->success === false) {
-                        echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+                        echo json_encode(array('th'=>1,'success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
                     } else {
-                        $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
-                        $fileCache->save($deviceNameCache);
                         $result2->config = $result;
-                        echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result2), TRUE)));
+                        $deviceNameCache->set($result2)->expiresAfter(EXPIRES_CACHE_DEVICE);
+                        $fileCache->save($deviceNameCache);
+                        echo json_encode(array('th'=>$result2,'success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result2), TRUE)));
                     }
                 } else {
                     $result=$deviceNameCache->get();
-                    $result2->config = $result;
-                    echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result2), TRUE)));
+                    echo json_encode(array('th','success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
                 }
             }else{
-                echo json_encode(array('success'=>false,'message'=>'Thiếts bị chưa được bật'));
+                $fileCache->deleteItem($name);
+                echo json_encode(array('success'=>false,'message'=>'Thiết bị chưa được bật'));
             }
         }
-        
         exit;
     }
 
@@ -78,14 +69,19 @@ class MapsPro extends CI_Controller {
     }
 
     public function test($name=4) {
-//        pre(getDeviceConfig(mGetSession('token'), 'Dev0'.$name));
-//        die;
+//        pre( setConfigDevice(mGetSession('token'), 'Dev0'.$name,'{"deviceName":"Dev01","name":"* CONG TY PARAGON **","otherConfig":{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"hour_blink":22,"minute_blink":0,"so_pha":3,"option1":[3,3,3,3,3,3,3,3],"option2":[3,3,3,3,3,3,3,3],"strageties":["A","A","A","A","A","A","A"],"lang":1,"train_road":[1,1,1,1,1,1,1,1]},"mainConfig":{"stragetiesA":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[1,1,1,1,1,1,1,1],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}],"stragetiesB":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}],"stragetiesC":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}],"stragetiesD":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}]}}'));
+        echo json_encode(getDeviceConfig(mGetSession('token'), 'Dev0'.$name));
+        die;
 //        echo $this->load->view('test/index',null,true);
         $fileCache = mConfig('fileCache');
+        pre('truoc delete');
         $deviceCache = $fileCache->getItem('Dev0'.$name);
         if (!empty($deviceCache->get())) {
-            pre(($deviceCache->get()));
+            pre(json_encode($deviceCache->get()));
         }
+        pre('sau delete');
+        $fileCache->deleteItem('Dev0'.$name);
+        var_dump(($deviceCache->get()));
     }
 
     public function getMainConfig() {
@@ -156,17 +152,16 @@ class MapsPro extends CI_Controller {
         }
         $config->otherConfig = $subOtherConfig;
         $result = setConfigDevice(mGetSession('token'), $config->deviceName, json_encode($config));
-        echo json_encode($result);
-        exit;
-        if ($result->success) {
+        if (@$result->success) {
             $tmp = new stdClass();
             $tmp->config = $config;
             $deviceNameCache = $fileCache->getItem($config->deviceName);
             $deviceNameCache->set($tmp)->expiresAfter(EXPIRES_CACHE_DEVICE);
             $fileCache->save($deviceNameCache);
-//            exit;
+            echo json_encode(array('success'=>true,'message'=>'Thiết bị đã được ghi'));
+            exit;
         }
-        echo json_encode(($result));
+        echo json_encode(array('success'=>false,'message'=>$result));
         exit;
     }
 

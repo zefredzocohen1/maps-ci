@@ -22,10 +22,10 @@
                 </div>
             </li>
             <li id="dashboard" data-choose="" >
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">dashboard</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li data-choose="" ><a href="<?php echo base_url()?>home">Dashboard v.1</a></li>
-                    <li data-choose="" ><a href="<?php echo base_url()?>table">Dashboard v.2</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>table">Danh sách thiết bị</a></li>
                 </ul>
             </li>
             <li id="user" data-choose="" >
@@ -35,6 +35,13 @@
                 </ul>
                 <ul class="nav nav-second-level">
                     <li data-choose="" ><a href="<?php echo base_url()?>user/create">Tạo user</a></li>
+                </ul>
+            </li>
+            <li id="dashboard" data-choose="" >
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Quản lý thiết bị</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li data-choose="" ><a href="<?php echo base_url()?>table">Danh sách thiết bị</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>device/add">Thêm thiết bị</a></li>
                 </ul>
             </li>
             <li data-choose="" >
