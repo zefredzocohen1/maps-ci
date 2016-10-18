@@ -14,7 +14,6 @@ class MapsPro extends CI_Controller {
     }
 
     public function index() {
-        pre($this->session->userdata);
         $fileCache = mConfig('fileCache');
         if(empty(mGetSession('username'))||empty(mGetSession('password'))){
             redirect(base_url().'front-end/user/index');
