@@ -88,7 +88,7 @@ define('HTTPS_REQUEST', 2);
 define('RESPON_ARRAY', 1);
 define('RESPON_JSON', 2);
 define('RESPON_ARRAY_STD', 3);
-define('EXPIRES_CACHE_DEVICE', 28800);
+define('EXPIRES_CACHE_DEVICE', 900);//15'
 define('EXPIRES_CACHE_TOKEN', 86400);
 define('EXPIRES_CACHE_LIST_DIVICE', 2592000);
 //define($name, $value);

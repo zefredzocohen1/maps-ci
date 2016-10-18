@@ -100,7 +100,7 @@ if (!function_exists('getDeviceConfig')) {
         if (empty($token) || empty($name)) {
             return array('success' => false, 'message' => 'error: token or device name');
         }
-        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config_db') . $name;
         if (empty($curl))
             $curl = new Curl();
         if ($typeRequest === 2) {
@@ -113,12 +113,18 @@ if (!function_exists('getDeviceConfig')) {
         $curl->setHeader('x-access-token', $token);
         $result = $curl->get($address);
         if ($curl->error) {
-            //ghi log
-            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
-            $result->success = FALSE;
+            $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
+            $curl->get($address);
+            if($curl->error){
+                $result->success = FALSE;
             $result->message = $curl->errorCode . '-' . $curl->errorMessage;
             return $result;
+            }else{
+                $result->from = 'api';
+                return $result;
+            }
         }
+        $result->from = 'db';
         return $result;
     }
 

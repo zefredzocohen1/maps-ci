@@ -13,6 +13,7 @@ $config['addr_device_blink'] = '/api/blink-device?device-name=';
 $config['addr_device_serial'] = '/api/device-serial?device-name=';
 $config['addr_get_device_id'] = '/api/device-id?device-name=';
 $config['addr_device_config'] = '/api/device-config?device-name=';
+$config['addr_device_config_db'] = '/api/device-config-db?device-name=';
 $config['addr_set_device_config'] = '/api/config-device?device-name=';
 $config['addr_config_time_device'] = '/api/config-time?device-name=';
 $config['addr_config_name_device'] = '/api/config-name?device-name=';

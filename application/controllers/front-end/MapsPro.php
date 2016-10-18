@@ -37,11 +37,9 @@ class MapsPro extends CI_Controller {
         header("Content-Type: application/json", true);
         $fileCache = mConfig('fileCache');
         $data = array();
+        $result2 = new stdClass();
         $name = scGetName($this->input->post('name'));
-        
-        $result = getDeviceConfig(mGetSession('token'), $name);
-//        $listDiviceConfig = mConfig('nameCache');
-        $listDivice = $fileCache->getItem(mConfig('nameCache')['listDivice'])->get();
+        $listDivice = getListDevice(mGetSession('token'));
         $isActive = FALSE;
         if(!empty($listDivice)){
             foreach ($listDivice as $i=>$device){
@@ -54,16 +52,19 @@ class MapsPro extends CI_Controller {
                 $deviceNameCache = $fileCache->getItem($name);
                 if (is_null($deviceNameCache->get())) {
                     $result = getDeviceConfig(mGetSession('token'), $name);
+                    echo json_encode('get api');
                     if (empty($result) || @$result->success === false) {
                         echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
                     } else {
                         $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
                         $fileCache->save($deviceNameCache);
-                        echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+                        $result2->config = $result;
+                        echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result2), TRUE)));
                     }
                 } else {
                     $result=$deviceNameCache->get();
-                    echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
+                    $result2->config = $result;
+                    echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result2), TRUE)));
                 }
             }else{
                 echo json_encode(array('success'=>false,'message'=>'Thiếts bị chưa được bật'));
@@ -77,10 +78,12 @@ class MapsPro extends CI_Controller {
         
     }
 
-    public function test() {
+    public function test($name=4) {
+//        pre(getDeviceConfig(mGetSession('token'), 'Dev0'.$name));
+//        die;
 //        echo $this->load->view('test/index',null,true);
         $fileCache = mConfig('fileCache');
-        $deviceCache = $fileCache->getItem('Dev01');
+        $deviceCache = $fileCache->getItem('Dev0'.$name);
         if (!empty($deviceCache->get())) {
             pre(($deviceCache->get()));
         }

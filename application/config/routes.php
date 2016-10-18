@@ -52,6 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'front-end/MapsPro/index';
 $route['404_override'] = '';
 $route['device/ajax_search'] = 'front-end/MapsPro/search';
+$route['test/(.*)'] = 'front-end/MapsPro/test/$1';
 $route['test'] = 'front-end/MapsPro/test';
 $route['device/getMainConfig']='front-end/MapsPro/getMainConfig';
 $route['device/saveConfig']='front-end/MapsPro/saveConfig';
