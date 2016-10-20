@@ -206,10 +206,10 @@
                         <button type="button" id="btnStart" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Start</button>
                         <button type="button" id="btnStop" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Stop</button>
                         <button type="button" id="btnBlink" class="btn btn-sm btn-info m-t-n-xs m-t-n-xs"  data-dismiss="">Blink</button>
-                        <button type="button" id="btnSetTime" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Set time</button>
-                        <button type="button" id="btnUpload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Upload</button>
-                        <button type="button" id="btnDownload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Download</button>
-                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="modal">Cancle</button>
+                        <button type="button" id="btnSetTime" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Set Time</button>
+                        <button type="button" id="btnUpload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Get Config</button>
+                        <button type="button" id="btnDownload" class="btn btn-sm btn-info m-t-n-xs" data-dismiss="">Set Config</button>
+                        <button type="button" id="btnCancle" class="btn btn-sm btn-danger m-t-n-xs" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
