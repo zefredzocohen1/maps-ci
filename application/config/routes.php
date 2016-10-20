@@ -49,21 +49,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'front-end/MapsPro/index';
-$route['404_override'] = '';
-$route['device/ajax_search'] = 'front-end/MapsPro/search';
-$route['test/(.*)'] = 'front-end/MapsPro/test/$1';
-$route['test'] = 'front-end/MapsPro/test';
-$route['device/getMainConfig']='front-end/MapsPro/getMainConfig';
-$route['device/saveConfig']='front-end/MapsPro/saveConfig';
-$route['translate_uri_dashes'] = FALSE;
-$route['device/test'] = 'front-end/MapsPro/test';
-$route['device/startDevice'] = 'front-end/MapsPro/startDevice';
-$route['device/stopDevice'] = 'front-end/MapsPro/stopDevice';
-$route['device/downloadConfigDevice'] = 'front-end/MapsPro/downloadConfigDevice';
-$route['device/blinkDevice'] = 'front-end/MapsPro/blinkDevice';
-$route['device/setTimeDevice'] = 'front-end/MapsPro/setTimeDevice';
-$route['user/(.*)'] ='front-end/user/$1' ;
-$route['home'] = 'front-end/MapsPro/index';
-$route['table'] = 'front-end/MapsPro/table';
-$route['device/add'] = 'front-end/device/add';
+$route['default_controller'] = 'base/Home/index';
+$route['Home/index'] = 'base/Home/index';
+$route['Home'] = 'base/Home/index';
+//$route['']
+//$route['login'] = 'user/index';
+//$route['default_controller'] = 'MapsPro/index';
+//$route['404_override'] = '';
+//$route['device/ajax_search'] = 'MapsPro/search';
+//$route['test/(.*)'] = 'MapsPro/test/$1';
+//$route['test'] = 'MapsPro/test';
+//$route['device/getMainConfig']='MapsPro/getMainConfig';
+//$route['device/saveConfig']='MapsPro/saveConfig';
+//$route['translate_uri_dashes'] = FALSE;
+//$route['device/test'] = 'MapsPro/test';
+//$route['device/startDevice'] = 'MapsPro/startDevice';
+//$route['device/stopDevice'] = 'MapsPro/stopDevice';
+//$route['device/downloadConfigDevice'] = 'MapsPro/downloadConfigDevice';
+//$route['device/blinkDevice'] = 'MapsPro/blinkDevice';
+//$route['device/setTimeDevice'] = 'MapsPro/setTimeDevice';
+//$route['user/(.*)'] ='user/$1' ;
+//$route['home'] = 'MapsPro/index';
+//$route['table'] = 'MapsPro/table';
+//$route['device/add'] = 'device/add';
+//$route['modem'] = 'modem/index';

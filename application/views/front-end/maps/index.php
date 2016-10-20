@@ -32,12 +32,18 @@
             });
             var markers = [];
             var i = 0;
+            var img = '';
             for (i = 0; i < jArray.length; i++) {
+                if(jArray[i]['isActive']){
+                    img = 'maker-online-lite.png';
+                }else{
+                    img = 'maker-offline-lite.png'
+                }
                 markers.push(new google.maps.Marker({
                     position: new google.maps.LatLng(jArray[i]['lat'], jArray[i]['long']),
                     map: map,
                     title: jArray[i]['name'],
-                    icon: '<?php echo base_url() ?>public/asset/image/traffic_lights_on-lite_2.png'
+                    icon: '<?php echo base_url() ?>public/asset/image/'+img
                 }))
             }
             for (i = 0; i < markers.length; i++) {
@@ -47,7 +53,7 @@
         function toggleBounce() {
             var data = {name:this.title};
         $.ajax({
-            url: '<?php echo base_url().'device/ajax_search'?>',
+            url: '<?php echo base_url().'Device/search'?>',
             type: "POST",
             dataType: "Json",
             data: data,

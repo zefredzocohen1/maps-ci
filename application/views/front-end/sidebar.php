@@ -22,39 +22,27 @@
                 </div>
             </li>
             <li id="dashboard" data-choose="" >
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">dashboard</span> <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Quản lý thiết bị</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li data-choose="" ><a href="<?php echo base_url()?>home">Dashboard v.1</a></li>
-                    <li data-choose="" ><a href="<?php echo base_url()?>table">Danh sách thiết bị</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>Home/index">Bản đồ</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>Device/index">Danh sách thiết bị</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>Device/add">Thêm mới thiết bị</a></li>
                 </ul>
             </li>
             <li id="user" data-choose="" >
                 <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Quản lý user</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li data-choose="" ><a href="<?php echo base_url()?>user/list">Danh sách user</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>User">Danh sách user</a></li>
                 </ul>
                 <ul class="nav nav-second-level">
-                    <li data-choose="" ><a href="<?php echo base_url()?>user/create">Tạo user</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>User/add">Tạo user</a></li>
                 </ul>
             </li>
             <li id="dashboard" data-choose="" >
-                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Quản lý thiết bị</span> <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Quản lý modem</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li data-choose="" ><a href="<?php echo base_url()?>table">Danh sách thiết bị</a></li>
-                    <li data-choose="" ><a href="<?php echo base_url()?>device/add">Thêm thiết bị</a></li>
-                </ul>
-            </li>
-            <li data-choose="" >
-                <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li data-choose="" ><a href="graph_flot.html">Flot Charts</a></li>
-                    <li data-choose="" ><a href="graph_morris.html">Morris.js Charts</a></li>
-                    <li data-choose="" ><a href="graph_rickshaw.html">Rickshaw Charts</a></li>
-                    <li data-choose="" ><a href="graph_chartjs.html">Chart.js</a></li>
-                    <li data-choose="" ><a href="graph_chartist.html">Chartist</a></li>
-                    <li data-choose="" ><a href="c3.html">c3 charts</a></li>
-                    <li data-choose="" ><a href="graph_peity.html">Peity Charts</a></li>
-                    <li data-choose="" ><a href="graph_sparkline.html">Sparkline Charts</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>Modem">Danh sách modem</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>Modem/add">Thêm modem</a></li>
                 </ul>
             </li>
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #2f4050 !important; float: right" >

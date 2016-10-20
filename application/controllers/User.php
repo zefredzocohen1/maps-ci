@@ -1,6 +1,7 @@
 <?php
 
 require APPPATH . 'third_party'.DIRECTORY_SEPARATOR.'php-cache'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
+require APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'BaseController.php';
 
 use phpFastCache\CacheManager;
 
@@ -14,10 +15,11 @@ class User extends CI_Controller {
     }
 
     public function index() {
+        
         $data = array();
         $this->load->library("form_validation");
-        if(!empty(mGetSession('username'))&&!empty(mGetSession('password'))){
-            redirect(base_url().'home');
+        if(!empty($this->session->userdata('username'))&&!empty($this->session->userdata('password'))&&!empty($this->session->userdata('role'))){
+            redirect(base_url().'Home');
         }
         if($this->input->post()){
             $this->form_validation->set_rules('username', 'username', 'trim|required');
@@ -53,44 +55,41 @@ class User extends CI_Controller {
     }
 
     public function login(){
-        if(!empty(mGetSession('username'))&&!empty(mGetSession('password'))){
-            redirect('front-end/MapsPro/index');
+        if(!empty($this->session->userdata('username'))&&!empty($this->session->userdata('password'))&&!empty($this->session->userdata('role'))){
+            redirect(base_url().'Home');
         }
+        $data = array();
         if($this->input->post()){
-            $user = scGetName($this->input->post('username'));
-            $pass = scGetName($this->input->post('password'));
-            if(trim($user)!=''&&trim($pass)!=''){
+            $this->form_validation->set_rules('username', 'username', 'trim|required');
+            $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[3]');
+            if ($this->form_validation->run()) {
+                $user = scGetName($this->input->post('username'));
+                $pass = scGetName($this->input->post('password'));
+                $userInfo = array(
+                    'username' => $user,
+                    'password' => $pass,
+                );
                 $result = getAuthenticate($user, $pass);
-                if(!empty($result)||@$result->success==false){
-                    $userInfo = array(
-                        'username' => $user,
-                        'password' => $pass
-                    );
+                if (!empty($result) && $result->success) {
+                    mSetSession(array('token' => $result->message));
+                    mSetSession(array('role'  =>$result->role));
                     mSetSession($userInfo);
-                    
-                    $fileCache = mConfig('fileCache');
-                    $tokenCache = $fileCache->getItem('token');
-                    if (is_null($tokenCache->get())) {
-                        $result = getAuthenticate(mGetSession('username'), mGetSession('password'));
-                        if (!empty($result) && $result['success']) {
-                            mSetSession(array('token' => $result['message']));
-                            $tokenCache->set(($result))->expiresAfter(EXPIRES_CACHE_TOKEN);
-                            $fileCache->save($tokenCache);
-                        }
-                    } else {
-                        writeLog('lay tu trong cache ra token: ' . print_r($tokenCache->get(), true));
-                        if (empty(mGetSession('token'))) {
-                            mSetSession(array('token' => $tokenCache->get()));
-                        }
-                    }
-                    
-                    
-                    
-                    
+                    redirect(base_url().'Home/index');
+                }
+                else{
+                    $this->session->set_flashdata(array(
+                        'type'=> mConfig('type_flash_data')['danger'],
+                        'message'=>'Mật khẩu hoặc tài khoản không đúng'
+                    ));
                 }
             }
         }
-        $this->load->view('front-end/user/login');
+        $data['temp'] = 'front-end/user/login';
+        $data['title'] = 'Đăng nhập';
+        $data['plugin'] = array(
+            'js'=>array('jquery.validate.min.js')
+        );
+        $this->load->view('front-end/template/user_before/master_user_before',$data);
     }
     
     public function logout(){

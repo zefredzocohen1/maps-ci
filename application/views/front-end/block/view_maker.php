@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body color-bgr-form" style="font-size: 12px;">
             <?php if(!empty($data)):?>
-            <form action="<?php echo base_url().'device/saveConfig'?>" method="post">
+            <form action="<?php echo base_url().'Device/saveConfig'?>" method="post">
             <div class="row " style="margin-left: 0px; margin-right: 0px;">
                 <div id="div-8-col" class="border-graph" style="padding-bottom: 10px">
                     <div class="row" style="margin-left: 0px !important; margin-top: 5px">
@@ -286,7 +286,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'device/saveConfig'?>',
+            url: '<?php echo base_url().'Device/saveConfig'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
@@ -312,7 +312,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'device/startDevice'?>',
+            url: '<?php echo base_url().'Device/startDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
@@ -335,7 +335,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'device/stopDevice'?>',
+            url: '<?php echo base_url().'Device/stopDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
@@ -357,7 +357,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'device/setTimeDevice'?>',
+            url: '<?php echo base_url().'Device/setTimeDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
@@ -379,7 +379,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'device/downloadConfigDevice'?>',
+            url: '<?php echo base_url().'Device/downloadConfigDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
@@ -399,7 +399,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'device/blinkDevice'?>',
+            url: '<?php echo base_url().'Device/blinkDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
