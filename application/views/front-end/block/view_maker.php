@@ -286,7 +286,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'Device/saveConfig'?>',
+            url: '<?php echo base_url().'Device/downloadConfigDevice'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
@@ -379,7 +379,7 @@ if(!empty($data)):
     var c = $(this);
     c.attr('disabled','disabled');
     $.ajax({
-            url: '<?php echo base_url().'Device/downloadConfigDevice'?>',
+            url: '<?php echo base_url().'Device/saveConfig'?>',
             type: "POST",
             dataType: "Json",
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
