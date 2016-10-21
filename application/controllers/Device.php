@@ -36,10 +36,10 @@ class Device extends BaseController {
             $serialDev = !empty(scGetName($this->input->post('serialDev')))?scGetName($this->input->post('serialDev')):'';
             $mainboardDev = !empty(scGetName($this->input->post('mainboardDev')))?scGetName($this->input->post('mainboardDev')):'';
             $registerStringDev = !empty(scGetName($this->input->post('registerStringDev')))?scGetName($this->input->post('registerStringDev')):'';
-            $simNumberDev = !empty(scGetName($this->input->post('simNumberDev')))?scGetName($this->input->post('simNumberDev')):'';
-            $stateDev = !empty(scGetName($this->input->post('stateDev')))?scGetName($this->input->post('stateDev')):'';
-            $longDev = !empty(scGetName($this->input->post('longDev')))?scGetName($this->input->post('longDev')):'';
-            $latDev = !empty(scGetName($this->input->post('latDev')))?scGetName($this->input->post('latDev')):'';
+            $simNumberDev = !empty(scGetNumber($this->input->post('simNumberDev')))?scGetName($this->input->post('simNumberDev')):'';
+            $stateDev = !empty(scGetNumber($this->input->post('stateDev')))?scGetName($this->input->post('stateDev')):'';
+            $longDev = !empty(scGetNumber($this->input->post('longDev')))?scGetName($this->input->post('longDev')):'';
+            $latDev = !empty(scGetNumber($this->input->post('latDev')))?scGetName($this->input->post('latDev')):'';
             $descriptionDev = !empty(scGetName($this->input->post('descriptionDev')))?scGetName($this->input->post('descriptionDev')):'';
             $data = array(
                 'name'=>$nameDev,
@@ -253,8 +253,6 @@ class Device extends BaseController {
             return json_encode(array('success'=>FALSE,'message'=>'Lỗi tên thiết bị hoặc trạng thái ưu tiên'));
         }
         $result = setOrderDevice(mGetSession('token'), $deviceName, $orderType);
-        echo json_encode($result);
-        exit;
         if (empty($result)) {
             return json_encode(array(
                 'success' => false,
