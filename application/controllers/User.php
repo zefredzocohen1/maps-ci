@@ -95,7 +95,7 @@ class User extends CI_Controller {
     public function logout(){
         $this->session->unset_userdata('username');
         $this->session->unset_userdata('password');
-        redirect(base_url().'front-end/user/index');
+        redirect(base_url().'user/index');
     }
     
     public function create(){

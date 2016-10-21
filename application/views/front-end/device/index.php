@@ -30,22 +30,36 @@
                             <tr>
                                 <th>Tên</th>
                                 <th>sim_number</th>
-                                <th>device_series</th>
+                                <th>device_serial</th>
                                 <th>device_mainboard</th>
-                                <th>device_state</th>
-                                <th>Active</th>
+                                <th>mode</th>
+                                <th>state</th>
+                                <th>created_time</th>
+                                <th>register_string</th>
+                                <th>Hành-động</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(!empty($listDevice)):?>
                             <?php foreach ($listDevice as $i =>$row):?>
                             <tr class="gradeX">
-                                <td><?php echo $row['name'];?></td>
-                                <td><?php echo $row['sim_number'];?></td>
-                                <td><?php echo $row['device_series'];?></td>
-                                <td><?php echo $row['device_mainboard'];?></td>
-                                <td><?php echo $row['device_state'];?></td>
-                                <td><?php echo $row['isActive']?'Bật':'Tắt';?></td>
+                                <td><?php echo isset($row['name'])?$row['name']:'';?></td>
+                                <td><?php echo isset($row['sim_number'])?$row['sim_number']:'';?></td>
+                                <td><?php echo isset($row['device_serial'])?$row['device_serial']:'';?></td>
+                                <td><?php echo isset($row['device_mainboard'])?$row['device_mainboard']:'';?></td>
+                                <td><?php echo isset($row['mode'])?$row['mode']:'';?></td>
+                                <td><?php echo isset($row['state'])?'Bật':'Tắt';?></td>
+                                <td><?php echo isset($row['created_time'])?$row['created_time']:'';?></td>
+                                <td><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
+                                <td colspan="2">
+                                    <div class="form-inline" style="display:inline">
+                                        <button style="display:inline" class="btn btn-primary btn-circle btn-xs btn-detail" type="button" title="Thông tin thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-info"></i>
+                            </button>
+                                        <button style="display:inline" class="btn btn-info btn-circle btn-xs btn-update" type="button" title="Cập nhật thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-refresh"></i>
+                            </button>
+                                        <button style="display:inline" class="btn btn-danger btn-circle btn-xs btn-delete" type="button" title="Xóa thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa  fa-times-circle"></i>
+                            </button></div>
+                                    </td>
                             </tr>
                             <?php endforeach;?>
                             <?php endif;?>
@@ -54,10 +68,13 @@
                             <tr>
                                 <th>Tên</th>
                                 <th>sim_number</th>
-                                <th>device_series</th>
+                                <th>device_serial</th>
                                 <th>device_mainboard</th>
-                                <th>device_state</th>
-                                <th>Active</th>
+                                <th>mode</th>
+                                <th>state</th>
+                                <th>created_time</th>
+                                <th>register_string</th>
+                                <th>Hành động</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -108,4 +125,27 @@
             "New row"]);
 
     }
+    
+    $('.btn-delete').on('click',function(){
+        var c = $(this);
+        var name = c.data('name').substring(4);
+        r = confirm('Bạn có chắc muốn thực hiện');
+            if(r==true){
+                $.ajax({
+                    url: '<?php echo base_url().'Device/delete'?>',
+                    type: "POST",
+                    dataType: "Json",
+                    data: {deviceName:name},
+                    success: function (data) {
+                        if(data.success){
+                            toast('Thành công','Lệnh thực hiện thành công','success');
+                        }else{
+                            toast('Có lỗi !',data.message,'error');
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            }
+    });
 </script>

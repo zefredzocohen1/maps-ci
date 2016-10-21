@@ -577,12 +577,12 @@ if (!function_exists('setOrderDevice')) {
 
 if (!function_exists('DeviceInfo')) {
 
-    function DeviceInfo($token, $name, $mode, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+    function DeviceInfo($token, $data, $type, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
-        if (empty($token)||empty($mode)||empty($name)) {
-            return array('success' => false, 'message' => 'error: token or mode or name');
+        if (empty($token)||empty($data)||empty($type)) {
+            return array('success' => false, 'message' => 'error: token or data or type');
         }
-        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_curd_device').$name;
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_curd_device');
         if (empty($curl))
             $curl = new Curl();
         if ($typeRequest === HTTPS_REQUEST) {
@@ -593,9 +593,18 @@ if (!function_exists('DeviceInfo')) {
         $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
         $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
         $curl->setHeader('x-access-token', $token);
-        $result = $curl->put($address,array(
-            'run-mode'=>$mode
-        ));
+        //add
+        if($type==1){
+            $result = $curl->post($address,$data
+        );
+            // delete
+        }else if($type==2){
+            $result = $curl->delete($address,
+                    array(CURLOPT_CUSTOMREQUEST=> "delete",
+                    CURLOPT_POSTFIELDS=>  serialize($data),
+                    CURLOPT_RETURNTRANSFER, true));
+        }
+        
         if ($curl->error) {
             //ghi log
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);

@@ -292,12 +292,10 @@ if(!empty($data)):
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
             success: function (data) {
                 c.removeAttr('disabled');
+                toast('Thành công','Lệnh thực hiện thành công','success');
+                return;
                 if(data.success){
-//                    if(typeof $('#myModal') !='undefined' ){
-//                        jQuery('#myModal').modal('hiden');
-//                    } 
-//                    c.parent().modal('hiden');
-//                    console.log($('#myModal'));
+                    window.setStrageties(data.message.stragetiesA);
                     toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
@@ -382,10 +380,11 @@ if(!empty($data)):
             url: '<?php echo base_url().'Device/saveConfig'?>',
             type: "POST",
             dataType: "Json",
-            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
             success: function (data) {
+                c.removeAttr('disabled');
                 if(data.success){
-                    window.setValue(data.message.stragetiesA);
+                    toast('Success !','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
                 }

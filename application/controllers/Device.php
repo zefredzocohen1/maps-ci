@@ -31,6 +31,41 @@ class Device extends BaseController {
     
     public function add(){
         $data = array();
+        if($this->input->post()){
+            $nameDev = !empty(scGetName($this->input->post('nameDev')))?scGetName($this->input->post('nameDev')):'';
+            $serialDev = !empty(scGetName($this->input->post('serialDev')))?scGetName($this->input->post('serialDev')):'';
+            $mainboardDev = !empty(scGetName($this->input->post('mainboardDev')))?scGetName($this->input->post('mainboardDev')):'';
+            $registerStringDev = !empty(scGetName($this->input->post('registerStringDev')))?scGetName($this->input->post('registerStringDev')):'';
+            $simNumberDev = !empty(scGetName($this->input->post('simNumberDev')))?scGetName($this->input->post('simNumberDev')):'';
+            $stateDev = !empty(scGetName($this->input->post('stateDev')))?scGetName($this->input->post('stateDev')):'';
+            $longDev = !empty(scGetName($this->input->post('longDev')))?scGetName($this->input->post('longDev')):'';
+            $latDev = !empty(scGetName($this->input->post('latDev')))?scGetName($this->input->post('latDev')):'';
+            $descriptionDev = !empty(scGetName($this->input->post('descriptionDev')))?scGetName($this->input->post('descriptionDev')):'';
+            $data = array(
+                'name'=>$nameDev,
+                'serial'=>$serialDev,
+                'mainboard'=> $mainboardDev,
+                'register-string'=> $registerStringDev,
+                'sim-number'=> $simNumberDev,
+                'state'=>  $stateDev,
+                'lng'=> $longDev,
+                'lat'=> $latDev,
+                'description'=> $descriptionDev,
+            );
+            $result = DeviceInfo(mGetSession('token'), $data, '1');
+            if(@$result->success==1){
+                $this->session->set_flashdata(array(
+                    'type'=>1,
+                    'message'=>'Đã thêm thành công thiết bị'
+                ));
+                redirect(base_url().'Device/index');
+            }else{
+                $this->session->set_flashdata(array(
+                    'type'=>2,
+                    'message'=>'Đã thêm thành công thiết bị'
+                ));
+            }
+        }
         $data['plugin'] = array(
             'css'=>array('plugins/steps/jquery.steps.css'),
             'js'=>array(
@@ -166,23 +201,18 @@ class Device extends BaseController {
         if (empty(mGetSession('token'))) {
             return json_encode(array('success' => false, 'error: token'));
         }
-        $fileCache = mConfig('fileCache');
         $name = scGetName($this->input->post('deviceName'));
-        $deviceNameCache = $fileCache->getItem($name);
         $result = getDeviceConfig(mGetSession('token'), $name);
-        var_dump($result);exit;
         if (empty($result)||@$result->success===false) {
             echo json_encode(array('success' => FALSE, 'message' => 'error'));
         } else {
-            $deviceNameCache->set($result)->expiresAfter(EXPIRES_CACHE_DEVICE);
-            $fileCache->save($deviceNameCache);
             $data = array();
-            $data['stragetiesA'] = $result->config->mainConfig->stragetiesA;
-            $data['stragetiesB'] = $result->config->mainConfig->stragetiesB;
-            $data['stragetiesC'] = $result->config->mainConfig->stragetiesC;
-            $data['stragetiesD'] = $result->config->mainConfig->stragetiesD;
-            $data['otherConfig'] = $result->config->otherConfig;
-            $data['deviceName'] = $result->config->deviceName;
+            $data['stragetiesA'] = $result->mainConfig->stragetiesA;
+            $data['stragetiesB'] = $result->mainConfig->stragetiesB;
+            $data['stragetiesC'] = $result->mainConfig->stragetiesC;
+            $data['stragetiesD'] = $result->mainConfig->stragetiesD;
+            $data['otherConfig'] = $result->otherConfig;
+            $data['deviceName'] = $result->deviceName;
             echo json_encode(array('success'=>TRUE,'message'=>  $data));
 //            echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
         }
@@ -233,5 +263,16 @@ class Device extends BaseController {
         } else {
             return json_encode($result);
         }
+    }
+    
+    public function delete(){
+        $nameDev = !empty(scGetName($this->input->post('deviceName')))?scGetName($this->input->post('deviceName')):'';
+        if(!empty($nameDev)){
+            $result = DeviceInfo(mGetSession('token'), array('name'=>$nameDev), 2);
+            echo json_encode($result);
+        }else{
+            echo json_encode(array('success'=>false,'message'=>'tên thiết bị đang để trống'));
+        }
+        exit;
     }
 }

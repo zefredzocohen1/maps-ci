@@ -20,6 +20,7 @@ class Home extends BaseController {
         $fileCache = mConfig('fileCache');
         $list = getListDevice(mGetSession('token'));
         $data['devicesInfo'] = !empty($list) ? $list : array();
+//        pre($data);exit;
         $data['temp'] = 'front-end/maps/index';
         $this->load->view('front-end/template/master', $data);
     }

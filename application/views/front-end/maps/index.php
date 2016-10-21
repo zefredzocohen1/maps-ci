@@ -22,6 +22,7 @@
     </div>
     <script>
         var jArray = <?php echo  (!empty($devicesInfo)) ? json_encode($devicesInfo):  json_encode(array());?>;
+        console.log(jArray);
         function initMap() {
             var uluru = {lat: 21.030385, lng: 105.787894};
             var map = new google.maps.Map(document.getElementById('map'), {
