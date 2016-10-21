@@ -33,13 +33,13 @@ class Device extends BaseController {
         $data = array();
         if($this->input->post()){
             $nameDev = !empty(scGetName($this->input->post('nameDev')))?scGetName($this->input->post('nameDev')):'';
-            $serialDev = !empty(scGetName($this->input->post('serialDev')))?scGetName($this->input->post('serialDev')):'';
-            $mainboardDev = !empty(scGetName($this->input->post('mainboardDev')))?scGetName($this->input->post('mainboardDev')):'';
+            $serialDev = !empty(scGetSerial($this->input->post('serialDev')))?scGetSerial($this->input->post('serialDev')):'';
+            $mainboardDev = !empty(scGetSerial($this->input->post('mainboardDev')))?scGetSerial($this->input->post('mainboardDev')):'';
             $registerStringDev = !empty(scGetName($this->input->post('registerStringDev')))?scGetName($this->input->post('registerStringDev')):'';
-            $simNumberDev = !empty(scGetNumber($this->input->post('simNumberDev')))?scGetName($this->input->post('simNumberDev')):'';
-            $stateDev = !empty(scGetNumber($this->input->post('stateDev')))?scGetName($this->input->post('stateDev')):'';
-            $longDev = !empty(scGetNumber($this->input->post('longDev')))?scGetName($this->input->post('longDev')):'';
-            $latDev = !empty(scGetNumber($this->input->post('latDev')))?scGetName($this->input->post('latDev')):'';
+            $simNumberDev = !empty(scGetNumber($this->input->post('simNumberDev')))?scGetNumber($this->input->post('simNumberDev')):'';
+            $stateDev = !empty(scGetNumber($this->input->post('stateDev')))?scGetNumber($this->input->post('stateDev')):'';
+            $longDev = !empty(scGetNumber($this->input->post('longDev')))?scGetNumber($this->input->post('longDev')):'';
+            $latDev = !empty(scGetNumber($this->input->post('latDev')))?scGetNumber($this->input->post('latDev')):'';
             $descriptionDev = !empty(scGetName($this->input->post('descriptionDev')))?scGetName($this->input->post('descriptionDev')):'';
             $data = array(
                 'name'=>$nameDev,
