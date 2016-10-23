@@ -294,7 +294,7 @@ if(!empty($data)):
             url: '<?php echo base_url().'Device/downloadConfigDevice'?>',
             type: "POST",
             dataType: "Json",
-            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
+            data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>'},
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
