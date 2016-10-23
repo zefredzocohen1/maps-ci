@@ -14,7 +14,7 @@ class BaseController extends CI_Controller {
         
         parent::__construct();
         if(!$this->checkLogin()){
-            redirect('User/login');
+            redirect('User/logout');
         }
         
     }
@@ -33,5 +33,12 @@ class BaseController extends CI_Controller {
     
     public function checkPermisson(){
         
+    }
+
+    public function deleteSession(){
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('password');
+        $this->session->unset_userdata('token');
+        $this->session->unset_userdata('role');
     }
 }

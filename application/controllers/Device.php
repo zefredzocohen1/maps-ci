@@ -30,6 +30,9 @@ class Device extends BaseController {
     }
     
     public function add(){
+        if(!$this->checkLogin()){
+            redirect(base_url().'user/logout');
+        }
         $data = array();
         if($this->input->post()){
             $nameDev = !empty(scGetName($this->input->post('nameDev')))?scGetName($this->input->post('nameDev')):'';

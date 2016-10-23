@@ -124,6 +124,7 @@ if (!function_exists('getDeviceConfig')) {
             }
             $curl->get($address);
             if($curl->error){
+                $result = new stdClass();
                 $result->success = FALSE;
             $result->message = $curl->errorCode . '-' . $curl->errorMessage;
             return $result;
