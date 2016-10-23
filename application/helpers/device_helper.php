@@ -553,7 +553,7 @@ if (!function_exists('setOrderDevice')) {
 
     function setOrderDevice($token, $name, $mode, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
-        if (empty($token)||empty($mode)||empty($name)) {
+        if (empty($token)||!is_numeric($mode)||empty($name)) {
             return array('success' => false, 'message' => 'error: token or mode or name');
         }
         $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_set_device_order').$name;
@@ -567,6 +567,7 @@ if (!function_exists('setOrderDevice')) {
         $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
         $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
         $curl->setHeader('x-access-token', $token);
+//        $curl->setHeader('Content-Type','application/x-www-form-urlencoded');
         $result = $curl->put($address,array(
             'run-mode'=>$mode
         ));

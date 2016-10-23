@@ -252,12 +252,12 @@ class Device extends BaseController {
     
     public function setOrderDevice(){
         $deviceName = !empty(scGetName($this->input->post('deviceName')))?scGetName($this->input->post('deviceName')):'';
-        $orderType = !empty(scGetName($this->input->post('orderType')))?  intval(scGetName($this->input->post('orderType'))):-1;
+        $orderType = is_numeric(scGetNumber($this->input->post('orderType')))?  intval(scGetNumber($this->input->post('orderType'))):-1;
         if(empty($deviceName)||$orderType<0||$orderType>8){
             echo json_encode(array('success'=>FALSE,'message'=>'Lỗi tên thiết bị hoặc trạng thái ưu tiên'));
             exit;
         }
-        $result = setOrderDevice(mGetSession('token'), $deviceName, $orderType);
+        $result = setOrderDevice(mGetSession('token'), $deviceName, intval($orderType));
         if (empty($result)) {
             echo  json_encode(array(
                 'success' => false,
