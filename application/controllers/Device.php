@@ -134,9 +134,9 @@ class Device extends BaseController {
                 $config->mainConfig->stragetiesD = json_decode($row['value']);
             } elseif (preg_match('/chien\-luoc\-ngay\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig->strageties[$_number[1] - 2] = mConfig('chien-luoc-ngay')[intval($row['value'])];
-            } elseif (preg_match('/option1\_([0-8])/', $row['name'], $_number)) {
+            } elseif (preg_match('/option1\_\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig->option1[$_number[1]] = intval($row['value']);
-            } elseif (preg_match('/option2\_([0-8])/', $row['name'], $_number)) {
+            } elseif (preg_match('/option2\_\[([0-8])\]/', $row['name'], $_number)) {
                 $subOtherConfig->option2[$_number[1]] = intval($row['value']);
             } elseif ($row['name'] == 'otherStartTime') {
                 $time = explode(':', $row['value']);
