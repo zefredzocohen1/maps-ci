@@ -2,10 +2,11 @@
     <div class="modal-content">
         <div id="headerDiv" class="" style="padding: 0px;border-bottom-width: 0px;">
             <div class="alert alert-warning" id="WarningMessageAdd"></div>
+            <div class="titleDev" style="position: absolute;top: 10px;left: 10px;margin-left: 10px; font-size: 14px"><?php echo !@empty($data->config->deviceName)?$data->config->deviceName.' - [Mô tả]':''?></div>
             <button type="button" class="close" data-dismiss="modal">
                 <span aria-hidden="true" class="close-span">&times;</span><span class="sr-only">Close</span>
             </button>
-            <h4 class="modal-title label-vms" id="myModalLabelForm" style="margin-left: 10px; padding-top: 5px; font-size: 20px">Thêm mới</h4>
+            <h4 class="modal-title label-vms" id="myModalLabelForm" style="margin-left: 10px; padding-top: 5px; font-size: 20px;visibility: hidden">Thêm mới</h4>
         </div>
         <div class="modal-body color-bgr-form" style="font-size: 12px;">
             <?php if(!empty($data)):?>
@@ -107,8 +108,12 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tck<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-3">
                                     <input type="text" placeholder="Thời điểm" id="vmsFreq" name="vmsFreq" maxlength="20" class="form-control input-sm vms-input vms-input-tck  vms-select-input" placeholder="">
+                                </div>
+                                <label class="col-sm-1 control-label label-vms">Tv<font color="red"><b>*</b></font></label>
+                                <div class="col-sm-2">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTv" name="vmsTv" maxlength="20" class="form-control input-sm vms-input vms-input-tck  vms-select-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Tgt<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
@@ -255,8 +260,12 @@ if(!empty($data)):
                 }else{
                     if(strageties1.hasOwnProperty(_name)){
                         var time = $(this).val().split(':');
-                        for(i=0;i<time.length;i++){
-                            active[parseInt(thoiDiem.val())][strageties1[_name][i]] = parseInt(time[i]);
+                        if(time.length==1){
+                            active[parseInt(thoiDiem.val())][strageties1[_name][1]] = parseInt(time[0]);
+                            active[parseInt(thoiDiem.val())][strageties1[_name][0]] = 0;
+                        }else{
+                            active[parseInt(thoiDiem.val())][strageties1[_name][0]] = parseInt(time[0]);
+                            active[parseInt(thoiDiem.val())][strageties1[_name][1]] = parseInt(time[1]);
                         }
                     }else{
                        active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()]=parseInt($(this).val());
@@ -270,8 +279,12 @@ if(!empty($data)):
                     }else{
                         if(strageties1.hasOwnProperty(_name)){
                             var time = $(this).val().split(':');
-                            for(i=0;i<time.length;i++){
-                                active[parseInt(thoiDiem.val())][strageties1[_name][i]] = parseInt(time[i]);
+                            if(time.length==1){
+                                active[parseInt(thoiDiem.val())][strageties1[_name][1]] = parseInt(time[0]);
+                                active[parseInt(thoiDiem.val())][strageties1[_name][0]] = 0;
+                            }else{
+                                active[parseInt(thoiDiem.val())][strageties1[_name][0]] = parseInt(time[0]);
+                                active[parseInt(thoiDiem.val())][strageties1[_name][1]] = parseInt(time[1]);
                             }
                         }else{
                            active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()]=parseInt($(this).val());

@@ -2,14 +2,14 @@ function validateJson(a){
     if (/^[\],:{}\s]*$/.test(a.replace(/\\["\\\/bfnrtu]/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, '')))return true
     else return false;
 }
-var strageties = ['vmsTx','vmsTsx','vmsTdbx','vmsTsdbx' ,'vmsFreq','vmsGt', 'vmsStartTime','vmsEndTime']
+var strageties = ['vmsTx','vmsTsx','vmsTdbx','vmsTsdbx' , 'vmsTv','vmsFreq','vmsGt', 'vmsStartTime','vmsEndTime']
 var strageties1 = {'vmsStartTime':['hour_on','minute_on'],'vmsEndTime':['hour_off','minute_off']}
-var strageties2 = {'vmsTx':1,'vmsTsx':1,'vmsTdbx':1,'vmsTsdbx':1 ,'vmsFreq':2,'vmsGt':2, 'vmsStartTime':3,'vmsEndTime':3};
+var strageties2 = {'vmsTx':1,'vmsTsx':1,'vmsTdbx':1,'vmsTsdbx':1 , 'vmsTv':2,'vmsFreq':2,'vmsGt':2, 'vmsStartTime':3,'vmsEndTime':3};
 var stragetiesOther = {vmsSectionDay:1,option1:2,option2:2,
     otherStartTime:3,otherEndTime:3,otherBlinkTime:3,
     otherAlpha:4};
 var stragetiesOther2 = {'otherStartTime':['hour_on','minute_on'],otherEndTime:['hour_off','minute_off'],otherBlinkTime:['hour_blink','minute_blink']}
-var chienluoconly = {hour_on:'',hour_off:'',minute_on:'',minute_off:'',freq:'',gt:'',tv:'',tx:['','','','','','','',''],tsx:['','','','','','','',''],tdbx:['','','','','','','',''],tsdbx:['','','','','','','','']};
+var chienluoconly = {hour_on:'',hour_off:'',minute_on:'',minute_off:'',freq:'',gt:'',tv:'3',tx:['','','','','','','',''],tsx:['','','','','','','',''],tdbx:['','','','','','','',''],tsdbx:['','','','','','','','']};
 function createArr(){
     var a=[]
   for(i=0;i<8;i++){
