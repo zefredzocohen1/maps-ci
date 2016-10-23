@@ -119,6 +119,8 @@ if (!function_exists('getDeviceConfig')) {
         if ($curl->error) {
             if($type==2){
                 $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
+            }else if($type==1){
+                $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config_db') . $name;
             }
             $curl->get($address);
             if($curl->error){

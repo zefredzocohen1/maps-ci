@@ -1,4 +1,8 @@
-
+<style>
+    #DataTables_Table_0{
+        font-size: 11px;
+    }
+</style>
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
