@@ -124,7 +124,7 @@ function toast(title,message,type){
     $.fn.extend({
         validateNumber:function(){
             var c = this,value = $(c).val();
-            if(parseInt(value)<0||parseInt(value)>8||!(Math.floor(value)&&$.isNumeric(value))){
+            if(parseInt(value)<0||parseInt(value)>255||!(Math.floor(value)&&$.isNumeric(value))){
                 toast('nhập sai dữ liệu','Dữ liệu phải là số từ 1 ->8','error');
             }
             // kiểm tra class vms-select-input

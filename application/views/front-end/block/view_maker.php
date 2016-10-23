@@ -298,12 +298,16 @@ if(!empty($data)):
             success: function (data) {
                 c.removeAttr('disabled');
                 if(data.success){
-                    $('#config_device_stragetiesA').val(data.message.stragetiesA);
-                    $('#config_device_stragetiesB').val(data.message.stragetiesB);
-                    $('#config_device_stragetiesC').val(data.message.stragetiesC);
-                    $('#config_device_stragetiesD').val(data.message.stragetiesD);
+                    $('#config_device_stragetiesA').val(JSON.stringify(data.message.stragetiesA));
+                    $('#config_device_stragetiesB').val(JSON.stringify(data.message.stragetiesB));
+                    $('#config_device_stragetiesC').val(JSON.stringify(data.message.stragetiesC));
+                    $('#config_device_stragetiesD').val(JSON.stringify(data.message.stragetiesD));
                     $('#vmsName').val(data.message.deviceName);
-                    $('#otherAlpha').val(data.message.otherConfig.so_pha);
+                    if(data.message.otherConfig!=null && data.message.otherConfig.so_pha !=null){
+                        $('#otherAlpha').val(data.message.otherConfig.so_pha);
+                    }else{
+                        $('#otherAlpha').val(0);
+                    }
                     window.setOtherConfig(data.message.otherConfig);
                     if(typeof thoi_diem !='undefined'&&parseInt(thoi_diem.val())>=0&&parseInt(thoi_diem.val())<6&&
                        typeof chien_luoc !='undefined'&&parseInt(chien_luoc.val())>=0&&parseInt(chien_luoc.val())<4){

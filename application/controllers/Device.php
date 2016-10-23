@@ -211,12 +211,12 @@ class Device extends BaseController {
             echo json_encode(array('success' => FALSE, 'message' => 'error'));
         } else {
             $data = array();
-            $data['stragetiesA'] = $result->mainConfig->stragetiesA;
-            $data['stragetiesB'] = $result->mainConfig->stragetiesB;
-            $data['stragetiesC'] = $result->mainConfig->stragetiesC;
-            $data['stragetiesD'] = $result->mainConfig->stragetiesD;
-            $data['otherConfig'] = $result->otherConfig;
-            $data['deviceName'] = $result->name;
+            $data['stragetiesA'] = @$result->mainConfig->stragetiesA;
+            $data['stragetiesB'] = @$result->mainConfig->stragetiesB;
+            $data['stragetiesC'] = @$result->mainConfig->stragetiesC;
+            $data['stragetiesD'] = @$result->mainConfig->stragetiesD;
+            $data['otherConfig'] = @$result->otherConfig;
+            $data['deviceName'] = @$result->name;
             echo json_encode(array('success'=>TRUE,'message'=>  $data));
 //            echo json_encode(array('success' => true, 'message' => $this->load->view('front-end/block/view_maker', array('data' => $result), TRUE)));
         }
