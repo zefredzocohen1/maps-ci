@@ -68,21 +68,31 @@ class MapsPro extends CI_Controller {
         
     }
 
-    public function test($name=4) {
-        pre(getListDevice(mGetSession('token')));
-//        pre( setConfigDevice(mGetSession('token'), 'Dev0'.$name,'{"deviceName":"Dev01","name":"* CONG TY PARAGON **","otherConfig":{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"hour_blink":22,"minute_blink":0,"so_pha":3,"option1":[3,3,3,3,3,3,3,3],"option2":[3,3,3,3,3,3,3,3],"strageties":["A","A","A","A","A","A","A"],"lang":1,"train_road":[1,1,1,1,1,1,1,1]},"mainConfig":{"stragetiesA":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[1,1,1,1,1,1,1,1],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}],"stragetiesB":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}],"stragetiesC":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}],"stragetiesD":[{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]},{"hour_on":6,"hour_off":22,"minute_on":0,"minute_off":0,"freq":60,"gt":0,"tv":3,"tx":[3,3,3,3,3,3,3,3],"tsx":[3,3,3,3,3,3,3,3],"tdbx":[3,3,3,3,3,3,3,3],"tsdbx":[3,3,3,3,3,3,3,3]}]}}'));
-        echo json_encode(getDeviceConfig(mGetSession('token'), 'Dev0'.$name));
-        die;
-//        echo $this->load->view('test/index',null,true);
-        $fileCache = mConfig('fileCache');
-        pre('truoc delete');
-        $deviceCache = $fileCache->getItem('Dev0'.$name);
-        if (!empty($deviceCache->get())) {
-            pre(json_encode($deviceCache->get()));
+    public function printTestDev($name='001',$typeGet = 1,$typePrint=1) {
+        echo 'name: '.$name.', kiểu get: '.($typeGet==1?'db':'api').', kiểu print: '.($typePrint==1?'data':'data va type').'<br/>';
+        if($typeGet==1){
+            $dataGetDev = getDeviceConfig(mGetSession('token'),'device'.$name,1);
+            if($typePrint==1){
+                pre($dataGetDev);
+            }else{
+                var_dump($dataGetDev);
+            }
+        }else{
+            $dataGetDev = getDeviceConfig(mGetSession('token'),'Dev'.$name,2);
+            if($typePrint==1){
+                pre($dataGetDev);
+            }else{
+                var_dump($dataGetDev);
+            }
         }
-        pre('sau delete');
-        $fileCache->deleteItem('Dev0'.$name);
-        var_dump(($deviceCache->get()));
+        echo json_encode(getDeviceConfig(mGetSession('token'), 'Dev'.$name));
+        die;
+    }
+
+    public function printSession(){
+        if(mGetSession('role')&&mGetSession('role')=='admin'){
+            pre($this->session->userdata());
+        }
     }
 
     public function getMainConfig() {

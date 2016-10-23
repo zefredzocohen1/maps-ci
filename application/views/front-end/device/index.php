@@ -43,19 +43,19 @@
                             <?php if(!empty($listDevice)):?>
                             <?php foreach ($listDevice as $i =>$row):?>
                             <tr class="gradeX">
-                                <td><?php echo isset($row['name'])?$row['name']:'';?></td>
-                                <td><?php echo isset($row['sim_number'])?$row['sim_number']:'';?></td>
-                                <td><?php echo isset($row['device_serial'])?$row['device_serial']:'';?></td>
-                                <td><?php echo isset($row['device_mainboard'])?$row['device_mainboard']:'';?></td>
-                                <td><?php echo isset($row['mode'])?$row['mode']:'';?></td>
-                                <td><?php echo isset($row['state'])?'Bật':'Tắt';?></td>
-                                <td><?php echo isset($row['created_time'])?$row['created_time']:'';?></td>
-                                <td><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
+                                <td class="nameDev"><?php echo isset($row['name'])?$row['name']:'';?></td>
+                                <td class="simNumberDev"><?php echo isset($row['sim_number'])?$row['sim_number']:'';?></td>
+                                <td class="deviceSerialDev"><?php echo isset($row['device_serial'])?$row['device_serial']:'';?></td>
+                                <td class="deviceMainboardDev"><?php echo isset($row['device_mainboard'])?$row['device_mainboard']:'';?></td>
+                                <td class="modeDev"><?php echo isset($row['mode'])?$row['mode']:'';?></td>
+                                <td class="statusDev"><?php echo isset($row['state'])?'Bật':'Tắt';?></td>
+                                <td class="createTimeDev"><?php echo isset($row['created_time'])?$row['created_time']:'';?></td>
+                                <td class="registerStringDev"><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
                                 <td colspan="2">
                                     <div class="form-inline" style="display:inline">
                                         <button style="display:inline" class="btn btn-primary btn-circle btn-xs btn-detail" type="button" title="Thông tin thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-info"></i>
                             </button>
-                                        <button style="display:inline" class="btn btn-info btn-circle btn-xs btn-update" type="button" title="Cập nhật thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-refresh"></i>
+                                        <button style="display:inline" class="btn btn-info btn-circle btn-xs btn-update" data-toggle="modal" data-target="#myModal" type="button" title="Cập nhật thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-refresh"></i>
                             </button>
                                         <button style="display:inline" class="btn btn-danger btn-circle btn-xs btn-delete" type="button" title="Xóa thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa  fa-times-circle"></i>
                             </button></div>
@@ -64,6 +64,78 @@
                             <?php endforeach;?>
                             <?php endif;?>
                         </tbody>
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <form action="<?php echo base_url().'Device/updateInfo'?>" method="post" id="updateDev">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Thông tin thiết bị</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label>Name *</label>
+                                                <input id="nameDev" name="nameDev" type="text" class="form-control required">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Serial *</label>
+                                                <input id="serialDev" name="serialDev" type="text" class="form-control required">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label>mainboard *</label>
+                                                <input id="mainboardDev" name="mainboardDev" type="text" class="form-control required">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>register-string *</label>
+                                                <input id="registerStringDev" name="registerStringDev" type="text" class="form-control required">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label>sim-number *</label>
+                                                <input id="simNumberDev" name="simNumberDev" type="text" class="form-control required">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>state *</label>
+                                                <select name="stateDev" class="form-control required">
+                                                    <option value="1">Online</option>
+                                                    <option value="0">Offline</option>
+                                                    <option value="-1">Ẩn</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                                <label>Long *</label>
+                                                <input id="longDev" name="longDev" type="text" class="form-control required">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Lat *</label>
+                                                <input id="latDev" name="latDev" type="text" class="form-control required">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Mô tả *</label>
+                                            <textarea id="descriptionDev" name="descriptionDev" type="text" class="form-control required"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="frmUpdate">Update</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                </div>
                         <tfoot>
                             <tr>
                                 <th>Tên</th>
@@ -112,19 +184,7 @@
             "width": "90%",
             "height": "100%"
         });
-
-
     });
-
-    function fnClickAddRow() {
-        $('#editable').dataTable().fnAddData([
-            "Custom row",
-            "New row",
-            "New row",
-            "New row",
-            "New row"]);
-
-    }
     
     $('.btn-delete').on('click',function(){
         var c = $(this);
@@ -138,6 +198,7 @@
                     data: {deviceName:name},
                     success: function (data) {
                         if(data.success){
+                            c.parents('tr').fadeOut(1000, function() { $(this).remove(); });
                             toast('Thành công','Lệnh thực hiện thành công','success');
                         }else{
                             toast('Có lỗi !',data.message,'error');
@@ -147,5 +208,39 @@
                     }
                 });
             }
+    });
+    $('.btn-update').on('click',function () {
+        $('#myModal').modal('hide');
+        var fillData = <?php echo json_encode(mConfig('DeviceInfo'));?>;
+        var c = $(this),trData = c.parents('tr');
+        $.ajax({
+            url: '<?php echo base_url().'Device/getDeviceInfo'?>',
+            type: "POST",
+            dataType: "Json",
+            data: {deviceName:trData.find('.NameDev').html()},
+            success: function (data) {
+                if(data.success){
+                   for(var k in fillData){
+                       if(fillData.hasOwnProperty(k)) {
+                            $('#'+fillData[k]).val(data[k]);
+                       }
+                   }
+                    $('#myModal').modal('show');
+                }else{
+                    toast('Thông tin thiết bị','Không lấy được thông tin thiết bị','error')
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        })
+//        for(i=0;i<fillData.length;i++){
+//            $('input#'+fillData[i]).val(trData.find('.'+fillData[i]).html());
+//            console.log(trData.find());
+//            console.log(trData.find('.'+fillData[i]).html());
+//        }
+    })
+
+    $('#frmUpdate').on('click',function(){
+
     });
 </script>

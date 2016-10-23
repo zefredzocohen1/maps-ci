@@ -5,20 +5,26 @@ function validateJson(a){
 var strageties = ['vmsTx','vmsTsx','vmsTdbx','vmsTsdbx' ,'vmsFreq','vmsGt', 'vmsStartTime','vmsEndTime']
 var strageties1 = {'vmsStartTime':['hour_on','minute_on'],'vmsEndTime':['hour_off','minute_off']}
 var strageties2 = {'vmsTx':1,'vmsTsx':1,'vmsTdbx':1,'vmsTsdbx':1 ,'vmsFreq':2,'vmsGt':2, 'vmsStartTime':3,'vmsEndTime':3};
-var stragetiesOther = {vmsSectionDay:1,op1:2,op2:2,
+var stragetiesOther = {vmsSectionDay:1,option1:2,option2:2,
     otherStartTime:3,otherEndTime:3,otherBlinkTime:3,
     otherAlpha:4};
 var stragetiesOther2 = {'otherStartTime':['hour_on','minute_on'],otherEndTime:['hour_off','minute_off'],otherBlinkTime:['hour_blink','minute_blink']}
+var chienluoconly = {hour_on:'',hour_off:'',minute_on:'',minute_off:'',freq:'',gt:'',tv:'',tx:['','','','','','','',''],tsx:['','','','','','','',''],tdbx:['','','','','','','',''],tsdbx:['','','','','','','','']};
 function createArr(){
     var a=[]
   for(i=0;i<8;i++){
-    a[i] = {hour_on:'',hour_off:'',minute_on:'',minute_off:'',freq:'',gt:'',tv:'',tx:['','','','','','','',''],tsx:['','','','','','','',''],tdbx:['','','','','','','',''],tsdbx:['','','','','','','','']};
+    a[i] = chienluoconly;
   }
   return a;
 }
+function createChienLuoc(){
+    var a = ['','','','','',''];
+    for(i=0;i<6;i++){
+        a[i] = [];
+    }
+}
 
 function setStrageties(config){
-    console.log(config);
     var _strageties = window.strageties2;
     for(var k in _strageties){
         if(_strageties.hasOwnProperty(k)){
@@ -38,24 +44,7 @@ function setStrageties(config){
                 }
             }
         }
-        
     }
-//    for(i=0;i<config['tx'].length;i++){
-//        $('#vmsTx'+i).val(config['tx'][i]);
-//    }
-//    for(i=0;i<config['tsx'].length;i++){
-//        $('#vmsTsx'+i).val(config['tsx'][i]);
-//    }
-//    for(i=0;i<config['tdbx'].length;i++){
-//        $('#vmTdbx'+i).val(config['tdbx'][i]);
-//    }
-//    for(i=0;i<config['tsdbx'].length;i++){
-//        $('#vmsTsdbx'+i).val(config['tsdbx'][i]);
-//    }
-//    $('#vmsStartTime').val(config['hour_on']+ ":"+config['minute_on']);
-//    $('#vmsEndTime').val(config['hour_off']+ ":"+config['minute_off']);
-//    $('#vmsFreq').val(config['freq']);
-//    $('#vmsGt').val(config['gt']);
 }
 
 function setOtherConfig(config){
@@ -68,7 +57,11 @@ function setOtherConfig(config){
                     $('#'+k+'['+i+']').val(config['strageties'][i]);
                 }
             }else if(strageties[k]==2){
-                $('#'+k).val(config[strageties1[k][0]]+ ":"+config[strageties1[k][1]]);
+                for( i =0;i< config[k].length;i++){
+                    $('#'+k+"_"+i).val(config[k][i]);
+                }
+            }else if(strageties[k]==3){
+                $('#'+k).val(config[strageties2[k][0]]+':'+config[strageties2[k][1]]);
             }
         }
     }
@@ -83,7 +76,7 @@ function toast(title,message,type){
             timeOut: 4000
         };
         toastr[type](message, title);
-    }, 1300);
+    }, 300);
 }
 
 (function ($) {
@@ -99,5 +92,45 @@ function toast(title,message,type){
            });
        }  
      })
+})(jQuery);
+
+(function ($) {
+     $.fn.extend({
+         validateTragete:function(option){
+            var c = this;
+            var v = option;
+            var arr = [];
+             $('.'+v).each(function(){
+                 if($(this).val()!=''){
+                     arr.push($(this).val())
+                 console.log(v);
+                 console.log($(this).val());
+                 }
+             });
+
+           return this.each(function(){
+               $('.vms-select-input').each(function(){
+                   arr.push($(this).val());
+               })
+               if(arr.length==0&&arr.length==36){
+                   toast('Nhập dữ liệu','Nhập hợp lên','success');
+               }else{
+                   toast('Nhập dữ liệu','Nhập lỗi','error')
+               }
+               console.log(arr);
+           });
+       }  
+     })
+    $.fn.extend({
+        validateNumber:function(){
+            var c = this,value = $(c).val();
+            if(parseInt(value)<0||parseInt(value)>8||!(Math.floor(value)&&$.isNumeric(value))){
+                toast('nhập sai dữ liệu','Dữ liệu phải là số từ 1 ->8','error');
+            }
+            // kiểm tra class vms-select-input
+            // 1 nhập toàn bộ
+            // null toàn bộ
+        }
+    });
 })(jQuery);
 

@@ -5,7 +5,7 @@ if (!function_exists('onlyCharacter')) {
     function onlyCharacter($str,$type=1) {
         if($type==1)$str = preg_replace('/[^a-zA-Z0-9. ]/', '', $str);
         if($type==2)$str = preg_replace('/[^0-9 .-]/', '', $str);
-        if($type==3)$str = preg_replace('/[^a-zA-Z0-9. \-]/', '', $str);
+        if($type==3)$str = preg_replace('/[^a-zA-Z0-9. \-\#_]/', '', $str);
         return ($str);
     }
 

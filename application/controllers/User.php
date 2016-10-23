@@ -56,7 +56,7 @@ class User extends CI_Controller {
 
     public function login(){
         if(!empty($this->session->userdata('username'))&&!empty($this->session->userdata('password'))&&!empty($this->session->userdata('role'))){
-            redirect(base_url().'Home');
+            redirect(base_url().'Home/index');
         }
         $data = array();
         if($this->input->post()){

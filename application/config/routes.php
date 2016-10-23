@@ -51,14 +51,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'base/Home/index';
 $route['Home/index'] = 'base/Home/index';
+$route['home'] = 'base/Home/index';
 $route['Home'] = 'base/Home/index';
 //$route['']
 //$route['login'] = 'user/index';
 //$route['default_controller'] = 'MapsPro/index';
 //$route['404_override'] = '';
 //$route['device/ajax_search'] = 'MapsPro/search';
-//$route['test/(.*)'] = 'MapsPro/test/$1';
-$route['test'] = 'MapsPro/test';
+$route['tst/(.*)'] = 'MapsPro/printTestDev/$1';
+$route['tst'] = 'MapsPro/printTestDev';
+$route['sc'] = 'MapsPro/printSession';
 //$route['device/getMainConfig']='MapsPro/getMainConfig';
 //$route['device/saveConfig']='MapsPro/saveConfig';
 //$route['translate_uri_dashes'] = FALSE;

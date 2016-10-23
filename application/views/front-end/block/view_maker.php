@@ -19,11 +19,11 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tên giao lộ<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input id="vmsName" placeholder="Tên giao lộ" type="text" name="intersection_name" maxlength="100" value="<?php echo !@empty($data->config->name)?$data->config->name:''?>" class="form-control input-sm vms-input">
+                                    <input id="vmsName" placeholder="Tên giao lộ" type="text" name="intersection_name" maxlength="100" value="<?php echo !@empty($data->config->name)?$data->config->name:''?>" class="form-control input-sm">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Ưu tiên<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <select id="vmsTypeOrder" name="vmsTypeOrder" class="form-control input-sm vms-input">
+                                    <select id="vmsTypeOrder" name="vmsTypeOrder" class="form-control input-sm">
                                         <option value="-1">--Loại Ưu tiên--</option>
                                         <option value="0">Auto</option>
                                         <option value="1">Tuyến 1</option>
@@ -47,7 +47,7 @@
                                 <label class="col-sm-1 control-label label-vms">Thời điểm<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
                                     <!--<input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">-->
-                                    <select class="form-control input-sm vms-input" id="thoi-diem" name="thoi-diem">
+                                    <select class="form-control input-sm" id="thoi-diem" name="thoi-diem">
                                         <option value="-1">--Chọn thời điểm--</option>
                                         <option value="0">1</option>
                                         <option value="1">2</option>
@@ -60,7 +60,7 @@
                                 <label class="col-sm-1 control-label label-vms" name="chien-luoc">Chiến lược<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
                                     <!--<input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">-->
-                                    <select  id="chien-luoc" class="form-control input-sm vms-input" name="chien-luoc">
+                                    <select  id="chien-luoc" class="form-control input-sm" name="chien-luoc">
                                         <option value="-1">--Chọn chiến lược--</option>
                                         <option value="0">A</option>
                                         <option value="1">B</option>
@@ -77,7 +77,7 @@
                                 <label class="col-sm-1 control-label label-vms">Txanh<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTx<?php echo $i?>" name="vmsTx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tx" placeholder="" value="<?php echo @!empty($data->config->mainConfig->active->tx[0])?$data->config->mainConfig->active->tx[0]:''?>">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTx<?php echo $i?>" name="vmsTx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tx vms-select-input" placeholder="" value="<?php echo @!empty($data->config->mainConfig->active->tx[0])?$data->config->mainConfig->active->tx[0]:''?>">
                                 </div>
                                 <?php endfor;?>
                             </div>
@@ -85,7 +85,7 @@
                                 <label class="col-sm-1 control-label label-vms">TSxanh<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTsx<?php echo $i?>" name="vmsTsx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsx" placeholder="" value="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTsx<?php echo $i?>" name="vmsTsx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsx  vms-select-input" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
                             </div>
@@ -93,7 +93,7 @@
                                 <label class="col-sm-1 control-label label-vms">Tdibo<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTdbx<?php echo $i?>" name="vmsTdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tdbx" placeholder="" value="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTdbx<?php echo $i?>" name="vmsTdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tdbx  vms-select-input" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
                             </div>
@@ -101,28 +101,28 @@
                                 <label class="col-sm-1 control-label label-vms">TSdibo<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
                                 <div class="col-sm-1">
-                                    <input type="text" placeholder="Thời điểm" id="vmsTsdbx<?php echo $i?>" name="vmsTsdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsdbx" placeholder="" value="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsTsdbx<?php echo $i?>" name="vmsTsdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsdbx  vms-select-input" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tck<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input type="text" placeholder="Thời điểm" id="vmsFreq" name="vmsFreq" maxlength="20" class="form-control input-sm vms-input vms-input-tck" placeholder="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsFreq" name="vmsFreq" maxlength="20" class="form-control input-sm vms-input vms-input-tck  vms-select-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Tgt<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <input type="text" placeholder="Chiến lược" id="vmsGt" name="vmsGt" maxlength="6" class="form-control input-sm vms-input vms-input-tgt" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsGt" name="vmsGt" maxlength="6" class="form-control input-sm vms-input vms-input-tgt  vms-select-input" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Bắt đầu<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input vms-input-start-time" placeholder="">
+                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input vms-input-start-time  vms-select-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">kết thúc<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <input type="text" placeholder="Chiến lược" id="vmsEndTime" name="vmsEndTime" maxlength="6" class="form-control input-sm vms-input vms-input-end-time" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="vmsEndTime" name="vmsEndTime" maxlength="6" class="form-control input-sm vms-input vms-input-end-time vms-select-input" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                 </label>
                                 <?php for($i=0;$i<8;$i++):?>
                                     <div class="col-sm-1">
-                                        <select id="<?php echo 'option1['.$i.']'?>" class="form-control pointer input-sm vms-input vms-input-option1" name="option1_[<?php echo $i?>]">
+                                        <select id="<?php echo 'option1_'.$i?>" class="form-control pointer input-sm vms-input vms-input-option1" name="option1_[<?php echo $i?>]">
                                             <option name="item" value="-1">--Loại OPT--</option>
                                             <option name="item" value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
                                             <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
@@ -170,7 +170,7 @@
                                 </label>
                                 <?php for($i=0;$i<8;$i++):?>
                                     <div class="col-sm-1">
-                                        <select id="<?php echo 'option2['.$i.']';?>" class="form-control pointer input-sm vms-input vms-input-option2" name="option2_[<?php echo $i?>]">
+                                        <select id="<?php echo 'option2_'.$i;?>" class="form-control pointer input-sm vms-input vms-input-option2" name="option2_[<?php echo $i?>]">
                                             <option value="-1">--Loại OPT--</option>
                                             <option value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
                                             <option value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
@@ -197,7 +197,7 @@
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Số pha<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort"  name="otherAlpha" value="<?php echo @!is_null($data->config->otherConfig->so_pha)?$data->config->otherConfig->so_pha:''?>" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                    <input type="text" placeholder="Chiến lược" id="otherAlpha"  name="otherAlpha" value="<?php echo @!is_null($data->config->otherConfig->so_pha)?$data->config->otherConfig->so_pha:''?>" maxlength="6" class="form-control input-sm vms-input" placeholder="">
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,8 @@ if(!empty($data)):
 })(jQuery);
     var config_device_strageties_active = [];
     var tmpChienLuoc = <?php echo json_encode(mConfig('chien-luoc',JSON_PRETTY_PRINT));?>;
-    $('.vms-input').on('input',function(){
+    $('.vms-select-input').on('input',function(){
+        $(this).validateNumber();
         var chienLuoc = $('#chien-luoc');
         var thoiDiem = $('#thoi-diem');
         var name=$(this).attr('name');
@@ -238,6 +239,7 @@ if(!empty($data)):
         }else{
             _name=name;
         }
+        
         if(typeof chienLuoc !='undefined' &&chienLuoc.val()>=0 
                 &&typeof thoiDiem !='undefined'  &&chienLuoc.val()>=0&& strageties.indexOf(_name)>=0
         ){
@@ -246,6 +248,9 @@ if(!empty($data)):
                 if(config.trim()!=''&&validateJson(config)){
                 active = JSON.parse(config);
                 if(_number!=null){
+                    if(active[parseInt(thoiDiem.val())]==null){
+                        active[parseInt(thoiDiem.val())] = chienluoconly;
+                    }
                     active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()][_number]=parseInt($(this).val());
                 }else{
                     if(strageties1.hasOwnProperty(_name)){
@@ -257,7 +262,7 @@ if(!empty($data)):
                        active[parseInt(thoiDiem.val())][_name.substring(3).toLowerCase()]=parseInt($(this).val());
                     }
                 }
-                 $('#config_device_'+tmpChienLuoc[parseInt(chienLuoc.val())]).val(JSON.stringify(active)) ;                 
+                 $('#config_device_'+tmpChienLuoc[parseInt(chienLuoc.val())]).val(JSON.stringify(active)) ; 
                 }else{
                     active = createArr();
                     if(_number!=null){
@@ -283,7 +288,7 @@ if(!empty($data)):
             }
     })
     $('#btnUpload').on('click',function(){
-    var c = $(this);
+    var c = $(this);var chien_luoc=$('#chien-luoc'), thoi_diem=$('#thoi-diem');
     c.attr('disabled','disabled');
     $.ajax({
             url: '<?php echo base_url().'Device/downloadConfigDevice'?>',
@@ -292,10 +297,23 @@ if(!empty($data)):
             data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',data:$('form').serializeArray()},
             success: function (data) {
                 c.removeAttr('disabled');
-                toast('Thành công','Lệnh thực hiện thành công','success');
-                return;
                 if(data.success){
-                    window.setStrageties(data.message.stragetiesA);
+                    $('#config_device_stragetiesA').val(data.message.stragetiesA);
+                    $('#config_device_stragetiesB').val(data.message.stragetiesB);
+                    $('#config_device_stragetiesC').val(data.message.stragetiesC);
+                    $('#config_device_stragetiesD').val(data.message.stragetiesD);
+                    $('#vmsName').val(data.message.deviceName);
+                    $('#otherAlpha').val(data.message.otherConfig.so_pha);
+                    window.setOtherConfig(data.message.otherConfig);
+                    if(typeof thoi_diem !='undefined'&&parseInt(thoi_diem.val())>=0&&parseInt(thoi_diem.val())<6&&
+                       typeof chien_luoc !='undefined'&&parseInt(chien_luoc.val())>=0&&parseInt(chien_luoc.val())<4){
+                        var ActiveStragete = data.message[tmpChienLuoc[parseInt(chien_luoc.val())]][parseInt(thoi_diem.val())];
+                        console.log(ActiveStragete);
+                        if(ActiveStragete ==null){
+                            ActiveStragete = chienluoconly;
+                        }
+                        window.setStrageties(ActiveStragete);
+                    }
                     toast('Thành công','Lệnh thực hiện thành công','success');
                 }else{
                     toast('Có lỗi !',data.message,'error');
@@ -428,13 +446,16 @@ $('#chien-luoc,#thoi-diem').on('change',function(){
                 if(config.trim()!=''&&validateJson(config)){
                     var tmp = JSON.parse(config);
                     config_device_strageties_active = tmp[parseInt(thoi_diem.val())];
-                        window.setStrageties(config_device_strageties_active);
                 }
                 else{
                     config = createArr();
                     config_device_strageties_active = config[0];
-                    window.setStrageties(config_device_strageties_active);
                 }
+                if(config_device_strageties_active==null){
+                    config = createArr();
+                    config_device_strageties_active = config[0];
+                }
+                window.setStrageties(config_device_strageties_active);
             }catch(e){
                 console.log(e)
             }
@@ -460,7 +481,6 @@ $('#chien-luoc,#thoi-diem').on('change',function(){
                     dataType: "Json",
                     data: {deviceName:'<?php echo !@empty($data->config->deviceName)?$data->config->deviceName:''?>',orderType:typeOrder},
                     success: function (data) {
-                        console.log(data);
                         if(data.success){
         //                    c.parent().modal('hiden');
                             toast('Thành công','Lệnh thực hiện thành công','success');

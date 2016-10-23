@@ -95,12 +95,16 @@ if (!function_exists('getAuthenticate')) {
 
 if (!function_exists('getDeviceConfig')) {
 
-    function getDeviceConfig($token, $name, $curl = '', $typeRequest = HTTPS_REQUEST) {
+    function getDeviceConfig($token, $name, $type=1, $curl = '', $typeRequest = HTTPS_REQUEST) {
         $result = new stdClass();
         if (empty($token) || empty($name)) {
             return array('success' => false, 'message' => 'error: token or device name');
         }
-        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config_db') . $name;
+        if($type==1){
+            $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config_db') . $name;
+        }else{
+            $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
+        }
         if (empty($curl))
             $curl = new Curl();
         if ($typeRequest === 2) {
@@ -113,7 +117,9 @@ if (!function_exists('getDeviceConfig')) {
         $curl->setHeader('x-access-token', $token);
         $result = $curl->get($address);
         if ($curl->error) {
-            $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
+            if($type==2){
+                $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_device_config') . $name;
+            }
             $curl->get($address);
             if($curl->error){
                 $result->success = FALSE;
@@ -124,7 +130,7 @@ if (!function_exists('getDeviceConfig')) {
                 return $result;
             }
         }
-        $result->from = 'db';
+        $result->from = $type==1?'db':'api';
         return $result;
     }
 
@@ -204,7 +210,7 @@ if (!function_exists('getListDevice')) {
                         'long'              => $value->longitude,
                         'lat'               => $value->latitude,
                         'name'              => $value->device_name,
-                        "sim_number"        => $value->sim_number,
+                        "sim_number"        => isset($value->sim_number)?$value->sim_number:'',
                         "device_serial"     => isset($value->device_serial)?$value->device_serial:'',
                         "device_mainboard"  => isset($value->device_mainboard)?$value->device_mainboard:'',
                         "mode"              =>$value->mode,
@@ -599,10 +605,18 @@ if (!function_exists('DeviceInfo')) {
         );
             // delete
         }else if($type==2){
-            $result = $curl->delete($address,
-                    array(CURLOPT_CUSTOMREQUEST=> "delete",
-                    CURLOPT_POSTFIELDS=>  serialize($data),
-                    CURLOPT_RETURNTRANSFER, true));
+            $curl->setOpt(CURLOPT_CUSTOMREQUEST, "DELETE");
+            $result = $curl->delete($address,array(
+                'device-name'=> $data['name']
+            ));
+            //get
+        }else if($type==3){
+            $result = $curl->get($address,array(
+                'device-name'=> $data['name']
+            ));
+        }
+        else if($type==4){
+            $result = $curl->put($address,$data);
         }
         
         if ($curl->error) {

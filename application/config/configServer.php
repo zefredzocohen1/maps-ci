@@ -42,3 +42,15 @@ $config['nameCache'] = array(
     
 );
 
+$config['DeviceInfo'] = array(
+    'device_name'=>'nameDev',
+    'sim_number'=>'simNumberDev',
+    'device_serial'=>'serialDev',
+    'device_mainboard'=>'mainboardDev',
+    'state'=>'stateDev',
+    'description'=>'descriptionDev',
+    'register_string'=>'registerStringDev',
+    'latitude'=>'latDev',
+    'longitude'=>'longDev'
+);
+
