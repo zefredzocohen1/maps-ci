@@ -232,7 +232,7 @@ if(!empty($data)):
     var config_device_strageties_active = [];
     var tmpChienLuoc = <?php echo json_encode(mConfig('chien-luoc',JSON_PRETTY_PRINT));?>;
     $('.vms-select-input').on('input',function(){
-        $(this).validateNumber();
+//        $(this).validateNumber();
         var chienLuoc = $('#chien-luoc');
         var thoiDiem = $('#thoi-diem');
         var name=$(this).attr('name');
