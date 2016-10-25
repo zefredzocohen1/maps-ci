@@ -103,8 +103,6 @@ function toast(title,message,type){
              $('.'+v).each(function(){
                  if($(this).val()!=''){
                      arr.push($(this).val())
-                 console.log(v);
-                 console.log($(this).val());
                  }
              });
 
@@ -117,7 +115,6 @@ function toast(title,message,type){
                }else{
                    toast('Nhập dữ liệu','Nhập lỗi','error')
                }
-               console.log(arr);
            });
        }  
      })

@@ -68,13 +68,14 @@
     <script>
         var markers = [];
         var jArray = [];
+        var map;
         function initialize() {
             initMap();
         }
         jArray = <?php echo  (!empty($devicesInfo)) ? json_encode($devicesInfo):  json_encode(array());?>;
         function initMap() {
             var uluru = {lat: 21.030385, lng: 105.787894};
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
                 maxZoom: 20,
                 minZoom: 3,
@@ -197,29 +198,33 @@
 //            });
         });
         }
+        function toggleAnimation(marker) {
+            if (marker.getAnimation() !== null) {
+                marker.setAnimation(null);
+            } else {
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+        }
         $(document).ready(function(){
             $('#pac-input').autocomplete({
                 source: jArray,
                 select: function (event, ui) {
                     event.preventDefault();
-                    var itemc = ui.item
-                    console.log();
+                    var itemc = ui.item;
+                    $('#pac-input').val(ui.item.label);
                     if(typeof markers !=undefined && markers.length>=0){
                         for(i=0;i<markers.length;i++){
-                            if(markers[i]['position'].lat()==itemc['position'].lat()&&markers[i]['position'].long()==itemc['position'].long()){
-                                map.setCenter({lat:itemc['position'].lat(),long:itemc['position'].long()})
+                            if(markers[i]['position'].lat().toFixed(3)==itemc.lat && markers[i]['position'].lng().toFixed(3)==itemc.long){
+                                map.setCenter({lat:itemc.lat,lng:itemc.long});
+                                markers[i].setAnimation(google.maps.Animation.BOUNCE);
+                                setTimeout(function() {
+                                    markers[i].setAnimation(null)
+                                }, 5000);
+                                break;
                             }
                         }
                     }
                     return;
-//                    if (ui.item.post_room_id != undefined && ui.item.post_room_name != undefined) {
-//                        $("#post_room_name").val(ui.item.post_room_name);
-//                        var url = "<?php //echo admin_url('Post_room/index?post_room_name=');?>//"+ui.item.post_room_name;
-//                        <?php //if($user->role_id==1):?>
-//                        if($('#user_name').val()!='') url+="&user_name="+$('#user_name').val();
-//                        <?php //endif;?>
-//                        window.location.href = url;
-//                    }
                 }
             })
         })
