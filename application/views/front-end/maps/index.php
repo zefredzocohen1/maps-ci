@@ -202,8 +202,15 @@
                 source: jArray,
                 select: function (event, ui) {
                     event.preventDefault();
-                    console.log(ui.item);
-                    console.log(markers);
+                    var itemc = ui.item
+                    console.log();
+                    if(typeof markers !=undefined && markers.length>=0){
+                        for(i=0;i<markers.length;i++){
+                            if(markers[i]['position'].lat()==itemc['position'].lat()&&markers[i]['position'].long()==itemc['position'].long()){
+                                map.setCenter({lat:itemc['position'].lat(),long:itemc['position'].long()})
+                            }
+                        }
+                    }
                     return;
 //                    if (ui.item.post_room_id != undefined && ui.item.post_room_name != undefined) {
 //                        $("#post_room_name").val(ui.item.post_room_name);

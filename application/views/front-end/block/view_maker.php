@@ -45,21 +45,8 @@
                                 <div id= "vmsModel" class="col-sm-2 label-vms" style="text-align: right; padding-right: 0px; margin-left: -20px; text-align: center;">Chiến lược giờ</div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-1 control-label label-vms">Thời điểm<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-5">
-                                    <!--<input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">-->
-                                    <select class="form-control input-sm" id="thoi-diem" name="thoi-diem">
-                                        <option value="-1">--Chọn thời điểm--</option>
-                                        <option value="0">1</option>
-                                        <option value="1">2</option>
-                                        <option value="2">3</option>
-                                        <option value="3">4</option>
-                                        <option value="4">5</option>
-                                        <option value="5">6</option>
-                                    </select>
-                                </div>
                                 <label class="col-sm-1 control-label label-vms" name="chien-luoc">Chiến lược<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-5">
                                     <!--<input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">-->
                                     <select  id="chien-luoc" class="form-control input-sm" name="chien-luoc">
                                         <option value="-1">--Chọn chiến lược--</option>
@@ -72,6 +59,19 @@
                                     <input type="hidden" name="config_device_stragetiesB" id="config_device_stragetiesB" value='<?php echo @!empty($data->config->mainConfig->stragetiesB)?json_encode($data->config->mainConfig->stragetiesB):''?>'/>
                                     <input type="hidden" name="config_device_stragetiesC" id="config_device_stragetiesC" value='<?php echo @!empty($data->config->mainConfig->stragetiesC)?json_encode($data->config->mainConfig->stragetiesC):''?>'/>
                                     <input type="hidden" name="config_device_stragetiesD" id="config_device_stragetiesD" value='<?php echo @!empty($data->config->mainConfig->stragetiesD)?json_encode($data->config->mainConfig->stragetiesD):''?>'/>
+                                </div>
+                                <label class="col-sm-1 control-label label-vms">Thời điểm<font color="red"><b>*</b></font></label>
+                                <div class="col-sm-3">
+                                    <!--<input type="text" placeholder="Thời điểm" id="vmsIp" maxlength="20" class="form-control input-sm vms-input" placeholder="">-->
+                                    <select class="form-control input-sm" id="thoi-diem" name="thoi-diem">
+                                        <option value="-1">--Chọn thời điểm--</option>
+                                        <option value="0">1</option>
+                                        <option value="1">2</option>
+                                        <option value="2">3</option>
+                                        <option value="3">4</option>
+                                        <option value="4">5</option>
+                                        <option value="5">6</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -234,9 +234,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label class="col-sm-1 control-label label-vms">Số pha<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="otherAlpha"  name="otherAlpha" value="<?php echo @!is_null($data->config->otherConfig->so_pha)?$data->config->otherConfig->so_pha:''?>" maxlength="6" class="form-control input-sm vms-input" placeholder="">
+                                <label class="col-sm-1 control-label label-vms" style="margin: 7px 0px 0px -25px;padding: 0px 0px 0px 0px;">Số pha<font color="red"><b>*</b></font></label>
+                                <div class="col-sm-2" style="padding: 0px 79px 0px 10px;">
+                                    <input type="text" placeholder="Chiến lược" id="otherAlpha"  name="otherAlpha" value="<?php echo @!is_null($data->config->otherConfig->so_pha)?$data->config->otherConfig->so_pha:''?>" maxlength="6" class="form-control input-sm vms-input" placeholder="" style="padding:0px !important;">
                                 </div>
                             </div>
                         </div>
