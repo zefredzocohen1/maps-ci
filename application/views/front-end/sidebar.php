@@ -32,10 +32,10 @@
             <li id="user" data-choose="" >
                 <a href="#"><i class="fa fa-user"></i> <span class="nav-label">Quản lý user</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                    <li data-choose="" ><a href="<?php echo base_url()?>User">Danh sách user</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url();?>User/index">Danh sách user</a></li>
                 </ul>
                 <ul class="nav nav-second-level">
-                    <li data-choose="" ><a href="<?php echo base_url()?>User/add">Tạo user</a></li>
+                    <li data-choose="" ><a href="<?php echo base_url()?>User/create">Tạo user</a></li>
                 </ul>
             </li>
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0; background-color: #2f4050 !important; float: right" >

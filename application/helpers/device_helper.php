@@ -182,7 +182,7 @@ if (!function_exists('getActiveChienLuoc')) {
 
 if (!function_exists('getListDevice')) {
 
-    function getListDevice($token, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+    function getListDevice($token, $type=1, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
         $result = array();
         if (empty($token)) {
             return array('success' => false, 'message' => 'error: token');
@@ -212,15 +212,22 @@ if (!function_exists('getListDevice')) {
                     $result[$i] = array(
                         'long'              => $value->longitude,
                         'lat'               => $value->latitude,
-                        'name'              => $value->device_name,
-                        "sim_number"        => isset($value->sim_number)?$value->sim_number:'',
-                        "device_serial"     => isset($value->device_serial)?$value->device_serial:'',
-                        "device_mainboard"  => isset($value->device_mainboard)?$value->device_mainboard:'',
-                        "mode"              =>$value->mode,
-                        "state"             => $value->state,
-                        'created_time'      =>  $value->created_time,
-                        'register_string'   =>  $value->register_string
+                        'name'              => $value->device_name
                     );
+                    if($type==1){
+                        $result[$i]['sim_number'] = isset($value->sim_number)?$value->sim_number:'';
+                        $result[$i]['device_serial'] = isset($value->device_serial)?$value->device_serial:'';
+                        $result[$i]['device_mainboard'] = isset($value->device_mainboard)?$value->device_mainboard:'';
+                        $result[$i]['mode'] = $value->mode;
+                        $result[$i]['state'] = $value->state;
+                        $result[$i]['created_time'] = $value->created_time;
+                        $result[$i]['register_string'] = $value->register_string;
+                    }else{
+                        $result[$i]['state'] = @$value->state;
+                        $result[$i]['created_time'] = $value->created_time;
+                        $result[$i]['label'] = $value->device_name.'-'.$value->device_serial.'-'.$value->device_mainboard;
+                        $result[$i]['value'] = $value->device_name;
+                    }
                 }
                 return $result;
             }
@@ -623,6 +630,59 @@ if (!function_exists('DeviceInfo')) {
             $result = $curl->put($address,$data);
         }
         
+        if ($curl->error) {
+            //ghi log
+            writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+            return array('success' => false, 'message' => 'error: ' . $curl->errorCode . ': ' . $curl->errorMessage);
+        } elseif (empty($result)) {
+            writeLog('error: dữ liệu trả về ko đúng');
+            return array('success' => false, 'message' => 'dữ liệu trả về ko đúng');
+        } else {
+            return $result;
+        }
+    }
+
+}
+
+if (!function_exists('UserInfo')) {
+
+    function UserInfo($token, $data, $type, $curl = '', $typeResponse = RESPON_JSON, $typeRequest = HTTPS_REQUEST) {
+        $result = array();
+        if (empty($token)||empty($data)||empty($type)) {
+            return array('success' => false, 'message' => 'error: token or data or type');
+        }
+        $address = mConfig('host_server') . ':' . mConfig('port_server') . mConfig('addr_curd_user');
+        if (empty($curl))
+            $curl = new Curl();
+        if ($typeRequest === HTTPS_REQUEST) {
+            $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+            $curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        }
+        $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
+        $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
+        $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
+        $curl->setHeader('x-access-token', $token);
+        //add
+        if($type==1){
+            $result = $curl->post($address,$data
+            );
+            // delete
+        }else if($type==2){
+            $curl->setOpt(CURLOPT_CUSTOMREQUEST, "DELETE");
+            $result = $curl->delete($address,array(
+                'device-name'=> $data['name']
+            ));
+            //get info
+        }else if($type==3){
+            $result = $curl->get($address,array(
+                'device-name'=> $data['name']
+            ));
+        }
+        //get list
+        else if($type==4){
+            $result = $curl->get($address);
+        }
+
         if ($curl->error) {
             //ghi log
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);

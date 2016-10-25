@@ -10,6 +10,50 @@
     .aaa{
         position: relative;
     }
+    .controls {
+        position: absolute;
+        z-index: 99;
+        left: 100px;
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 300px;
+    }
+
+    #pac-input:focus {
+        border-color: #4d90fe;
+    }
+
+    .pac-container {
+        font-family: Roboto;
+    }
+
+    #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+    }
+
+    #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+    }
 
 </style>
 
@@ -17,12 +61,17 @@
 <link type="text/css" rel="stylesheet" href="<?php echo base_url() ?>public/asset/css/its_custom.css"/>
 </head>
 <body>
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
     <div class="modal fade" id="myModal" tabindex="-1" data-keyboard="false" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true"> 
     </div>
     <script>
-        var jArray = <?php echo  (!empty($devicesInfo)) ? json_encode($devicesInfo):  json_encode(array());?>;
-        console.log(jArray);
+        var markers = [];
+        var jArray = [];
+        function initialize() {
+            initMap();
+        }
+        jArray = <?php echo  (!empty($devicesInfo)) ? json_encode($devicesInfo):  json_encode(array());?>;
         function initMap() {
             var uluru = {lat: 21.030385, lng: 105.787894};
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -31,7 +80,7 @@
                 minZoom: 3,
                 center: uluru
             });
-            var markers = [];
+
             var i = 0;
             var img = '';
             for (i = 0; i < jArray.length; i++) {
@@ -52,7 +101,75 @@
             }
             for (i = 0; i < markers.length; i++) {
                 markers[i].addListener('click', toggleBounce);
+
             }
+        }
+
+        function initAutocomplete() {
+            alert(1)
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -33.8688, lng: 151.2195},
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            // Create the search box and link it to the UI element.
+            var input = document.getElementById('pac-input');
+            var searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            // Bias the SearchBox results towards current map's viewport.
+            map.addListener('bounds_changed', function() {
+                alert(2)
+                searchBox.setBounds(map.getBounds());
+            });
+
+            // [START region_getplaces]
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
+            searchBox.addListener('places_changed', function() {
+                alert(1);
+                var places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach(function(marker) {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                var bounds = new google.maps.LatLngBounds();
+                places.forEach(function(place) {
+                    var icon = {
+                        url: place.icon,
+                        size: new google.maps.Size(71, 71),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(25, 25)
+                    };
+
+                    // Create a marker for each place.
+                    markers.push(new google.maps.Marker({
+                        map: map,
+                        icon: icon,
+                        title: place.name,
+                        position: place.geometry.location
+                    }));
+
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            // [END region_getplaces]
         }
         function toggleBounce() {
             var data = {name:this.title};
@@ -80,6 +197,25 @@
 //            });
         });
         }
+        $(document).ready(function(){
+            $('#pac-input').autocomplete({
+                source: jArray,
+                select: function (event, ui) {
+                    event.preventDefault();
+                    console.log(ui.item);
+                    console.log(markers);
+                    return;
+//                    if (ui.item.post_room_id != undefined && ui.item.post_room_name != undefined) {
+//                        $("#post_room_name").val(ui.item.post_room_name);
+//                        var url = "<?php //echo admin_url('Post_room/index?post_room_name=');?>//"+ui.item.post_room_name;
+//                        <?php //if($user->role_id==1):?>
+//                        if($('#user_name').val()!='') url+="&user_name="+$('#user_name').val();
+//                        <?php //endif;?>
+//                        window.location.href = url;
+//                    }
+                }
+            })
+        })
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJj4O6Bf0zPYK4JsaAFHCMTNXg7GYXmd0&callback=initMap">

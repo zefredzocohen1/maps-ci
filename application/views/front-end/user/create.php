@@ -7,9 +7,6 @@
                 <input type="text" class="form-control" name="username" id="username" placeholder="Name" required>
             </div>
             <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
                 <input type="password" class="form-control" name="password" placeholder="Password" required>
             </div>
             <div class="form-group">
@@ -33,14 +30,11 @@ $(document).ready(function () {
             rules: {
                 username: {
                     required: true,
+                    minlength: 3
                 },
                 password: {
                     required: true,
                     minlength: 3
-                },
-                email: {
-                    required: true,
-                    email: true
                 },
                 permisson: {
                     required: true,
@@ -51,14 +45,11 @@ $(document).ready(function () {
             messages: {
                 username: {
                     required: 'Trường không được để trống',
+                    minlength: 'Tên phải chứa ít nhất 3 ký tự'
                 },
                 password: {
                     required: 'Trường không được để trống',
                     minlength: 'Độ dài mật khẩu phải lớn hơn 3'
-                },
-                email: {
-                    required: 'Trường không được để trống',
-                    email: 'Trường phải có định dạng email'
                 },
                 permisson: {
                     required: true,

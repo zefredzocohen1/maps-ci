@@ -1,119 +1,148 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8" />
-        <title>Trang chủ</title>
-        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-        <meta content="" name="description" />
-        <meta content="" name="author" />
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-        <link href="<?php echo base_url() ?>public1/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/animate.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/style.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/style-responsive.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>public1/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Places Searchbox</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
 
-    </head>
-    <body>
-        <!-- ================== BEGIN BASE JS ================== -->
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!--[if lt IE 9]>
-                <script src="assets/crossbrowserjs/html5shiv.js"></script>
-                <script src="assets/crossbrowserjs/respond.min.js"></script>
-                <script src="assets/crossbrowserjs/excanvas.min.js"></script>
-        <![endif]-->
-        <script src="<?php echo base_url() ?>public1/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="<?php echo base_url() ?>public1/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-        <!-- ================== END BASE JS ================== -->
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+        }
 
-        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-        <script src="<?php echo base_url() ?>public1/assets/js/apps.min.js"></script>
-        <!-- ================== BEGIN BASE JS ================== -->
-        <!--<script src="<?php echo base_url() ?>public1/assets/plugins/pace/pace.min.js"></script>-->
-        <script>
-            var context = "/its-omap";
-            $(document).ready(function () {
-                App.init();
-            });
-        </script>
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
 
-        <style>
-            .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
-                padding-left: 5px;
-                padding-right: 5px;
+        .pac-container {
+            font-family: Roboto;
+        }
+
+        #type-selector {
+            color: #fff;
+            background-color: #4d90fe;
+            padding: 5px 11px 0px 11px;
+        }
+
+        #type-selector label {
+            font-family: Roboto;
+            font-size: 13px;
+            font-weight: 300;
+        }
+        #target {
+            width: 345px;
+        }
+    </style>
+</head>
+<body>
+<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+<div id="map"></div>
+<script>
+    // This example adds a search box to a map, using the Google Place Autocomplete
+    // feature. People can enter geographical searches. The search box will return a
+    // pick list containing a mix of places and predicted search terms.
+
+    // This example requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+    function initAutocomplete() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -33.8688, lng: 151.2195},
+            zoom: 13,
+            mapTypeId: 'roadmap'
+        });
+
+        // Create the search box and link it to the UI element.
+        var input = document.getElementById('pac-input');
+        var searchBox = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // Bias the SearchBox results towards current map's viewport.
+        map.addListener('bounds_changed', function() {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        var markers = [];
+        // Listen for the event fired when the user selects a prediction and retrieve
+        // more details for that place.
+        searchBox.addListener('places_changed', function() {
+            var places = searchBox.getPlaces();
+
+            if (places.length == 0) {
+                return;
             }
-        </style>
-        <!-- ================== END PAGE LEVEL JS ================== -->
-        <div id="page-loader" class="fade in"><span class="spinner"></span></div>
-        <div id="page-container" style="height: 100%;" class="fade page-sidebar-fixed page-header-fixed">
-            <div id="sidebar" class="sidebar">
-                <div data-scrollbar="true" data-height="100%">
-                    <ul class="nav">
-                        <li class="nav-profile">
-                            <div class="image">
-                                <a href="javascript:;"><img src="<?php echo base_url() ?>public1/assets/img/user-13.jpg" alt="" /></a>
-                            </div>
-                            <div class="info">
-                                <%=username%>
-                                <small><a href="logout.jsp">Thoát</a></small> 
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="nav">
-                        <li class="nav-header"></li>
-                        <li class="has-sub setActive expand" id="1">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-laptop"></i>
-                                <span>Quản lý xe</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li class="setActive" id="1-1"><a href="<?php echo base_url() ?>public1/">Giám sát</a></li>
-                                <li class="setActive" id="1-2"><a href="<?php echo base_url() ?>public1/transactions">Danh sách xe - OBU</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-sub setActive expand" id="21">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-flag-o"></i>
-                                <span>Quản lý đội xe</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li class="setActive" id="21-1"><a href="<?php echo base_url() ?>public1/drivers">Danh sách lái xe</a></li>
-                                <li class="setActive" id="21-2"><a href="<?php echo base_url() ?>public1/commands">Lệnh điều xe</a></li>
-                            </ul>
-                        </li>
 
-                        <li class="has-sub setActive expand" id="3">
-                            <a href="javascript:;">
-                                <b class="caret pull-right"></b>
-                                <i class="fa fa-laptop"></i>
-                                <span>Báo cáo thống kê</span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li class="setActive" id="3-1"><a href="<?php echo base_url() ?>public1/reports">Thống kê theo xe</a></li>
-                                <li class="setActive" id="3-2"><a href="<?php echo base_url() ?>public1/report-drivers">Thống kê theo lái xe</a></li>
-                                <li class="setActive" id="3-3"><a href="<?php echo base_url() ?>public1/report-departments">Thống kê theo phòng</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify">
-                                <i class="fa fa-angle-double-left">
-                                </i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="sidebar-bg"></div>
-            <jsp:include page="${requestScope.body}" />
-            <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
-        </div>
-    </body>
+            // Clear out the old markers.
+            markers.forEach(function(marker) {
+                marker.setMap(null);
+            });
+            markers = [];
+
+            // For each place, get the icon, name and location.
+            var bounds = new google.maps.LatLngBounds();
+            places.forEach(function(place) {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                var icon = {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(25, 25)
+                };
+
+                // Create a marker for each place.
+                markers.push(new google.maps.Marker({
+                    map: map,
+                    icon: icon,
+                    title: place.name,
+                    position: place.geometry.location
+                }));
+
+                if (place.geometry.viewport) {
+                    // Only geocodes have viewport.
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
+        });
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete"
+        async defer></script>
+</body>
 </html>

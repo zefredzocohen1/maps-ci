@@ -20,6 +20,7 @@ $config['addr_config_name_device'] = '/api/config-name?device-name=';
 $config['addr_config_device_mode'] = '/api/config-device-mode?device-name=';
 $config['addr_set_device_order'] = '/api/config-device-mode?device-name=';
 $config['addr_curd_device'] = '/api/device-info';
+$config['addr_curd_user'] = '/api/users';
 $config['addr_create_user'] = 'api/users';
 $config['curl_connect_timeout'] = 5;
 $config['curl_verbose'] = 1;

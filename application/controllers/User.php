@@ -18,9 +18,6 @@ class User extends CI_Controller {
         
         $data = array();
         $this->load->library("form_validation");
-        if(!empty($this->session->userdata('username'))&&!empty($this->session->userdata('password'))&&!empty($this->session->userdata('role'))){
-            redirect(base_url().'Home');
-        }
         if($this->input->post()){
             $this->form_validation->set_rules('username', 'username', 'trim|required');
             $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[3]');
@@ -46,12 +43,14 @@ class User extends CI_Controller {
                 }
             }
         }
-        $data['temp'] = 'front-end/user/login';
+        $data['temp'] = 'front-end/user/index';
         $data['title'] = 'Đăng nhập';
         $data['plugin'] = array(
             'js'=>array('jquery.validate.min.js')
         );
-        $this->load->view('front-end/template/user_before/master_user_before',$data);
+        $list = UserInfo(mGetSession('token'),array(1),4);
+        $data['listUser'] = !empty($list)?$list:null;
+        $this->load->view('front-end/template/master',$data);
     }
 
     public function login(){
@@ -110,17 +109,19 @@ class User extends CI_Controller {
 //                    ));
 //        }
         if($this->input->post()){
-            $user = convert_accented_characters(scGetName($this->input->post('username')));
+            $user = scGetName($this->input->post('username'));
             $pass = scGetName($this->input->post('password'));
-            $permisson = scGetName($this->input->post('permison'));
-            if(!empty($user)&&!empty($pass)){
-                createUser($token,
+            $permisson = scGetName($this->input->post('permisson'));
+            if(!empty($user)&&!empty($pass)&&!empty($permisson)){
+                $result = UserInfo(mGetSession('token'),
                     array(
                         'username'=>$user,
                         'password'=>$pass,
-                        'permisson'=>$role
-                    ));
+                        'permisson'=>$permisson
+                    ),1);
+                var_dump($result);
             }
+            return;
         }
         $data['temp'] = 'front-end/user/create';
         $data['title'] = 'Thêm người dùng';

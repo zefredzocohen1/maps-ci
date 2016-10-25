@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Txanh<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
-                                <div class="col-sm-1">
+                                <div class="col-sm-1" style="padding: 1px 1px 1px 15px;">
                                     <input type="text" placeholder="Thời điểm" id="vmsTx<?php echo $i?>" name="vmsTx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tx vms-select-input" placeholder="" value="<?php echo @!empty($data->config->mainConfig->active->tx[0])?$data->config->mainConfig->active->tx[0]:''?>">
                                 </div>
                                 <?php endfor;?>
@@ -85,7 +85,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">TSxanh<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
-                                <div class="col-sm-1">
+                                <div class="col-sm-1" style="padding: 1px 1px 1px 15px;">
                                     <input type="text" placeholder="Thời điểm" id="vmsTsx<?php echo $i?>" name="vmsTsx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsx  vms-select-input" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
@@ -93,7 +93,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tdibo<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
-                                <div class="col-sm-1">
+                                <div class="col-sm-1" style="padding: 1px 1px 1px 15px;">
                                     <input type="text" placeholder="Thời điểm" id="vmsTdbx<?php echo $i?>" name="vmsTdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tdbx  vms-select-input" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">TSdibo<font color="red"><b>*</b></font></label>
                                 <?php for($i=0;$i<8;$i++):?>
-                                <div class="col-sm-1">
+                                <div class="col-sm-1" style="padding: 1px 1px 1px 15px;">
                                     <input type="text" placeholder="Thời điểm" id="vmsTsdbx<?php echo $i?>" name="vmsTsdbx<?php echo $i?>" maxlength="20" class="form-control input-sm vms-input vms-input-tsdbx  vms-select-input" placeholder="" value="">
                                 </div>
                                 <?php endfor;?>
@@ -123,11 +123,23 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Bắt đầu<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-5">
-                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input vms-input-start-time  vms-select-input" placeholder="">
+<!--                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input vms-input-start-time  vms-select-input" placeholder="">-->
+                                    <div class="ibox-content">
+                                        <div class="input-group clockpicker clockpickerStartTime" data-autoclose="true">
+                                            <input type="text" class="form-control" id="vmsStartTime" name="vmsStartTime" value="" class="form-control input-sm vms-input vms-input-start-time  vms-select-input" >
+                                            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">kết thúc<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-3">
-                                    <input type="text" placeholder="Chiến lược" id="vmsEndTime" name="vmsEndTime" maxlength="6" class="form-control input-sm vms-input vms-input-end-time vms-select-input" placeholder="">
+<!--                                    <input type="text" placeholder="Chiến lược" id="vmsEndTime" name="vmsEndTime" maxlength="6" class="form-control input-sm vms-input vms-input-end-time vms-select-input" placeholder="">-->
+                                    <div class="ibox-content">
+                                        <div class="input-group clockpicker clockpickerEndTime" data-autoclose="true">
+                                            <input type="text" class="form-control" id="vmsEndTime" name="vmsEndTime" value="" class="form-control input-sm vms-input vms-input-end-time  vms-select-input" >
+                                            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -156,49 +168,71 @@
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">OPT 1<font color="red"><b>*</b></font>
                                 </label>
-                                <?php for($i=0;$i<8;$i++):?>
-                                    <div class="col-sm-1">
-                                        <select id="<?php echo 'option1_'.$i?>" class="form-control pointer input-sm vms-input vms-input-option1" name="option1_[<?php echo $i?>]">
-                                            <option name="item" value="-1">--Loại OPT--</option>
-                                            <option name="item" value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
-                                            <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
-                                            <option name="item" value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
-                                            <option name="item" value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
-                                            <option name="item" value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
-                                            <option name="item" value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
-                                        </select>
-                                    </div>
-                                <?php endfor;?>
+                                <div style="margin-left: -200px;">
+                                    <?php for($i=0;$i<8;$i++):?>
+                                        <div class="col-sm-1" style="padding: 1px 1px 1px 10px">
+                                            <select id="<?php echo 'option1_'.$i?>" class="form-control pointer input-sm vms-input vms-input-option1" name="option1_[<?php echo $i?>]">
+                                                <option name="item" value="-1">--Loại OPT--</option>
+                                                <option name="item" value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
+                                                <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
+                                                <option name="item" value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
+                                                <option name="item" value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
+                                                <option name="item" value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
+                                                <option name="item" value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
+                                            </select>
+                                        </div>
+                                    <?php endfor;?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">OPT 2<font color="red"><b>*</b></font>
                                 </label>
-                                <?php for($i=0;$i<8;$i++):?>
-                                    <div class="col-sm-1">
-                                        <select id="<?php echo 'option2_'.$i;?>" class="form-control pointer input-sm vms-input vms-input-option2" name="option2_[<?php echo $i?>]">
-                                            <option value="-1">--Loại OPT--</option>
-                                            <option value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
-                                            <option value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
-                                            <option value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
-                                            <option value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
-                                            <option value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
-                                            <option value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
-                                        </select>
-                                    </div>
-                                <?php endfor;?>
+                                <div style="margin-left: -200px;">
+                                    <?php for($i=0;$i<8;$i++):?>
+                                        <div class="col-sm-1" style="padding: 1px 1px 1px 10px">
+                                            <select id="<?php echo 'option2_'.$i;?>" class="form-control pointer input-sm vms-input vms-input-option2" name="option2_[<?php echo $i?>]">
+                                                <option value="-1">--Loại OPT--</option>
+                                                <option value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
+                                                <option value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
+                                                <option value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
+                                                <option value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
+                                                <option value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
+                                                <option value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
+                                            </select>
+                                        </div>
+                                    <?php endfor;?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Giờ mở<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Thời điểm" id="vmsIp" name="otherStartTime" value="<?php echo @!is_null($data->config->otherConfig->hour_on)&&@!is_null($data->config->otherConfig->minute_on)?$data->config->otherConfig->hour_on.':'.$data->config->otherConfig->minute_on:''?>"  maxlength="20" class="form-control input-sm vms-input" placeholder="">
+<!--                                    <input type="text" placeholder="Thời điểm" id="vmsIp" name="otherStartTime" value="--><?php //echo @!is_null($data->config->otherConfig->hour_on)&&@!is_null($data->config->otherConfig->minute_on)?$data->config->otherConfig->hour_on.':'.$data->config->otherConfig->minute_on:''?><!--"  maxlength="20" class="form-control input-sm vms-input" placeholder="">-->
+                                    <div class="ibox-content">
+                                        <div class="input-group clockpicker clockpickerOtherStartTime" data-autoclose="true">
+                                            <input type="text" class="form-control" id="otherStartTime" name="otherStartTime" value="<?php echo @!is_null($data->config->otherConfig->hour_on)&&@!is_null($data->config->otherConfig->minute_on)?$data->config->otherConfig->hour_on.':'.$data->config->otherConfig->minute_on:''?>" >
+                                            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Giờ tắt<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort" name="otherEndTime" value="<?php echo @!is_null($data->config->otherConfig->hour_off)&&@!is_null($data->config->otherConfig->minute_off)?$data->config->otherConfig->hour_off.':'.$data->config->otherConfig->minute_off:''?>"  maxlength="6" class="form-control input-sm vms-input" placeholder="">
+<!--                                    <input type="text" placeholder="Chiến lược" id="vmsPort" name="otherEndTime" value="--><?php //echo @!is_null($data->config->otherConfig->hour_off)&&@!is_null($data->config->otherConfig->minute_off)?$data->config->otherConfig->hour_off.':'.$data->config->otherConfig->minute_off:''?><!--"  maxlength="6" class="form-control input-sm vms-input" placeholder="">-->
+                                    <div class="ibox-content">
+                                        <div class="input-group clockpicker clockpickerOtherEndTime" data-autoclose="true">
+                                            <input type="text" class="form-control" id="otherEndTime" name="otherEndTime" value="<?php echo @!is_null($data->config->otherConfig->hour_off)&&@!is_null($data->config->otherConfig->minute_off)?$data->config->otherConfig->hour_off.':'.$data->config->otherConfig->minute_off:''?>" >
+                                            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Giờ chớp<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
-                                    <input type="text" placeholder="Chiến lược" id="vmsPort" name="otherBlinkTime" value="<?php echo @!is_null($data->config->otherConfig->hour_blink)&&@!is_null($data->config->otherConfig->minute_blink)?$data->config->otherConfig->hour_blink.':'.$data->config->otherConfig->minute_blink:''?>"  maxlength="6" class="form-control input-sm vms-input" placeholder="">
+<!--                                    <input type="text" placeholder="Chiến lược" id="vmsPort" name="otherBlinkTime" value="--><?php //echo @!is_null($data->config->otherConfig->hour_blink)&&@!is_null($data->config->otherConfig->minute_blink)?$data->config->otherConfig->hour_blink.':'.$data->config->otherConfig->minute_blink:''?><!--"  maxlength="6" class="form-control input-sm vms-input" placeholder="">-->
+                                    <div class="ibox-content">
+                                        <div class="input-group clockpicker clockpickerOtherBlinkTime" data-autoclose="true">
+                                            <input type="text" class="form-control" id="otherBlinkTime" name="otherBlinkTime" value="<?php echo @!is_null($data->config->otherConfig->hour_blink)&&@!is_null($data->config->otherConfig->minute_blink)?$data->config->otherConfig->hour_blink.':'.$data->config->otherConfig->minute_blink:''?>" >
+                                            <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Số pha<font color="red"><b>*</b></font></label>
                                 <div class="col-sm-2">
@@ -229,6 +263,23 @@ if(!empty($data)):
 <script>
     (function ($) {
 })(jQuery);
+    $('.clockpickerOtherStartTime,.clockpickerOtherEndTime,.clockpickerOtherBlinkTime').clockpicker({
+        placement: 'top',
+        align: 'left',
+        donetext: 'Done'
+    });
+    $('.clockpickerStartTime,.clockpickerEndTime').clockpicker({
+        placement: 'top',
+        align: 'left',
+        donetext: 'Done'
+    });
+    $('input[id^=vmsTx],input[id^=vmsTsx],input[id^=vmsTsx],input[id^=vmsTdbx],input[id^=vmsTsdbx],#vmstv,#vmsFreq,#vmsGt,#otherAlpha').TouchSpin({
+        verticalbuttons: true,
+        buttondown_class: 'btn btn-white',
+        buttonup_class: 'btn btn-white',
+        min:0,
+        max:255
+    });
     var config_device_strageties_active = [];
     var tmpChienLuoc = <?php echo json_encode(mConfig('chien-luoc',JSON_PRETTY_PRINT));?>;
     $('.vms-select-input').on('input',function(){
@@ -322,6 +373,7 @@ if(!empty($data)):
                         $('#otherAlpha').val(0);
                     }
                     window.setOtherConfig(data.message.otherConfig);
+                    console.log(data.message.otherConfig);
                     if(typeof thoi_diem !='undefined'&&parseInt(thoi_diem.val())>=0&&parseInt(thoi_diem.val())<6&&
                        typeof chien_luoc !='undefined'&&parseInt(chien_luoc.val())>=0&&parseInt(chien_luoc.val())<4){
                         var ActiveStragete = data.message[tmpChienLuoc[parseInt(chien_luoc.val())]][parseInt(thoi_diem.val())];

@@ -74,7 +74,7 @@ class MapsPro extends CI_Controller {
             $dataGetDev = getDeviceConfig(mGetSession('token'),'device'.$name,1);
             if($typePrint==1){
                 pre($dataGetDev);
-            }else{
+            }elseif($typeGet==2){
                 var_dump($dataGetDev);
             }
         }else{
@@ -85,7 +85,7 @@ class MapsPro extends CI_Controller {
                 var_dump($dataGetDev);
             }
         }
-        echo json_encode(getDeviceConfig(mGetSession('token'), 'Dev'.$name));
+        echo json_encode($dataGetDev);
         die;
     }
 

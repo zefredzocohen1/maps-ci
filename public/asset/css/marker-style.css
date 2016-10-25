@@ -1,0 +1,13 @@
+.ibox-content{
+    padding: 0px !important;
+}
+.clockpicker-popover{
+    z-index: 999999;
+}
+input[id^=vmsTx],input[id^=vmsTsx],input[id^=vmsTsx],input[id^=vmsTdbx],input[id^=vmsTsdbx],#vmsFreq,#vmsGt,#vmstv{
+    height: 34px !important;
+    /*border-radius: 7px 0px 0px 7px !important;*/
+}
+input[id^=vmsTsdbx],#otherAlpha{
+    height: 34px !important;
+}

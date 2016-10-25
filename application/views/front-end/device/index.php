@@ -57,11 +57,11 @@
                                 <td class="registerStringDev"><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
                                 <td colspan="2">
                                     <div class="form-inline" style="display:inline">
-                                        <button style="display:inline" class="btn btn-primary btn-circle btn-xs btn-detail" type="button" title="Thông tin thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-info"></i>
+                                        <button style="display:inline" class="btn btn-primary btn-circle btn-xs btn-detail" type="button" title="Thông tin thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa fa-info"></i>
                             </button>
-                                        <button style="display:inline" class="btn btn-info btn-circle btn-xs btn-update" data-toggle="modal" data-target="#myModal" type="button" title="Cập nhật thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa fa-refresh"></i>
+                                        <button style="display:inline" class="btn btn-info btn-circle btn-xs btn-update" data-toggle="modal" data-target="#myModal" type="button" title="Cập nhật thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa fa-refresh"></i>
                             </button>
-                                        <button style="display:inline" class="btn btn-danger btn-circle btn-xs btn-delete" type="button" title="Xóa thiết bị" data-name="dev_<?php echo $row['name'];?>"><i class="fa  fa-times-circle"></i>
+                                        <button style="display:inline" class="btn btn-danger btn-circle btn-xs btn-delete" type="button" title="Xóa thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa  fa-times-circle"></i>
                             </button></div>
                                     </td>
                             </tr>

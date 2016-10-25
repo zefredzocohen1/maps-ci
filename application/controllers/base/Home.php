@@ -18,11 +18,12 @@ class Home extends BaseController {
             redirect('User/login');
         }
         $fileCache = mConfig('fileCache');
-        $list = getListDevice(mGetSession('token'));
+        $list = getListDevice(mGetSession('token'),2);
+//        pre($list);
         $data['devicesInfo'] = !empty($list) ? $list : array();
         $data['plugin'] = array(
-            'js'=>array('plugins/clockpicker/clockpicker.js'),
-            'css'=>array('plugins/clockpicker/clockpicker.css')
+            'js'=>array('jquery-ui-1.10.4.min.js','plugins/clockpicker/clockpicker.js','plugins/touchspin/jquery.bootstrap-touchspin.min.js'),
+            'css'=>array('plugins/jquery-ui/jquery-ui.min.css','plugins/clockpicker/clockpicker.css','plugins/touchspin/jquery.bootstrap-touchspin.min.css','marker-style.css')
         );
         $data['temp'] = 'front-end/maps/index';
         $this->load->view('front-end/template/master', $data);
