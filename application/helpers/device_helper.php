@@ -319,6 +319,28 @@ if (!function_exists('createDeviceConfig')) {
 
 }
 
+if (!function_exists('createDeviceMainConfig')) {
+
+    function createDeviceMainConfig() {
+        $result = new stdClass();
+        $result->hour_off = '';
+        $result->minute_on = '';
+        $result->minute_off = '';
+        $result->freq= '';
+        $result->gt= '';
+        $result->tv = '3';
+        $result->gt= '';
+        $result->tv = '3';
+        $result->tx= array();
+        $result->tsx= array();
+        $result->tdbx= array();
+        $result->tsdbx= array();
+        return $result;
+    }
+
+}
+
+
 if (!function_exists('createDeviceSubOtherConfig')) {
 
     function createDeviceSubOtherConfig() {
