@@ -222,7 +222,7 @@ class Device extends BaseController {
             exit;
         }
         foreach ($config->mainConfig->$chienLuoc[$thoiDiem] as &$i =>&$row){
-            $row = $configActive->$i
+//            $row = $configActive->$i
         }
         echo json_encode('thoidiem: '.$thoiDiem.': chienluoc'.$chienLuoc);
         die;
