@@ -314,6 +314,10 @@ if (!function_exists('createDeviceConfig')) {
         $result->otherConfig->lang = 1;
         $result->otherConfig->train_road = array(0,0,0,0,0,0,0,0);
         $result->mainConfig = new stdClass();
+//        $result->mainConfig->stragetiesA = array();
+//        $result->mainConfig->stragetiesB = array();
+//        $result->mainConfig->stragetiesC = array();
+//        $result->mainConfig->stragetiesD = array();
         return $result;
     }
 
@@ -519,9 +523,9 @@ if (!function_exists('createUser')) {
         $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
         $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
         $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
-        
+
         $curl->setOpt(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-        
+
         $curl->setHeader('x-access-token', $token);
         $result = $curl->post($address,$userInfo);
         if ($curl->error) {
@@ -556,9 +560,9 @@ if (!function_exists('deleteUser')) {
         $curl->setOpt(CURLOPT_CONNECTTIMEOUT, mConfig('curl_connect_timeout'));
         $curl->setOpt(CURLOPT_VERBOSE, mConfig('curl_verbose'));
         $curl->setOpt(CURLOPT_TIMEOUT, mConfig('curl_timeout'));
-        
+
         $curl->setOpt(CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
-        
+
         $curl->setHeader('x-access-token', $token);
         $result = $curl->delete($address,$userInfo);
         if ($curl->error) {
@@ -649,7 +653,7 @@ if (!function_exists('DeviceInfo')) {
         else if($type==4){
             $result = $curl->put($address,$data);
         }
-        
+
         if ($curl->error) {
             //ghi log
             writeLog('error: ' . $curl->errorCode . ': ' . $curl->errorMessage);

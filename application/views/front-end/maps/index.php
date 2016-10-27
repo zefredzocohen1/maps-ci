@@ -63,7 +63,7 @@
 <body>
 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
-    <div class="modal fade" id="myModal" tabindex="-1" data-keyboard="false" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true"> 
+    <div class="modal fade" id="myModal" tabindex="-1" data-keyboard="false" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="myModalLabel" aria-hidden="true">
     </div>
     <script>
         var markers = [];
@@ -85,7 +85,7 @@
             var i = 0;
             var img = '';
             for (i = 0; i < jArray.length; i++) {
-                
+
                 if(jArray[i]['state']==1){
                     img = 'maker-online-lite.png';
                 }else if(jArray[i]['state']==0){
@@ -123,7 +123,7 @@
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 toast('Có lỗi !',errorThrown+': '+textStatus,'error');
-                
+
             }
         });
         }
