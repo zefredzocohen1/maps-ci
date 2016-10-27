@@ -68,13 +68,14 @@
     <script>
         var markers = [];
         var jArray = [];
+        var map;
         function initialize() {
             initMap();
         }
         jArray = <?php echo  (!empty($devicesInfo)) ? json_encode($devicesInfo):  json_encode(array());?>;
         function initMap() {
             var uluru = {lat: 21.030385, lng: 105.787894};
-            var map = new google.maps.Map(document.getElementById('map'), {
+            map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
                 maxZoom: 20,
                 minZoom: 3,
@@ -105,72 +106,6 @@
             }
         }
 
-        function initAutocomplete() {
-            alert(1)
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -33.8688, lng: 151.2195},
-                zoom: 13,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            });
-
-            // Create the search box and link it to the UI element.
-            var input = document.getElementById('pac-input');
-            var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-            // Bias the SearchBox results towards current map's viewport.
-            map.addListener('bounds_changed', function() {
-                alert(2)
-                searchBox.setBounds(map.getBounds());
-            });
-
-            // [START region_getplaces]
-            // Listen for the event fired when the user selects a prediction and retrieve
-            // more details for that place.
-            searchBox.addListener('places_changed', function() {
-                alert(1);
-                var places = searchBox.getPlaces();
-
-                if (places.length == 0) {
-                    return;
-                }
-
-                // Clear out the old markers.
-                markers.forEach(function(marker) {
-                    marker.setMap(null);
-                });
-                markers = [];
-
-                // For each place, get the icon, name and location.
-                var bounds = new google.maps.LatLngBounds();
-                places.forEach(function(place) {
-                    var icon = {
-                        url: place.icon,
-                        size: new google.maps.Size(71, 71),
-                        origin: new google.maps.Point(0, 0),
-                        anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 25)
-                    };
-
-                    // Create a marker for each place.
-                    markers.push(new google.maps.Marker({
-                        map: map,
-                        icon: icon,
-                        title: place.name,
-                        position: place.geometry.location
-                    }));
-
-                    if (place.geometry.viewport) {
-                        // Only geocodes have viewport.
-                        bounds.union(place.geometry.viewport);
-                    } else {
-                        bounds.extend(place.geometry.location);
-                    }
-                });
-                map.fitBounds(bounds);
-            });
-            // [END region_getplaces]
-        }
         function toggleBounce() {
             var data = {name:this.title};
         $.ajax({
@@ -191,35 +126,29 @@
                 
             }
         });
-        $(document).ajaxComplete(function () {
-//            $("#titleCheck").change(function () {
-//                $("input:checkbox").prop('checked', $(this).prop("checked"));
-//            });
-        });
         }
+
         $(document).ready(function(){
             $('#pac-input').autocomplete({
                 source: jArray,
                 select: function (event, ui) {
                     event.preventDefault();
-                    var itemc = ui.item
-                    console.log();
+                    var itemc = ui.item;
+                    $('#pac-input').val(itemc.label);
                     if(typeof markers !=undefined && markers.length>=0){
                         for(i=0;i<markers.length;i++){
-                            if(markers[i]['position'].lat()==itemc['position'].lat()&&markers[i]['position'].long()==itemc['position'].long()){
-                                map.setCenter({lat:itemc['position'].lat(),long:itemc['position'].long()})
+                            if(markers[i]['position'].lat().toFixed(3)==itemc['lat']&&
+                                markers[i]['position'].lng().toFixed(3)==itemc['long']){
+                                map.setCenter({lat:itemc['lat'], lng:itemc['long']})
+                                markers[i].setAnimation(google.maps.Animation.BOUNCE);
+                                setTimeout(function() {
+                                    markers[i].setAnimation(null)
+                                }, 5000);
+                                break;
                             }
                         }
                     }
                     return;
-//                    if (ui.item.post_room_id != undefined && ui.item.post_room_name != undefined) {
-//                        $("#post_room_name").val(ui.item.post_room_name);
-//                        var url = "<?php //echo admin_url('Post_room/index?post_room_name=');?>//"+ui.item.post_room_name;
-//                        <?php //if($user->role_id==1):?>
-//                        if($('#user_name').val()!='') url+="&user_name="+$('#user_name').val();
-//                        <?php //endif;?>
-//                        window.location.href = url;
-//                    }
                 }
             })
         })

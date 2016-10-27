@@ -210,9 +210,9 @@ if (!function_exists('getListDevice')) {
             if (!empty($result) && $typeResponse == RESPON_JSON) {
                 foreach ($result as $i => $value) {
                     $result[$i] = array(
-                        'long'              => $value->longitude,
-                        'lat'               => $value->latitude,
-                        'name'              => $value->device_name
+                        'long'              => round( $value->longitude,3),
+                        'lat'               => round( $value->latitude, 3),
+                        'name'              => strlen($value->device_name)>20? substr($value->device_name,0,20):$value->device_name
                     );
                     if($type==1){
                         $result[$i]['sim_number'] = isset($value->sim_number)?$value->sim_number:'';
@@ -335,6 +335,26 @@ if (!function_exists('createDeviceSubOtherConfig')) {
         $result->strageties = '';
         $result->lang = 1;
         $result->train_road = array(0,0,0,0,0,0,0,0);
+        return $result;
+    }
+
+}
+
+if (!function_exists('createDeviceMainConfig')) {
+
+    function createDeviceMainConfig() {
+        $result = new stdClass();
+        $result->hour_on = '';
+        $result->hour_off = '';
+        $result->minute_on = '';
+        $result->minute_off = '';
+        $result->freq = '';
+        $result->gt = '';
+        $result->tv = '';
+        $result->tx = array();
+        $result->tsx = array();
+        $result->tdbx = array();
+        $result->tsdbx = array();
         return $result;
     }
 
