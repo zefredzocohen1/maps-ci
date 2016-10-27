@@ -35,9 +35,8 @@ class Device extends BaseController {
         }
         $data = array();
         if($this->input->post()){
+//            pre($this->input->post());return;
             $nameDev = !empty(scGetName($this->input->post('nameDev')))?scGetName($this->input->post('nameDev')):'';
-            $serialDev = !empty(scGetSerial($this->input->post('serialDev')))?scGetSerial($this->input->post('serialDev')):'';
-            $mainboardDev = !empty(scGetSerial($this->input->post('mainboardDev')))?scGetSerial($this->input->post('mainboardDev')):'';
             $registerStringDev = !empty(scGetName($this->input->post('registerStringDev')))?scGetName($this->input->post('registerStringDev')):'';
             $simNumberDev = !empty(scGetNumber($this->input->post('simNumberDev')))?scGetNumber($this->input->post('simNumberDev')):'';
             $stateDev = !empty(scGetNumber($this->input->post('stateDev')))?scGetNumber($this->input->post('stateDev')):'';
@@ -46,8 +45,6 @@ class Device extends BaseController {
             $descriptionDev = !empty(scGetName($this->input->post('descriptionDev')))?scGetName($this->input->post('descriptionDev')):'';
             $data = array(
                 'name'=>$nameDev,
-                'serial'=>$serialDev,
-                'mainboard'=> $mainboardDev,
                 'register-string'=> $registerStringDev,
                 'sim-number'=> $simNumberDev,
                 'state'=>  $stateDev,

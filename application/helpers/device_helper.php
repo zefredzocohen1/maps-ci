@@ -225,7 +225,7 @@ if (!function_exists('getListDevice')) {
                     }else{
                         $result[$i]['state'] = @$value->state;
                         $result[$i]['created_time'] = $value->created_time;
-                        $result[$i]['label'] = $value->device_name.'-'.$value->device_serial.'-'.$value->device_mainboard;
+                        $result[$i]['label'] = $value->device_name.'-'.@$value->device_serial.'-'.@$value->device_mainboard;
                         $result[$i]['value'] = $value->device_name;
                     }
                 }

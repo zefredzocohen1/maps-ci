@@ -373,11 +373,9 @@ if(!empty($data)):
                         $('#otherAlpha').val(0);
                     }
                     window.setOtherConfig(data.message.otherConfig);
-                    console.log(data.message.otherConfig);
                     if(typeof thoi_diem !='undefined'&&parseInt(thoi_diem.val())>=0&&parseInt(thoi_diem.val())<6&&
                        typeof chien_luoc !='undefined'&&parseInt(chien_luoc.val())>=0&&parseInt(chien_luoc.val())<4){
                         var ActiveStragete = data.message[tmpChienLuoc[parseInt(chien_luoc.val())]][parseInt(thoi_diem.val())];
-                        console.log(ActiveStragete);
                         if(ActiveStragete ==null){
                             ActiveStragete = chienluoconly;
                         }
