@@ -83,21 +83,9 @@
                                                 <input id="nameDev" name="nameDev" type="text" class="form-control required">
                                             </div>
                                             <div class="col-md-6">
-                                                <label>Serial *</label>
-                                                <input id="serialDev" name="serialDev" type="text" class="form-control required">
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-6">
-                                                <label>mainboard *</label>
-                                                <input id="mainboardDev" name="mainboardDev" type="text" class="form-control required">
-                                            </div>
-                                            <div class="col-md-6">
                                                 <label>register-string *</label>
                                                 <input id="registerStringDev" name="registerStringDev" type="text" class="form-control required">
                                             </div>
-
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-6">

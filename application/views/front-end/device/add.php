@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mô tả *</label>
-                                    <textarea id="descriptionDev" name="descriptionDev" type="text" class="form-control required"></textarea>
+                                    <textarea id="descriptionDev" name="descriptionDev" type="text" class="form-control"></textarea>
                             </div>
                         </div>
                     </fieldset>
