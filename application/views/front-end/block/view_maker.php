@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms" name="chien-luoc">Chiến lược<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <!--<input type="text" placeholder="Chiến lược" id="vmsPort" maxlength="6" class="form-control input-sm vms-input" placeholder="">-->
                                     <select  id="chien-luoc" class="form-control input-sm" name="chien-luoc">
                                         <option value="-1">--Chọn chiến lược--</option>
@@ -108,7 +108,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Tck<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <input type="text" placeholder="Thời điểm" id="vmsFreq" name="vmsFreq" maxlength="20" class="form-control input-sm vms-input vms-input-tck  vms-select-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Tv<font color="red"><b>*</b></font></label>
@@ -116,13 +116,13 @@
                                     <input type="text" placeholder="Thời điểm" id="vmsTv" name="vmsTv" maxlength="20" class="form-control input-sm vms-input vms-input-tck  vms-select-input" placeholder="">
                                 </div>
                                 <label class="col-sm-1 control-label label-vms">Tgt<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <input type="text" placeholder="Chiến lược" id="vmsGt" name="vmsGt" maxlength="6" class="form-control input-sm vms-input vms-input-tgt  vms-select-input" placeholder="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label label-vms">Bắt đầu<font color="red"><b>*</b></font></label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
 <!--                                    <input type="text" placeholder="Thời điểm" id="vmsStartTime" name="vmsStartTime" maxlength="20" class="form-control input-sm vms-input vms-input-start-time  vms-select-input" placeholder="">-->
                                     <div class="ibox-content">
                                         <div class="input-group clockpicker clockpickerStartTime" data-autoclose="true">
