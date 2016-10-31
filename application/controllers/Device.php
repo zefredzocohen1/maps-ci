@@ -326,11 +326,8 @@ class Device extends BaseController {
 
     public function updateInfo(){
         if($this->input->post()){
-            $data = array();
             $data = array(
                 'name' => scGetName($this->input->post('nameDev')),
-                'serial' => scGetSerial($this->input->post('serialDev')),
-                'mainboard' => scGetSerial($this->input->post('mainboardDev')),
                 'lat' => scGetNumber($this->input->post('latDev')),
                 'lng' => scGetNumber($this->input->post('longDev')),
                 'register-string' => scGetSerial($this->input->post('registerStringDev')),

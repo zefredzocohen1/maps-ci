@@ -34,12 +34,11 @@
                             <tr>
                                 <th>Tên</th>
                                 <th>sim_number</th>
-                                <th>device_serial</th>
-                                <th>device_mainboard</th>
                                 <th>mode</th>
                                 <th>state</th>
                                 <th>created_time</th>
                                 <th>register_string</th>
+                                <th>Mô tả</th>
                                 <th>Hành-động</th>
                             </tr>
                         </thead>
@@ -49,12 +48,11 @@
                             <tr class="gradeX">
                                 <td class="nameDev"><?php echo isset($row['name'])?$row['name']:'';?></td>
                                 <td class="simNumberDev"><?php echo isset($row['sim_number'])?$row['sim_number']:'';?></td>
-                                <td class="deviceSerialDev"><?php echo isset($row['device_serial'])?$row['device_serial']:'';?></td>
-                                <td class="deviceMainboardDev"><?php echo isset($row['device_mainboard'])?$row['device_mainboard']:'';?></td>
                                 <td class="modeDev"><?php echo isset($row['mode'])?$row['mode']:'';?></td>
                                 <td class="statusDev"><?php echo isset($row['state'])?'Bật':'Tắt';?></td>
                                 <td class="createTimeDev"><?php echo isset($row['created_time'])?$row['created_time']:'';?></td>
                                 <td class="registerStringDev"><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
+                                <td class="DescriptionDev"><?php echo @$row['description'];?></td>
                                 <td colspan="2">
                                     <div class="form-inline" style="display:inline">
                                         <button style="display:inline" class="btn btn-primary btn-circle btn-xs btn-detail" type="button" title="Thông tin thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa fa-info"></i>
@@ -83,21 +81,9 @@
                                                 <input id="nameDev" name="nameDev" type="text" class="form-control required">
                                             </div>
                                             <div class="col-md-6">
-                                                <label>Serial *</label>
-                                                <input id="serialDev" name="serialDev" type="text" class="form-control required">
-                                            </div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="col-md-6">
-                                                <label>mainboard *</label>
-                                                <input id="mainboardDev" name="mainboardDev" type="text" class="form-control required">
-                                            </div>
-                                            <div class="col-md-6">
                                                 <label>register-string *</label>
                                                 <input id="registerStringDev" name="registerStringDev" type="text" class="form-control required">
                                             </div>
-
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-6">
@@ -107,8 +93,7 @@
                                             <div class="col-md-6">
                                                 <label>state *</label>
                                                 <select name="stateDev" class="form-control required">
-                                                    <option value="1">Online</option>
-                                                    <option value="0">Offline</option>
+                                                    <option value="1">Hiện</option>
                                                     <option value="-1">Ẩn</option>
                                                 </select>
                                             </div>
@@ -144,12 +129,11 @@
                             <tr>
                                 <th>Tên</th>
                                 <th>sim_number</th>
-                                <th>device_serial</th>
-                                <th>device_mainboard</th>
                                 <th>mode</th>
                                 <th>state</th>
                                 <th>created_time</th>
                                 <th>register_string</th>
+                                <th>Mô tả</th>
                                 <th>Hành động</th>
                             </tr>
                         </tfoot>
