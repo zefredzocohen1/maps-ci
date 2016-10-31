@@ -53,6 +53,7 @@ $config['DeviceInfo'] = array(
     'description'=>'descriptionDev',
     'register_string'=>'registerStringDev',
     'latitude'=>'latDev',
-    'longitude'=>'longDev'
+    'longitude'=>'longDev',
+    'description'=>'descriptionDev'
 );
 

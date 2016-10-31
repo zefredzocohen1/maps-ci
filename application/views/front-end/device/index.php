@@ -207,6 +207,7 @@
             dataType: "Json",
             data: {deviceName:trData.find('.NameDev').html()},
             success: function (data) {
+                console.log(data);
                 if(data.success){
                    for(var k in fillData){
                        if(fillData.hasOwnProperty(k)) {
