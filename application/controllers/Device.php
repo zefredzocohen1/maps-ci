@@ -82,7 +82,6 @@ class Device extends BaseController {
     
     public function search() {
         header("Content-Type: application/json", true);
-        $fileCache = mConfig('fileCache');
         $data = array();
         $result2 = new stdClass();
         $name = scGetName($this->input->post('name'));
@@ -90,7 +89,6 @@ class Device extends BaseController {
         
         $state = -1;
         if(!empty($listDivice)){
-            $deviceNameCache = $fileCache->getItem($name);
             foreach ($listDivice as $i=>$device){
                if($device['name']==$name ){
                    $state = $device['state'];
@@ -115,7 +113,6 @@ class Device extends BaseController {
     }
     
     public function saveConfig() {
-        $fileCache = mConfig('fileCache');
         $data = $this->input->post('data');
         $value = array_values($data);
         $config = createDeviceConfig();
@@ -191,11 +188,6 @@ class Device extends BaseController {
         }
         $result = setConfigDevice(mGetSession('token'), $config->deviceName, json_encode($config));
         if (@$result->success) {
-            $tmp = new stdClass();
-            $tmp->config = $config;
-            $deviceNameCache = $fileCache->getItem($config->deviceName);
-            $deviceNameCache->set($tmp)->expiresAfter(EXPIRES_CACHE_DEVICE);
-            $fileCache->save($deviceNameCache);
             echo json_encode(array('success'=>true,'message'=>'Thiết bị đã được ghi'));
             exit;
         }
