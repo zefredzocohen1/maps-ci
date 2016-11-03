@@ -1,9 +1,8 @@
 <?php
 
 require APPPATH . 'third_party'.DIRECTORY_SEPARATOR.'php-curl'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
-require APPPATH . 'third_party'.DIRECTORY_SEPARATOR.'php-cache'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
-use phpFastCache\CacheManager;
+//use phpFastCache\CacheManager;
 use \Curl\Curl;
 
 if (!function_exists('mConfig')) {

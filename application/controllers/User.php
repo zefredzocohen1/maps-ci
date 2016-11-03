@@ -1,9 +1,8 @@
 <?php
 
-require APPPATH . 'third_party'.DIRECTORY_SEPARATOR.'php-cache'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 require APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'BaseController.php';
 
-use phpFastCache\CacheManager;
+//use phpFastCache\CacheManager;
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -102,12 +101,13 @@ class User extends CI_Controller {
     public function create(){
         $role = mGetSession('role');
         $data = array();
-//        if($role != mConfig('role')['admin']){
-//            $this->session->set_flashdata(array(
-//                        'type'=> mConfig('type_flash_data')['danger'],
-//                        'message'=>'Bạn không có quyền tạo user'
-//                    ));
-//        }
+        if($role != mConfig('role')['admin']){
+            $this->session->set_flashdata(array(
+                'type'=> mConfig('type_flash_data')['danger'],
+                'message'=>'Bạn không có quyền tạo user'
+            ));
+            redirect(base_url('Home/index'));
+        }
         if($this->input->post()){
             $user = scGetName($this->input->post('username'));
             $pass = scGetName($this->input->post('password'));

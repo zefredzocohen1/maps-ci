@@ -2,7 +2,7 @@
 
 require APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'base' . DIRECTORY_SEPARATOR . 'BaseController.php';
 
-use phpFastCache\CacheManager;
+//use phpFastCache\CacheManager;
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -17,9 +17,7 @@ class Home extends BaseController {
         if(!$this->checkLogin()){
             redirect('User/login');
         }
-        $fileCache = mConfig('fileCache');
         $list = getListDevice(mGetSession('token'),2);
-//        pre($list);
         $data['devicesInfo'] = !empty($list) ? $list : array();
         $data['plugin'] = array(
             'js'=>array('jquery-ui-1.10.4.min.js','plugins/clockpicker/clockpicker.js','plugins/touchspin/jquery.bootstrap-touchspin.min.js'),

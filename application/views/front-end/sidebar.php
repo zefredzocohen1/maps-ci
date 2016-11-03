@@ -6,9 +6,9 @@
                         <img alt="image" class="img-circle" src="<?php echo base_url()?>public/asset/img/profile_small.jpg" />
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear"> 
-                            <span class="block m-t-xs"> <strong class="font-bold"><?php echo mGetSession('user_name')?></strong>
-                            </span> <span class="text-muted text-xs block">admin <b class="caret"></b></span> 
+                        <span class="clear">
+                            <span class="block m-t-xs"> <strong class="font-bold"><?php echo @mGetSession('username')?></strong>
+                            </span> <span class="text-muted text-xs block"><?php echo @mGetSession('role')?> <b class="caret"></b></span>
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -17,9 +17,7 @@
                         <li><a href="<?php echo base_url()?>user/logout">Logout</a></li>
                     </ul>
                 </div>
-                <div class="logo-element">
-                    Mp
-                </div>
+                <div class="logo-element">Mp</div>
             </li>
             <li id="dashboard" data-choose="" >
                 <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Quản lý thiết bị</span> <span class="fa arrow"></span></a>

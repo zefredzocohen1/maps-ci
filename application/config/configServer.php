@@ -34,8 +34,8 @@ $config['type_flash_data'] = array(
 );
 
 $config['role'] = array(
-    'user'=>1,
-    'admin'=>2,
+    'user'=>0,
+    'admin'=>1,
 );
 
 $config['nameCache'] = array(
