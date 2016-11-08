@@ -174,8 +174,8 @@
                                             <select id="<?php echo 'option1_'.$i?>" class="form-control pointer input-sm vms-input vms-input-option1" name="option1_[<?php echo $i?>]">
                                                 <option name="item" value="-1">--Loại OPT--</option>
                                                 <option name="item" value="0" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==0?' selected':''?>>Xanh</option>
-                                                <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
                                                 <option name="item" value="2" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==2?' selected':''?>>Vang</option>
+                                                <option name="item" value="1" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==1?' selected':''?>>Đo</option>
                                                 <option name="item" value="3" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==3?' selected':''?>>Chu thap</option>
                                                 <option name="item" value="4" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==4?' selected':''?>>Bo xanh</option>
                                                 <option name="item" value="5" <?php echo @!is_null($data->config->otherConfig->option1[$i])&&$data->config->otherConfig->option1[$i]==5?' selected':''?>>Bo do</option>
