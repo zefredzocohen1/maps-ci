@@ -36,7 +36,6 @@
                                 <th>sim_number</th>
                                 <th>mode</th>
                                 <th>state</th>
-                                <th>created_time</th>
                                 <th>register_string</th>
                                 <th>device_serial</th>
                                 <th>device_mainboard</th>
@@ -52,7 +51,6 @@
                                 <td class="simNumberDev"><?php echo isset($row['sim_number'])?$row['sim_number']:'';?></td>
                                 <td class="modeDev"><?php echo isset($row['mode'])?$row['mode']:'';?></td>
                                 <td class="statusDev"><?php echo isset($row['state'])?'Bật':'Tắt';?></td>
-                                <td class="createTimeDev"><?php echo isset($row['created_time'])?$row['created_time']:'';?></td>
                                 <td class="registerStringDev"><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
                                 <td class="deviceSerialDev"><?php echo isset($row['device_serial'])?$row['device_serial']:'';?></td>
                                 <td class="deviceMainboardDev"><?php echo isset($row['device_mainboard'])?$row['device_mainboard']:'';?></td>
@@ -133,7 +131,6 @@
                                 <th>sim_number</th>
                                 <th>mode</th>
                                 <th>state</th>
-                                <th>created_time</th>
                                 <th>register_string</th>
                                 <th>device_serial</th>
                                 <th>device_mainboard</th>
