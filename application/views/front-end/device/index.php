@@ -38,6 +38,8 @@
                                 <th>state</th>
                                 <th>created_time</th>
                                 <th>register_string</th>
+                                <th>device_serial</th>
+                                <th>device_mainboard</th>
                                 <th>Mô tả</th>
                                 <th>Hành-động</th>
                             </tr>
@@ -52,11 +54,11 @@
                                 <td class="statusDev"><?php echo isset($row['state'])?'Bật':'Tắt';?></td>
                                 <td class="createTimeDev"><?php echo isset($row['created_time'])?$row['created_time']:'';?></td>
                                 <td class="registerStringDev"><?php echo isset($row['register_string'])?$row['register_string']:'';?></td>
+                                <td class="deviceSerialDev"><?php echo isset($row['device_serial'])?$row['device_serial']:'';?></td>
+                                <td class="deviceMainboardDev"><?php echo isset($row['device_mainboard'])?$row['device_mainboard']:'';?></td>
                                 <td class="DescriptionDev"><?php echo @$row['description'];?></td>
                                 <td colspan="2">
                                     <div class="form-inline" style="display:inline">
-                                        <button style="display:inline" class="btn btn-primary btn-circle btn-xs btn-detail" type="button" title="Thông tin thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa fa-info"></i>
-                            </button>
                                         <button style="display:inline" class="btn btn-info btn-circle btn-xs btn-update" data-toggle="modal" data-target="#myModal" type="button" title="Cập nhật thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa fa-refresh"></i>
                             </button>
                                         <button style="display:inline" class="btn btn-danger btn-circle btn-xs btn-delete" type="button" title="Xóa thiết bị" data-name="dev_<?php echo @$row['name'];?>"><i class="fa  fa-times-circle"></i>
@@ -133,6 +135,8 @@
                                 <th>state</th>
                                 <th>created_time</th>
                                 <th>register_string</th>
+                                <th>device_serial</th>
+                                <th>device_mainboard</th>
                                 <th>Mô tả</th>
                                 <th>Hành động</th>
                             </tr>

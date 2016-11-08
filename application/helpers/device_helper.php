@@ -311,7 +311,7 @@ if (!function_exists('createDeviceConfig')) {
         $result->deviceName = '';
         $result->name = '';
         $result->otherConfig = new stdClass();
-        $result->otherConfig->lang = 1;
+        $result->otherConfig->lang = 0;
         $result->otherConfig->train_road = array(0,0,0,0,0,0,0,0);
         $result->mainConfig = new stdClass();
 //        $result->mainConfig->stragetiesA = array();
