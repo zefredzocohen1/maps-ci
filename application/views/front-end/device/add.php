@@ -27,9 +27,7 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <h2>
-                    Form thêm mới thiết bị
-                </h2>
+                <h2>Form thêm mới thiết bị</h2>
                 <form id="form" action="<?php echo base_url().'Device/add'?>" class="wizard-big" method="POST">
                     <h1>Thông số thiết bị</h1>
                     <fieldset>
@@ -53,9 +51,8 @@
                                     <div class="col-md-6">
                                         <label>state *</label>
                                         <select name="stateDev" class="form-control required">
-                                            <option value="1">Online</option>
-                                            <option value="0">Offline</option>
-                                            <option value="-1">Ẩn</option>
+                                            <option value="1">Hiện</option>
+                                            <option value="0">Ẩn</option>
                                         </select>
                                     </div>
                                     
@@ -72,8 +69,10 @@
                                     
                                 </div>
                                 <div class="form-group">
-                                    <label>Mô tả *</label>
-                                    <textarea id="descriptionDev" name="descriptionDev" type="text" class="form-control required"></textarea>
+                                    <div class="col-md-12">
+                                        <label>Mô tả *</label>
+                                        <textarea id="descriptionDev" name="descriptionDev" type="text" class="form-control required"></textarea>
+                                    </div>
                             </div>
                         </div>
                     </fieldset>
